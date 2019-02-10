@@ -1,0 +1,19 @@
+<!DOCTYPE html
+>
+{% load render_bundle from webpack_loader %}
+<html class="no-js" lang="">
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width"/>
+    <title>Tax-Duitama</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>    
+</head>
+<body>
+<div id="root">
+</div>
+{% render_bundle 'main' %}
+</body>
+
+</html>
