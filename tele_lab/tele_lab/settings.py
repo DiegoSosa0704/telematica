@@ -25,7 +25,7 @@ SECRET_KEY = '5=w9*njgea2)n69@xv245tuyu2d3=vb4n-4eyrk&#v^4h@zt-q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.10.130', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'webpack_loader',
+    # 'webpack_loader',
+    'rest_framework',
+    'telematics'
 ]
 
 MIDDLEWARE = [
@@ -134,6 +136,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+"""
 
 WEBPACK_LOADER = {
     'DEFAULT': {
@@ -141,3 +144,4 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.dev.json'),
     }
 }
+"""
