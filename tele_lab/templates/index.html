@@ -1,19 +1,23 @@
-<!DOCTYPE html
->
 {% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
 <html class="no-js" lang="">
 {% load staticfiles %}
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width"/>
-    <title>Tax-Duitama</title>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>    
+    <title>Telematica</title>
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
 </head>
 <body>
 <div id="root">
 </div>
 {% render_bundle 'main' %}
+{% render_bundle 'undefined' %}
+{% render_bundle 'runtime~main' %}
 </body>
 
 </html>
