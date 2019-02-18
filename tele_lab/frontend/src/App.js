@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import {Provider} from "react-redux"
 import {createStore} from "redux";
 import ponyApp from "./reducers";
+import 'semantic-ui-css/semantic.min.css'
 
 // import TeleLab from './components/TeleLab'
 import NotFound from './components/NotFound'
