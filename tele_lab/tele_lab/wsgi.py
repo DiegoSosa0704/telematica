@@ -1,4 +1,23 @@
-"""
+"""import React, {Component} from 'react';
+import {Route, Switch, BrowserRouter} from 'react-router-dom'
+import TeleLab from './components/TeleLab'
+import NotFound from './components/NotFound'
+
+class App extends Component {
+    render() {
+        return (
+            <BrowserRouter>
+                <Switch>
+                    <Route exact path="/" component={TeleLab}/>
+                    <Route component={NotFound}/>
+                </Switch>
+            </BrowserRouter>
+        );
+    }
+}
+
+export default App;
+
 WSGI config for tax_duitama project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.

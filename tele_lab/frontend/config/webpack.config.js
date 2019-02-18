@@ -138,11 +138,11 @@ module.exports = function(webpackEnv) {
       // require.resolve('webpack-dev-server/client') + '?/',
       // require.resolve('webpack/hot/dev-server'),
       isEnvDevelopment &&
-        require.resolve('react-dev-utils/webpackHotDevClient'),
-      isEnvDevelopment &&
         require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
       isEnvDevelopment &&
         require.resolve('webpack/hot/dev-server'),
+      //isEnvDevelopment &&
+      //  require.resolve('react-dev-utils/webpackHotDevClient'),
       // Finally, this is your app's code:
       paths.appIndexJs,
       // We include the app code last so that if there is a runtime error during
@@ -157,11 +157,11 @@ module.exports = function(webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? 'js/[name].[chunkhash:8].js'
+        ? 'static/js/[name].[chunkhash:8].js'
         : isEnvDevelopment && 'static/js/bundle.js',
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
-        ? 'js/[name].[chunkhash:8].chunk.js'
+        ? 'static/js/[name].[chunkhash:8].chunk.js'
         : isEnvDevelopment && 'static/js/[name].chunk.js',
       // We inferred the "public path" (such as / or /my-project) from homepage.
       // We use "/" in development.
@@ -327,7 +327,7 @@ module.exports = function(webpackEnv) {
               loader: require.resolve('url-loader'),
               options: {
                 limit: 10000,
-                name: 'media/[name].[hash:8].[ext]',
+                name: 'static/media/[name].[hash:8].[ext]',
               },
             },
             // Process application JS with Babel.
@@ -472,7 +472,7 @@ module.exports = function(webpackEnv) {
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
-                name: 'media/[name].[hash:8].[ext]',
+                name: 'static/media/[name].[hash:8].[ext]',
               },
             },
             // ** STOP ** Are you adding a new loader?
@@ -606,10 +606,7 @@ module.exports = function(webpackEnv) {
           silent: true,
           formatter: typescriptFormatter,
         }),
-      isEnvDevelopment &&
-        new BundleTracker({path: paths.statsRoot, filename: 'webpack-stats.dev.json'}),
-      isEnvProduction &&
-        new BundleTracker({path: paths.statsRoot, filename: 'webpack-stats.prod.json'}),
+      isEnvDevelopment && new BundleTracker({path: paths.statsRoot, filename: 'webpack-stats.dev.json'}),,
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
