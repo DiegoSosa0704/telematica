@@ -1,19 +1,60 @@
-import React from 'react'
-import {Input, Menu, Container} from 'semantic-ui-react'
+import React, {Component} from 'react'
+import {Container, Menu} from 'semantic-ui-react'
+import {Link} from "react-router-dom";
 
+export default class MenuExampleStackable extends Component {
+    state = {};
 
-const MenuExampleInputs = () => (
-    <Menu>
-        <Container>
-            <Menu.Item>
-                <Input className='icon' icon='search' placeholder='Search...'/>
-            </Menu.Item>
+    handleItemClick = (e, {name}) => this.setState({activeItem: name});
 
-            <Menu.Item position='right'>
-                <Input action={{type: 'submit', content: 'Go'}} placeholder='Navigate to...'/>
-            </Menu.Item>
-        </Container>
-    </Menu>
-)
+    render() {
+        const {activeItem} = this.state;
 
-export default MenuExampleInputs
+        return (
+            <Menu stackable inverted>
+                <Container>
+                    <Menu.Item>
+                        <img src='https://react.semantic-ui.com/logo.png'/>
+                    </Menu.Item>
+
+                    <Menu.Item
+                        name='schedule'
+                        active={activeItem === 'schedule'}
+                        onClick={this.handleItemClick}
+                        as={Link}
+                        to="/"
+                    >
+                        Horario
+                    </Menu.Item>
+
+                    <Menu.Item
+                        name='record'
+                        active={activeItem === 'record'}
+                        onClick={this.handleItemClick}
+                        as={Link}
+                        to="/record"
+                    >
+                        Historial
+                    </Menu.Item>
+
+                    <Menu.Item
+                        name='recommended'
+                        active={activeItem === 'recommended'}
+                        onClick={this.handleItemClick}
+                        as={Link}
+                        to="/recommended"
+                    >
+                        Recomendador
+                    </Menu.Item>
+                    <Menu.Menu position='right'>
+                        <Menu.Item name='admin'
+                                   active={activeItem === 'admin'}
+                                   onClick={this.handleItemClick}>
+                            Admin
+                        </Menu.Item>
+                    </Menu.Menu>
+                </Container>
+            </Menu>
+        )
+    }
+}
