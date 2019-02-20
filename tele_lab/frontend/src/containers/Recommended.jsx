@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import {Button, Container} from 'semantic-ui-react'
+import {Button, Container, Segment} from 'semantic-ui-react'
 
 class HomePage extends Component {
     render() {
         return (
             <div>
-                <Container>
+                <Segment style={{minHeight: '88vh'}}>
                     <Button>Recomendador</Button>
-                </Container>
+
+                </Segment>
             </div>
         );
     }
