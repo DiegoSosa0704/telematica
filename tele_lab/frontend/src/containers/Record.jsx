@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {Container, Grid, Header, Icon, Menu, Search, Segment, Table} from 'semantic-ui-react'
+import {Grid, Header, Icon, Menu, Search, Segment, Table} from 'semantic-ui-react'
 
 class HomePage extends Component {
     render() {
         return (
             <div>
-                <Segment placeholder style={{minHeight: '88vh'}}>
+                <Segment placeholder style={{minHeight: '90vh'}}>
                     <Grid columns={1} stackable textAlign='center'>
                         <Grid.Row verticalAlign='middle'>
                             <Grid.Column>

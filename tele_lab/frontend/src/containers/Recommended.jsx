@@ -5,7 +5,7 @@ class HomePage extends Component {
     render() {
         return (
             <div>
-                <Segment style={{minHeight: '88vh'}}>
+                <Segment style={{minHeight: '90vh'}}>
                     <Button>Recomendador</Button>
 
                 </Segment>
