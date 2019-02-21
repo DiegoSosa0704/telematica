@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import {Button, Form, Grid, Header, Image, Message, Segment} from "semantic-ui-react";
-import {fakeAuth} from "../App";
-import {Link, Redirect} from "react-router-dom";
+import {Button, Form, Grid, Header, Segment} from "semantic-ui-react";
+import {fakeAuth} from "./HomePage";
+import {Redirect} from "react-router-dom";
 
 
 class Login extends Component {
@@ -16,7 +16,7 @@ class Login extends Component {
     };
 
     render() {
-        const {from} = this.props.location.state || {from: {pathname: "/protected"}};
+        const {from} = this.props.location.state || {from: {pathname: "/admin/home"}};
         const {redirectToReferrer} = this.state;
 
         if (redirectToReferrer) {

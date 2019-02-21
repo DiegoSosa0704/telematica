@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Grid, Header, Icon, Menu, Search, Segment, Table} from 'semantic-ui-react'
 
-class HomePage extends Component {
+class Record extends Component {
     render() {
         return (
             <div>
@@ -86,4 +86,4 @@ class HomePage extends Component {
     }
 }
 
-export default HomePage;
+export default Record;

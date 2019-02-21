@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Button, Container, Segment} from 'semantic-ui-react'
+import {Button, Segment} from 'semantic-ui-react'
 
-class HomePage extends Component {
+class Recommended extends Component {
     render() {
         return (
             <div>
@@ -14,4 +14,4 @@ class HomePage extends Component {
     }
 }
 
-export default HomePage;
+export default Recommended;
