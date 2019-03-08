@@ -19,9 +19,9 @@ class App extends Component {
                 }
                 `}</style>
                 {fakeAuth.isAuthenticated ? (
-                    <HomePage/>
-                ) : (
                     <AdminContainer/>
+                ) : (
+                    <HomePage/>
                 )}
             </div>
         );

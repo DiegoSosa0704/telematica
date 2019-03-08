@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Container} from "semantic-ui-react";
-import {Redirect, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import Schedule from "./Schedule";
 import Record from "./Record";
 import Recommended from "./Recommended";
@@ -8,41 +8,17 @@ import LoginAdmin from "./LoginAdmin";
 import AdminContainer from "./AdminContainer";
 import HomeFooter from "../components/Footer";
 import HomeMenu from "../components/HomeMenu";
-
-export const fakeAuth = {
-    isAuthenticated: false,
-    authenticate(cb) {
-        this.isAuthenticated = true;
-        setTimeout(cb, 100); // fake async
-    },
-    signout(cb) {
-        this.isAuthenticated = false;
-        setTimeout(cb, 100);
-    }
-};
-
-const PrivateRoute = ({component: Component, ...rest}) => (
-    <Route
-        {...rest}
-        render={props =>
-            fakeAuth.isAuthenticated ? (
-                <Component {...props} />
-            ) : (
-                <Redirect
-                    to={{
-                        pathname: "/login",
-                        state: {from: props.location}
-                    }}
-                />
-            )
-        }
-    />
-);
+import {connect} from "react-redux";
 
 class HomePage extends Component {
     render() {
         return (
             <div>
+                {this.props.isAdmin ? (
+                   <div>Es admin</div>
+                ) : (
+                    <div>No es admin</div>
+                )}
                 <HomeMenu/>
                 <Container style={{minHeight: '80vh'}}>
                     <Switch>
@@ -60,4 +36,15 @@ class HomePage extends Component {
     }
 }
 
-export default HomePage
+
+const mapStateToProps = state => {
+    return {
+        isAdmin: state.auth.is_admin
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)

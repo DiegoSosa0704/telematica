@@ -1,27 +1,10 @@
 import React, {Component} from 'react'
 import {Button, Form, Grid, Header, Segment} from "semantic-ui-react";
 import {fakeAuth} from "./HomePage";
-import {Redirect} from "react-router-dom";
 
 
 class Login extends Component {
-    state = {
-        redirectToReferrer: false
-    };
-
-    login = () => {
-        fakeAuth.authenticate(() => {
-            this.setState({redirectToReferrer: true});
-        });
-    };
-
     render() {
-        const {from} = this.props.location.state || {from: {pathname: "/admin/home"}};
-        const {redirectToReferrer} = this.state;
-
-        if (redirectToReferrer) {
-            return <Redirect to={from}/>;
-        }
         return (
             <div className='login-form'>
                 <style>{`
@@ -37,7 +20,7 @@ class Login extends Component {
                             <Form size='large'>
                                 <Segment stacked style={{marginTop: '100px'}}>
                                     <Header as='h1' textAlign='center'>
-                                        Administrador
+                                        Login
                                     </Header>
                                     <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address'/>
                                     <Form.Input

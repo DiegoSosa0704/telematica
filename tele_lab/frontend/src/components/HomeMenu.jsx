@@ -1,10 +1,26 @@
 import React, {Component} from 'react'
 import {Container, Menu} from "semantic-ui-react";
 import {Link} from "react-router-dom";
+import * as reducers from "../reducers";
+import {auth} from "../actions";
+import {connect} from "react-redux";
 
 class HomeMenu extends Component {
     state = {};
-    handleItemClick = (e, {name}) => this.setState({activeItem: name});
+
+    handleItemClick = (e, {name}) => {
+        this.setState({activeItem: name});
+
+    };
+
+    handleLogoutClick = () => {
+        if (this.props.isAuthenticated) {
+            console.log("Esta autenticado");
+            this.props.logout();
+        } else {
+            console.log("pos no")
+        }
+    };
 
     render() {
         const {activeItem} = this.state;
@@ -49,11 +65,11 @@ class HomeMenu extends Component {
                         <Menu.Item
                             name='signup'
                             active={activeItem === 'signup'}
-                            onClick={this.handleItemClick}
+                            onClick={this.handleLogoutClick}
                             as={Link}
-                            to='/login'
+                            to='/login/'
                         >
-                            Admin
+                            Cerrar Sesión
                         </Menu.Item>
                     </Menu.Menu>
                 </Container>
@@ -62,4 +78,18 @@ class HomeMenu extends Component {
     }
 }
 
-export default HomeMenu;
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated: reducers.isAuthenticated(state),
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logout: () => {
+            return dispatch({type: auth.LOGOUT_SUCCESSFUL});
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeMenu)
