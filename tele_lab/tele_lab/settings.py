@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'webpack_loader',
     'rest_framework',
+    'rolepermissions',
 ]
 
 MIDDLEWARE = [
@@ -169,3 +170,5 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.dev.json'),
     }
 }
+
+ROLEPERMISSIONS_MODULE = 'tele_lab.roles'

@@ -17,14 +17,17 @@ from rest_framework import status as status_rest
 from rest_framework import viewsets
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
-
+from rolepermissions.decorators import has_role_decorator
+from rolepermissions.mixins import HasRoleMixin
 from email_manager.service import EmailSender
 from utils import utils_token
 from . import models, serializers
 from .models import User
+from rolepermissions.roles import assign_role
 
 
 @api_view(['GET'])
+
 def verify_email(request, token):
     print(token)
     return Response({"detail": "ok"}, status=status.HTTP_200_OK)
@@ -39,7 +42,8 @@ class UserRegisterDRF(viewsets.ModelViewSet, CsrfExemptMixin, OAuthLibMixin):
     validator_class = oauth2_settings.OAUTH2_VALIDATOR_CLASS
     oauthlib_backend_class = oauth2_settings.OAUTH2_BACKEND_CLASS
 
-    def create(self, request, *args, **kwargs):
+    @action(methods=['post'], detail=False)
+    def create_user(self, request):
         email_sender = EmailSender()
         serializer = serializers.UserSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -49,6 +53,7 @@ class UserRegisterDRF(viewsets.ModelViewSet, CsrfExemptMixin, OAuthLibMixin):
                 except Exception:
                     return Response({"detail": "Error to save user"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
                 # url, headers, body, token_status = self.create_token_response(request)
+                assign_role(user, 'academic')
                 token = utils_token.generate_email_token(user.id)
                 body_verify_email = email_sender.verify_email_body(token=token)
                 email_sender.send_html_email(subject_param="Verify register", to_param=request.data['email'],
@@ -56,6 +61,29 @@ class UserRegisterDRF(viewsets.ModelViewSet, CsrfExemptMixin, OAuthLibMixin):
             except Exception:
                 return Response({"detail": "Error to send email"},
                                 status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+            return Response({"detail": "user created"}, status=status.HTTP_201_CREATED)
+
+    @action(methods=['post'], detail=False)
+    def create_admin(self, request):
+        email_sender = EmailSender()
+        serializer = serializers.AdminSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            try:
+                try:
+                    user = serializer.save()
+                except Exception:
+                    return Response({"detail": "Error to save user"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+                # url, headers, body, token_status = self.create_token_response(request)
+                assign_role(user, 'admin')
+                token = utils_token.generate_email_token(user.id)
+                body_verify_email = email_sender.verify_email_body(token=token)
+                email_sender.send_html_email(subject_param="Verify register", to_param=request.data['email'],
+                                             html_content=body_verify_email)
+            except Exception:
+                return Response({"detail": "Error to send email"},
+                                status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
             return Response({"detail": "user created"}, status=status.HTTP_201_CREATED)
 
     # metodo para enviar link para cambiar password

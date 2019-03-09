@@ -85,7 +85,6 @@ export function isAuthenticated(state) {
 */
 
 export function isAuthenticated(state) {
-    console.log("El valor es: ", state.access);
     return state.access !== undefined;
 }
 

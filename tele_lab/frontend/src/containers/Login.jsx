@@ -5,9 +5,7 @@ import LoginForm from '../components/forms/LoginForm'
 import {authErrors, isAuthenticated} from '../reducers'
 
 const Login = (props) => {
-    console.log(props.isAuthenticated);
     if (props.isAuthenticated) {
-        console.log('entro');
         return (
             <Redirect to='/'/>
         )

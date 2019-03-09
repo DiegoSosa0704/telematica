@@ -3,7 +3,11 @@ from users.models import User
 
 
 class Academic(models.Model):
-    type = models.CharField(verbose_name='Tipo de estudiante', choices=[], default='NA', max_length=2)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE
+    )
+    type = models.CharField(verbose_name='Tipo de usuario', choices=[], default='NA', max_length=2)
     code = models.CharField(verbose_name='Código', max_length=25)
     first_name = models.CharField(verbose_name='Nombres', max_length=25)
     last_name = models.CharField(verbose_name='Apellidos', max_length=25)

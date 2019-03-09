@@ -1,5 +1,5 @@
 from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
+    BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
 from django.db import models
 
@@ -39,7 +39,7 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     """
     Clase que hereda de AbstractBaseUser para modificar atributos del usuario
     predeterminado de django.
@@ -55,9 +55,9 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True
     )
-    first_name = models.CharField(verbose_name='first name', max_length=30, blank=True)
-    last_name = models.CharField(verbose_name='last name', max_length=30, blank=True)
-    date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
+    # first_name = models.CharField(verbose_name='first name', max_length=30, blank=True)
+    # last_name = models.CharField(verbose_name='last name', max_length=30, blank=True)
+    # date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     password = models.CharField(verbose_name='password', max_length=128)
 
     is_active = models.BooleanField(default=False)
@@ -68,14 +68,16 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    """
     def get_full_name(self):
         return self.first_name
 
     def get_short_name(self):
         return self.first_name
+    """
 
     def __str__(self):
-        return self.last_name
+        return self.email
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
