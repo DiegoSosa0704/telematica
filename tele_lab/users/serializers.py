@@ -29,6 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
             type=validated_data.get('type'),
             academic_program=validated_data.get('academic_program'),
         )
+        user.save()
         academic.save()
         return user
 

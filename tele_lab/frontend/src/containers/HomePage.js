@@ -19,6 +19,7 @@ class HomePage extends Component {
             <div>
                 {this.props.isAdmin ? (
                     <div>
+                        Es admin
                         <AdminMenu/>
                         <div style={{
                             marginLeft: '250px',
@@ -36,6 +37,7 @@ class HomePage extends Component {
                     </div>
                 ) : (
                     <div>
+                        No es admin
                         <HomeMenu/>
                         <Container style={{minHeight: '80vh'}}>
                             <Switch>

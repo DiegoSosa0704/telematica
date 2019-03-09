@@ -1,8 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import {Link, Redirect} from 'react-router-dom'
-import {Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react'
+import {Button, Form, Grid, Header, Message, Segment, Select} from 'semantic-ui-react'
 import {auth} from '../../actions'
+
+const typeUser = [
+    {key: 'ES', text: 'Estudiante', value: 'ES'},
+    {key: 'DO', text: 'Docente', value: 'DO'},
+];
+
+const academicPrograms = [
+    {key: '78', text: 'Ing Sistemas y Computación', value: '78'},
+];
 
 class LoginBox extends React.Component {
     constructor(props) {
@@ -14,6 +23,9 @@ class LoginBox extends React.Component {
     state = {
         first_name: '',
         last_name: '',
+        code: '',
+        type: '',
+        academic_program: '',
         email: '',
         password: '',
         password_2: ''
@@ -32,11 +44,14 @@ class LoginBox extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         if (this.state.password === this.state.password_2) {
+            //console.log(this.state)
             this.props.onSubmit(this.state);
         } else {
             console.log('Las contraseñas no coinciden')
         }
     }
+
+    handleChange = (e, {name, value}) => this.setState({[name]: value})
 
     render() {
         if (this.props.signup) {
@@ -59,30 +74,64 @@ class LoginBox extends React.Component {
                     style={{height: '100%'}}
                     verticalAlign='middle'
                 >
-                    <Grid.Column style={{maxWidth: 450}}>
+                    <Grid.Column style={{maxWidth: 600}}>
                         <Header as='h2' color='black' textAlign='center'>
                             TaxDuitama
                         </Header>
                         <Form onSubmit={this.handleSubmit} size='large'>
                             <Segment stacked textAlign='left'>
-                                <Form.Field>
-                                    <label>Nombre: </label>
-                                    <Form.Input
-                                        fluid
-                                        type='text'
-                                        name='first_name'
-                                        onChange={this.handleInputChange}
+                                <Form.Group widths='equal'>
+                                    <Form.Field>
+                                        <label>Nombre: </label>
+                                        <Form.Input
+                                            fluid
+                                            type='text'
+                                            name='first_name'
+                                            onChange={this.handleInputChange}
+                                        />
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <label>Apellido: </label>
+                                        <Form.Input
+                                            fluid
+                                            type='text'
+                                            name='last_name'
+                                            onChange={this.handleInputChange}
+                                        />
+                                    </Form.Field>
+                                </Form.Group>
+                                <Form.Group widths='equal'>
+                                    <Form.Field
+                                        control={Select}
+                                        options={typeUser}
+                                        label={{children: 'Tipo', htmlFor: 'form-select-control-type'}}
+                                        search
+                                        searchInput={{id: 'form-select-control-gender-type'}}
+                                        name='type'
+                                        onChange={this.handleChange}
                                     />
-                                </Form.Field>
-                                <Form.Field>
-                                    <label>Apellido: </label>
-                                    <Form.Input
-                                        fluid
-                                        type='text'
-                                        name='last_name'
-                                        onChange={this.handleInputChange}
-                                    />
-                                </Form.Field>
+                                    <Form.Field>
+                                        <label>Código: </label>
+                                        <Form.Input
+                                            fluid
+                                            type='text'
+                                            name='code'
+                                            onChange={this.handleInputChange}
+                                        />
+                                    </Form.Field>
+                                </Form.Group>
+                                <Form.Field
+                                    control={Select}
+                                    options={academicPrograms}
+                                    label={{
+                                        children: 'Programa Académico',
+                                        htmlFor: 'form-select-control-academic-program'
+                                    }}
+                                    search
+                                    searchInput={{id: 'form-select-control-academic-program'}}
+                                    name='academic_program'
+                                    onChange={this.handleChange}
+                                />
                                 <Form.Field>
                                     <label>Correo eléctronico: </label>
                                     <Form.Input

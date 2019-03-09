@@ -46,5 +46,4 @@ def get_token_for_user(user_id):
     token = None
     for i in access_token:
         token = i.token
-
     return token

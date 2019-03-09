@@ -17,20 +17,21 @@ from rest_framework import status as status_rest
 from rest_framework import viewsets
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
-from rolepermissions.decorators import has_role_decorator
-from rolepermissions.mixins import HasRoleMixin
+from rolepermissions.roles import assign_role
+
 from email_manager.service import EmailSender
 from utils import utils_token
 from . import models, serializers
 from .models import User
-from rolepermissions.roles import assign_role
 
 
 @api_view(['GET'])
-
-def verify_email(request, token):
-    print(token)
-    return Response({"detail": "ok"}, status=status.HTTP_200_OK)
+def is_admin(request, token):
+    try:
+        user = utils_token.get_user_token(token)
+    except Exception as e:
+        return Response({'detail': e.args}, status=status.HTTP_404_NOT_FOUND)
+    return Response({"is_admin": user.is_admin}, status=status.HTTP_200_OK)
 
 
 class UserRegisterDRF(viewsets.ModelViewSet, CsrfExemptMixin, OAuthLibMixin):

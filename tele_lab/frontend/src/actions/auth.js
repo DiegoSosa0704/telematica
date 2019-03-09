@@ -22,8 +22,8 @@ export const login = (username, password) => ({
         endpoint: '/api/v1/login/',
         method: 'POST',
         body: JSON.stringify({
-            client_id: "uaP4l30ijsGfx6lOjnvStPKVwXFNGBI0WRwLVRXF",
-            client_secret: "dxjBD5PMXamAuuzZC7WlNC6i0vaYrJSCRbyccd6lXvttmVJCFoI9pSb4Kz7wwnPvcFKQH5D88IGvpeAqqGIYCSNkbsG4AppfCmVoO2pZDqID2yMRjekGqVf24fM2wbs8",
+            client_id: "ukY88NOauQWUmInWyYKomkf60yEMTZ4UNOnueFdj",
+            client_secret: "OsBhQxWZgZBuHrQa7lbpJ6XCPz83wdBRt7E6S8UGDM8t7UwTNSZA4bGPnLxKgUnGfh4ANjm2OhcBAzoOctAoJu0y1aczYg9rqxtgIym5NIRcr9yP6TAJGDJeu4TiNL6h",
             grant_type: "password",
             username: username,
             password: password
@@ -37,12 +37,15 @@ export const login = (username, password) => ({
 
 export const signUp = (states) => ({
     [RSAA]: {
-        endpoint: '/api/v1/user/',
+        endpoint: '/api/v1/user/create_user/',
         method: 'POST',
         body: JSON.stringify({
-            email: states.email,
             first_name: states.first_name,
             last_name: states.last_name,
+            code: states.code,
+            type: states.type,
+            academic_program: states.academic_program,
+            email: states.email,
             password: states.password,
         }),
         headers: {'Content-Type': 'application/json'},
