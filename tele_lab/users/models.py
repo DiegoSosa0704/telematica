@@ -2,6 +2,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
 from django.db import models
+from rolepermissions.roles import assign_role
 
 
 class UserManager(BaseUserManager):
@@ -36,6 +37,7 @@ class UserManager(BaseUserManager):
         user.is_admin = True
         user.is_active = True
         user.save(using=self._db)
+        assign_role(user, 'admin')
         return user
 
 

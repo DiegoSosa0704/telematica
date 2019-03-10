@@ -17,6 +17,7 @@ from rest_framework import status as status_rest
 from rest_framework import viewsets
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
+from rolepermissions.decorators import has_role_decorator
 from rolepermissions.roles import assign_role
 
 from email_manager.service import EmailSender
@@ -26,6 +27,7 @@ from .models import User
 
 
 @api_view(['GET'])
+@has_role_decorator('admin')
 def is_admin(request, token):
     try:
         user = utils_token.get_user_token(token)
@@ -39,6 +41,7 @@ class UserRegisterDRF(viewsets.ModelViewSet, CsrfExemptMixin, OAuthLibMixin):
     serializer_class = serializers.UserSerializer
 
     permission_classes = (permissions.AllowAny,)
+    # permission_classes = (IsAuthenticatedOrCreate,)
     server_class = oauth2_settings.OAUTH2_SERVER_CLASS
     validator_class = oauth2_settings.OAUTH2_VALIDATOR_CLASS
     oauthlib_backend_class = oauth2_settings.OAUTH2_BACKEND_CLASS
@@ -180,12 +183,14 @@ class TokenView(OAuthLibMixin, View):
                         sender=self, request=request,
                         token=token)
 
+                """
                 data = json.loads(body)
                 if user.is_admin:
                     data.update({'is_admin': True})
                 else:
                     data.update({'is_admin': False})
                 body = json.dumps(data)
+                """
 
             response = HttpResponse(content=body, status=status)
 

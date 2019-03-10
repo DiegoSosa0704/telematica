@@ -9,5 +9,5 @@ class Admin(AbstractUserRole):
 
 class Academic(AbstractUserRole):
     available_permissions = {
-        'nose': True,
+        'is_admin': True,
     }
