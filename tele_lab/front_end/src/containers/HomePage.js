@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Container, Grid} from "semantic-ui-react";
-import {Route, Switch} from "react-router-dom";
+import {Router, Route, Switch} from "react-router-dom";
+import {createBrowserHistory} from 'history'
 import Schedule from "./Schedule";
 import Record from "./Record";
 import Recommended from "./Recommended";
@@ -13,6 +14,8 @@ import NotFound from "../components/NotFound";
 import Loan from "./Loan";
 import AdminMenu from "../components/AdminMenu";
 import {auth} from "../actions";
+import * as reducers from "../reducers";
+
 
 class HomePage extends Component {
   constructor(props) {
@@ -26,11 +29,9 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div>
-        <button onClick={this.handleButton}>boton</button>
-        {this.props.isAdmin ? (
+      <Router history={createBrowserHistory()}>
+        {this.props.is_admin ? (
           <div>
-            Es admin
             <AdminMenu/>
             <div style={{
               marginLeft: '250px',
@@ -48,7 +49,6 @@ class HomePage extends Component {
           </div>
         ) : (
           <div>
-            No es admin
             <HomeMenu/>
             <Container style={{minHeight: '80vh'}}>
               <Switch>
@@ -63,8 +63,7 @@ class HomePage extends Component {
             <HomeFooter/>
           </div>
         )}
-
-      </div>
+      </Router>
     );
   }
 }
@@ -72,8 +71,10 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAdmin: state.auth.is_admin,
-    access_token: state.auth.access.token
+    is_admin: state.auth.is_admin,
+    access_token: state.auth.access.token,
+    refresh_token: state.auth.refresh.token,
+    isAuthenticated: reducers.isAuthenticated(state)
   }
 };
 
@@ -81,7 +82,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onSubmit: (token) => {
       return dispatch(auth.is_admin(token));
-    }
+    },
   };
 };
 

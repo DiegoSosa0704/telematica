@@ -17,10 +17,18 @@ export const SIGN_UP_REQUEST = '@@auth/SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = '@@auth/SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = '@@auth/SIGN_UP_FAILURE';
 
+export const ROLE_USER_REQUEST = '@@auth/ROLE_USER_REQUEST';
+export const ROLE_USER_SUCCESS = '@@auth/ROLE_USER_SUCCESS';
+export const ROLE_USER_FAILURE = '@@auth/ROLE_USER_FAILURE';
+
+export const GET_USER_REQUEST = '@@auth/GET_USER_REQUEST';
+export const GET_USER_SUCCESS = '@@auth/GET_USER_SUCCESS';
+export const GET_USER_FAILURE = '@@auth/GET_USER_FAILURE';
+
 
 export const login = (username, password) => ({
   [RSAA]: {
-    endpoint: '/api/v1/login/',
+    endpoint: '/api/v1/get_token/',
     method: 'POST',
     body: JSON.stringify({
       client_id: "ukY88NOauQWUmInWyYKomkf60yEMTZ4UNOnueFdj",
@@ -58,7 +66,7 @@ export const signUp = (states) => ({
 
 export const refreshAccessToken = (token) => ({
   [RSAA]: {
-    endpoint: '/api/v1/token/',
+    endpoint: '/api/v1/get_token/',
     method: 'POST',
     body: JSON.stringify({
       client_id: "ukY88NOauQWUmInWyYKomkf60yEMTZ4UNOnueFdj",
@@ -66,7 +74,7 @@ export const refreshAccessToken = (token) => ({
       grant_type: "refresh_token",
       refresh_token: token,
     }),
-    headers: {'Content-Type': 'application/json'},
+    headers: withAuth({'Content-Type': 'application/json'}),
     types: [
       TOKEN_REQUEST, TOKEN_RECEIVED, TOKEN_FAILURE
     ]
@@ -92,7 +100,19 @@ export const is_admin = (token) => ({
     method: 'GET',
     headers: withAuth({'Content-Type': 'application/json'}),
     types: [
-      VERIFY_EMAIL_REQUEST, VERIFY_EMAIL_SUCCESS, VERIFY_EMAIL_FAILURE
+      ROLE_USER_REQUEST, ROLE_USER_SUCCESS, ROLE_USER_FAILURE
+    ]
+  }
+});
+
+
+export const getUserData = (token) => ({
+  [RSAA]: {
+    endpoint: `/api/v1/get_user_data/${token}`,
+    method: 'GET',
+    headers: withAuth({'Content-Type': 'application/json'}),
+    types: [
+      GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE
     ]
   }
 });

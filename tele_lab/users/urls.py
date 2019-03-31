@@ -6,6 +6,7 @@ router = DefaultRouter()
 router.register('user', views.UserRegisterDRF, base_name='users')
 
 urlpatterns = [
-                  path('login/', views.TokenView.as_view(), name="token"),
+                  path('get_token/', views.TokenView.as_view(), name="token"),
                   path('is_admin/<str:token>', views.is_admin, name="is_admin"),
+                  path('get_user_data/<str:token>', views.is_admin, name="is_admin"),
               ] + router.urls

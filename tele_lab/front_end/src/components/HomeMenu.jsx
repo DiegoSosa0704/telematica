@@ -15,16 +15,12 @@ class HomeMenu extends Component {
 
   handleLogoutClick = () => {
     if (this.props.isAuthenticated) {
-      console.log("Esta autenticado");
       this.props.logout();
-    } else {
-      console.log("pos no")
     }
   };
 
   render() {
     const {activeItem} = this.state;
-
     return (
       <Menu stackable inverted>
         <Container>

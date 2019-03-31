@@ -1,8 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux';
-import {Link, Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react'
 import {auth} from '../../actions'
+import {Redirect} from "react-router";
+import {isAuthenticated} from "../../reducers";
 
 class LoginBox extends React.Component {
   constructor(props) {
@@ -32,7 +34,7 @@ class LoginBox extends React.Component {
   }
 
   render() {
-    if (this.props.isAuth) {
+    if (this.props.isAuthenticated) {
       return <Redirect to="/"/>
     }
     return (
@@ -106,11 +108,10 @@ class LoginBox extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isAuth: state.auth.isAuth
-  }
-};
+const mapStateToProps = (state) => ({
+  isAuthenticated: isAuthenticated(state)
+});
+
 
 const mapDispatchToProps = dispatch => {
   return {

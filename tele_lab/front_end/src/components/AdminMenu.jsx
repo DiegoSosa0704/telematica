@@ -1,8 +1,22 @@
 import React, {Component} from 'react'
 import {Dropdown, Icon, Image, Input, Menu} from "semantic-ui-react";
 import {Link} from "react-router-dom";
+import * as reducers from "../reducers";
+import {auth} from "../actions";
+import {connect} from "react-redux";
 
 class AdminMenu extends Component {
+  constructor(props) {
+    super(props);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this)
+  }
+
+  handleLogoutClick = () => {
+    if (this.props.isAuthenticated) {
+      this.props.logout();
+    }
+  };
+
   state = {};
   handleItemClick = (e, {name}) => this.setState({activeItem: name});
 
@@ -54,10 +68,34 @@ class AdminMenu extends Component {
           >
             Mantenimiento
           </Menu.Item>
+          <Menu.Item
+            name='signup'
+            active={activeItem === 'signup'}
+            onClick={this.handleLogoutClick}
+            as={Link}
+            to='/login/'
+          >
+            Cerrar Sesión
+          </Menu.Item>
         </Menu>
       </div>
     );
   }
 }
 
-export default AdminMenu
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: reducers.isAuthenticated(state),
+  }
+};
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => {
+      return dispatch({type: auth.LOGOUT_SUCCESSFUL});
+    }
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminMenu)

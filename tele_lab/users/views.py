@@ -2,6 +2,8 @@ import json
 
 from braces.views import CsrfExemptMixin
 from django.contrib.auth.hashers import make_password
+from django.core import serializers
+from django.forms.models import model_to_dict
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -17,7 +19,6 @@ from rest_framework import status as status_rest
 from rest_framework import viewsets
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
-from rolepermissions.decorators import has_role_decorator
 from rolepermissions.roles import assign_role
 
 from email_manager.service import EmailSender
@@ -27,7 +28,22 @@ from .models import User
 
 
 @api_view(['GET'])
-@has_role_decorator('admin')
+def get_user_data(request, token):
+    try:
+        user = utils_token.get_user_token(token)
+        dict_obj = model_to_dict(user)
+        dict_obj.pop('id')
+        dict_obj.pop('last_login')
+        dict_obj.pop('groups')
+        dict_obj.pop('user_permissions')
+        dict_obj.pop('password')
+        print(dict_obj)
+    except Exception as e:
+        return Response({'detail': e.args}, status=status.HTTP_404_NOT_FOUND)
+    return Response(dict_obj, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
 def is_admin(request, token):
     try:
         user = utils_token.get_user_token(token)
@@ -165,13 +181,23 @@ class TokenView(OAuthLibMixin, View):
     @method_decorator(sensitive_post_parameters("password"))
     def post(self, request, *args, **kwargs):
         load_body = json.loads(request.body)
-        username = load_body['username']
         try:
-            user = User.objects.get(email=username)
-        except Exception:
-            body = {"error": "email don't found"}
-            response = JsonResponse(body, status=status_rest.HTTP_401_UNAUTHORIZED)
-            return response
+            username = load_body['username']
+            try:
+                user = User.objects.get(email=username)
+            except Exception as e:
+                body = {"error": "email don't found"}
+                response = JsonResponse(body, status=status_rest.HTTP_401_UNAUTHORIZED)
+                return response
+        except KeyError:
+            token = request.META.get('HTTP_AUTHORIZATION').split('Bearer ')[1]
+            try:
+                user = utils_token.get_user_token(token)
+            except Exception as e:
+                body = {"error": "Bearer token don't found"}
+                response = JsonResponse(body, status=status_rest.HTTP_401_UNAUTHORIZED)
+                return response
+
         if user.is_active:
             url, headers, body, status = self.create_token_response(request)
             if status == 200:
@@ -182,16 +208,12 @@ class TokenView(OAuthLibMixin, View):
                     app_authorized.send(
                         sender=self, request=request,
                         token=token)
-
-                """
                 data = json.loads(body)
                 if user.is_admin:
                     data.update({'is_admin': True})
                 else:
                     data.update({'is_admin': False})
                 body = json.dumps(data)
-                """
-
             response = HttpResponse(content=body, status=status)
 
             for k, v in headers.items():
