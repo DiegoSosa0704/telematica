@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Container, Grid} from "semantic-ui-react";
-import {Router, Route, Switch} from "react-router-dom";
-import {createBrowserHistory} from 'history'
+import {Route, Switch} from "react-router-dom";
 import Schedule from "./Schedule";
 import Record from "./Record";
 import Recommended from "./Recommended";
@@ -20,17 +19,16 @@ import * as reducers from "../reducers";
 class HomePage extends Component {
   constructor(props) {
     super(props);
-    this.handleButton = this.handleButton.bind(this)
   }
 
-  handleButton() {
+  componentWillMount() {
     this.props.onSubmit(this.props.access_token)
   }
 
   render() {
-    return (
-      <Router history={createBrowserHistory()}>
-        {this.props.is_admin ? (
+    if (this.props.is_admin !== undefined) {
+      if (this.props.is_admin) {
+        return (
           <div>
             <AdminMenu/>
             <div style={{
@@ -47,7 +45,9 @@ class HomePage extends Component {
               </Grid>
             </div>
           </div>
-        ) : (
+        );
+      } else {
+        return (
           <div>
             <HomeMenu/>
             <Container style={{minHeight: '80vh'}}>
@@ -57,14 +57,19 @@ class HomePage extends Component {
                 <Route exact path="/recommended" component={Recommended}/>
                 <Route exact path="/login" component={LoginAdmin}/>
                 <Route exact path="/admin/home" component={AdminContainer}/>
-                {/* <PrivateRoute path="/protected" component={Protected}/>*/}
               </Switch>
             </Container>
             <HomeFooter/>
           </div>
-        )}
-      </Router>
-    );
+        );
+      }
+    } else {
+      return (
+        <div>
+          <h3>Cargando...</h3>
+        </div>
+      );
+    }
   }
 }
 

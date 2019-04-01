@@ -59,18 +59,6 @@ class LoginBox extends React.Component {
             </Header>
             <Form onSubmit={this.handleSubmit} size='large'>
               <Segment stacked textAlign='left'>
-                {/*
-                                <Form.Field>
-                                    <label>Nombre de usuario: </label>
-                                    <Form.Input
-                                        fluid
-                                        type='text'
-                                        name='username'
-                                        onChange={this.handleInputChange}
-                                    />
-                                </Form.Field>
-                                */}
-
                 <Form.Field>
                   <label>Correo eléctronico: </label>
                   <Form.Input

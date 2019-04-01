@@ -16,11 +16,11 @@ const persistor = persistStore(store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
-      <PersistGate persistor={persistor}>
+    <PersistGate persistor={persistor}>
+      <Router history={history}>
         <App/>
-      </PersistGate>
-    </Router>
+      </Router>
+    </PersistGate>
   </Provider>
   , document.getElementById('root'));
 

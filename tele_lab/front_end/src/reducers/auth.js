@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
         refresh: {
           token: action.payload.refresh_token,
         },
-        is_admin: action.payload.is_admin,
+        //is_admin: action.payload.is_admin,
         errors: {},
       };
     case auth.TOKEN_RECEIVED:
@@ -40,7 +40,7 @@ export default (state = initialState, action) => {
         refresh: {
           token: action.payload.refresh_token,
         },
-        is_admin: action.payload.is_admin,
+        //is_admin: action.payload.is_admin,
       };
     case auth.LOGIN_FAILURE:
     case auth.TOKEN_FAILURE:
@@ -55,7 +55,6 @@ export default (state = initialState, action) => {
       return {};
     case auth.VERIFY_EMAIL_REQUEST:
     case auth.VERIFY_EMAIL_SUCCESS:
-      console.log(action.payload);
       return {
         ...state
       };
@@ -67,6 +66,10 @@ export default (state = initialState, action) => {
       return {signup: true};
     case auth.SIGN_UP_FAILURE:
     case auth.ROLE_USER_SUCCESS:
+      return {
+        ...state,
+        is_admin: action.payload.is_admin
+      };
     case auth.ROLE_USER_FAILURE:
     case auth.GET_USER_REQUEST:
     case auth.GET_USER_SUCCESS:
@@ -90,15 +93,12 @@ export function refreshToken(state) {
 
 export function isAccessTokenExpired(state) {
   if (state.access && state.access.expires_in) {
-    console.log(state.access.expires_in - (new Date()).getTime());
     return state.access.expires_in - (new Date()).getTime() < 10000
   }
   return true
 }
 
 export function isAuthenticated(state) {
-  console.log(state)
-  console.log(!isAccessTokenExpired(state));
   return !isAccessTokenExpired(state)
 }
 
