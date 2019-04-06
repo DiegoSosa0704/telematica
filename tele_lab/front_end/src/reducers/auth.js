@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
         refresh: {
           token: action.payload.refresh_token,
         },
-        //is_admin: action.payload.is_admin,
+        is_admin: action.payload.is_admin,
         errors: {},
       };
     case auth.TOKEN_RECEIVED:
@@ -40,7 +40,7 @@ export default (state = initialState, action) => {
         refresh: {
           token: action.payload.refresh_token,
         },
-        //is_admin: action.payload.is_admin,
+        is_admin: action.payload.is_admin,
       };
     case auth.LOGIN_FAILURE:
     case auth.TOKEN_FAILURE:

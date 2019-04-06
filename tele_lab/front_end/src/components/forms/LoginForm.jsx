@@ -5,12 +5,14 @@ import {Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react'
 import {auth} from '../../actions'
 import {Redirect} from "react-router";
 import {isAuthenticated} from "../../reducers";
+import DjangoCSRFToken from 'django-react-csrftoken'
 
 class LoginBox extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.input = React.createRef();
   }
 
   state = {
@@ -29,8 +31,9 @@ class LoginBox extends React.Component {
   };
 
   handleSubmit(event) {
+    let token = this.refs.django_csrftoken.state.csrfToken;
+    this.props.onSubmit(this.state.email, this.state.password, token);
     event.preventDefault();
-    this.props.onSubmit(this.state.email, this.state.password);
   }
 
   render() {
@@ -58,6 +61,7 @@ class LoginBox extends React.Component {
               Telemática
             </Header>
             <Form onSubmit={this.handleSubmit} size='large'>
+              <DjangoCSRFToken ref="django_csrftoken"/>
               <Segment stacked textAlign='left'>
                 <Form.Field>
                   <label>Correo eléctronico: </label>
@@ -103,8 +107,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (username, password) => {
-      return dispatch(auth.login(username, password));
+    onSubmit: (username, password, token) => {
+      return dispatch(auth.login(username, password, token));
     }
   };
 };

@@ -26,7 +26,7 @@ export const GET_USER_SUCCESS = '@@auth/GET_USER_SUCCESS';
 export const GET_USER_FAILURE = '@@auth/GET_USER_FAILURE';
 
 
-export const login = (username, password) => ({
+export const login = (username, password, token) => ({
   [RSAA]: {
     endpoint: '/api/v1/get_token/',
     method: 'POST',
@@ -37,7 +37,7 @@ export const login = (username, password) => ({
       username: username,
       password: password
     }),
-    headers: {'Content-Type': 'application/json'},
+    headers: {'Content-Type': 'application/json', 'X-CSRFToken': token},
     types: [
       LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
     ]

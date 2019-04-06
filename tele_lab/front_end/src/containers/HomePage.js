@@ -17,14 +17,6 @@ import * as reducers from "../reducers";
 
 
 class HomePage extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillMount() {
-    this.props.onSubmit(this.props.access_token)
-  }
-
   render() {
     if (this.props.is_admin !== undefined) {
       if (this.props.is_admin) {

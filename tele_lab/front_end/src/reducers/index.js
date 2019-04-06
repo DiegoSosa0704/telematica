@@ -4,7 +4,7 @@ import auth, * as fromAuth from './auth'
 
 export default combineReducers({
   auth: auth,
-  router: routerReducer
+  router: routerReducer,
 })
 
 export const isAuthenticated = state => fromAuth.isAuthenticated(state.auth);

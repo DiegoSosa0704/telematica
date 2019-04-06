@@ -20,6 +20,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rolepermissions.roles import assign_role
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from email_manager.service import EmailSender
 from utils import utils_token

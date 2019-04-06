@@ -18,6 +18,7 @@ class LoginBox extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputEmail = this.handleInputEmail.bind(this);
   }
 
   state = {
@@ -41,10 +42,17 @@ class LoginBox extends React.Component {
     });
   };
 
+  handleInputEmail = (event) => {
+    const target = event.target;
+    this.setState({
+      [target.name]: target.value + "@uptc.edu.co"
+    });
+    console.log({[target.name]: target.value + "@uptc.edu.co"})
+  };
+
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.password === this.state.password_2) {
-      //console.log(this.state)
       this.props.onSubmit(this.state);
     } else {
       console.log('Las contraseñas no coinciden')
@@ -136,10 +144,11 @@ class LoginBox extends React.Component {
                   <label>Correo eléctronico: </label>
                   <Form.Input
                     fluid
-                    type='email'
+                    type='text'
                     name='email'
                     onChange={this.handleInputChange}
                   />
+                  <span>@uptc.edu.co</span>
                 </Form.Field>
                 <Form.Field>
                   <label>Contraseña: </label>

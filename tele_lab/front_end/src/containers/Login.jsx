@@ -3,11 +3,12 @@ import {connect} from 'react-redux'
 import LoginForm from '../components/forms/LoginForm'
 import {isAuthenticated} from '../reducers'
 import {Redirect} from "react-router";
+import routes from '../routes'
 
 const Login = (props) => {
   if (props.isAuthenticated) {
     return (
-       <Redirect to="/dashboard"/>
+       <Redirect to={routes.home}/>
     )
   } else {
     return (
