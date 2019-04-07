@@ -99,3 +99,19 @@ class Maintenance(models.Model):
     state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_IN_MAINTENANCE, blank=False)
     maintenance = models.CharField(verbose_name='Mantenimiento', max_length=50, blank=False)
     recommendations = models.CharField(verbose_name='', max_length=50, blank=True)
+
+
+class Headquarters(models.Model):
+    name = models.CharField(verbose_name="Sede", max_length=255, blank=False)
+
+    def __str__(self):
+        return self.name
+
+
+class AcademicProgram(models.Model):
+    id_headquarters = models.ForeignKey(Headquarters, models.CASCADE, db_column='id_headquarters')
+    name = models.CharField(verbose_name="Nombre", max_length=255, blank=False)
+    code = models.IntegerField(verbose_name="Código", blank=False)
+
+    def __str__(self):
+        return str(self.code) + " -> " + self.name
