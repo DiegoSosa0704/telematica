@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux'
 import {routerReducer} from 'react-router-redux'
 import auth, * as fromAuth from './auth'
+import academicProgram from './academicProgram'
 
 export default combineReducers({
   auth: auth,
-  router: routerReducer,
+  academicProgram: academicProgram,
+  router: routerReducer
 })
 
 export const isAuthenticated = state => fromAuth.isAuthenticated(state.auth);

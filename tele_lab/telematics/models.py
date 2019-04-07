@@ -2,6 +2,22 @@ from django.db import models
 from users.models import User
 
 
+class Headquarters(models.Model):
+    name = models.CharField(verbose_name="Sede", max_length=255, blank=False)
+
+    def __str__(self):
+        return self.name
+
+
+class AcademicProgram(models.Model):
+    id_headquarters = models.ForeignKey(Headquarters, models.CASCADE, db_column='id_headquarters')
+    name = models.CharField(verbose_name="Nombre", max_length=255, blank=False)
+    code = models.IntegerField(verbose_name="Código", blank=False)
+
+    def __str__(self):
+        return str(self.code) + " -> " + self.name
+
+
 class Academic(models.Model):
     user = models.OneToOneField(
         User,
@@ -11,7 +27,7 @@ class Academic(models.Model):
     code = models.CharField(verbose_name='Código', max_length=25)
     first_name = models.CharField(verbose_name='Nombres', max_length=25)
     last_name = models.CharField(verbose_name='Apellidos', max_length=25)
-    academic_program = models.CharField(verbose_name='Programa académico', choices=[], default='NA', max_length=2)
+    id_academic_program = models.ForeignKey(AcademicProgram, models.CASCADE, db_column='id_academic_program')
 
 
 class Administrator(models.Model):
@@ -36,6 +52,9 @@ class Component(models.Model):
     description = models.CharField(verbose_name='Descripción', max_length=50)
     observations = models.CharField(verbose_name='Observaciones', max_length=50)
     level = models.CharField(verbose_name='Nivel', max_length=2, choices=[], default='')
+
+    def __str__(self):
+        return self.name
 
 
 class Loan(models.Model):
@@ -99,19 +118,3 @@ class Maintenance(models.Model):
     state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_IN_MAINTENANCE, blank=False)
     maintenance = models.CharField(verbose_name='Mantenimiento', max_length=50, blank=False)
     recommendations = models.CharField(verbose_name='', max_length=50, blank=True)
-
-
-class Headquarters(models.Model):
-    name = models.CharField(verbose_name="Sede", max_length=255, blank=False)
-
-    def __str__(self):
-        return self.name
-
-
-class AcademicProgram(models.Model):
-    id_headquarters = models.ForeignKey(Headquarters, models.CASCADE, db_column='id_headquarters')
-    name = models.CharField(verbose_name="Nombre", max_length=255, blank=False)
-    code = models.IntegerField(verbose_name="Código", blank=False)
-
-    def __str__(self):
-        return str(self.code) + " -> " + self.name

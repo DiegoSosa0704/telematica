@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
-import {Divider, Dropdown, Form, Grid, Header, Segment} from "semantic-ui-react";
+import {Divider, Dropdown, Form, Grid, Header, Input, Segment} from "semantic-ui-react";
 import StudentSearchEngine from "../../components/Admin/StudentSearch";
 
 const caseSensitiveSearch = (options, query) => {
@@ -37,7 +37,10 @@ class Loan extends Component {
             <Grid.Row>
               <Grid.Column>
                 <Form>
-                  <Form.Input as={StudentSearchEngine} placeholder='Código'/>
+                  <Form.Field>
+                    <label>Componentes</label>
+                    <Input as={StudentSearchEngine} placeholder='Código'/>
+                  </Form.Field>
                   <Divider horizontal>
                     <Header as='h4'>
                       Estudiante

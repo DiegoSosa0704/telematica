@@ -1,31 +1,40 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router'
 import {authErrors, isAuthenticated} from '../reducers'
 import SignUpForm from "../components/forms/SignUpForm";
+import {academicProgram} from "../actions";
 
-const Login = (props) => {
-  console.log(props.isAuthenticated);
-  if (props.isAuthenticated) {
-    console.log('entro');
-    return (
-      <Redirect to='/'/>
-    )
-  } else {
-    return (
-      <div className="login-page">
-        <SignUpForm {...props}/>
-      </div>
-    )
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.props.getAcademicPrograms();
   }
-};
+
+  render() {
+    if (this.props.isAuthenticated) {
+      return (
+        <Redirect to='/'/>
+      )
+    } else {
+      return (
+        <SignUpForm {...this.props}/>
+      )
+    }
+  }
+}
 
 
 const mapStateToProps = (state) => ({
   errors: authErrors(state),
-  isAuthenticated: isAuthenticated(state)
+  isAuthenticated: isAuthenticated(state),
+  academic_programs: state.academicProgram.academic_programs,
 });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  getAcademicPrograms: () => {
+    return dispatch(academicProgram.getAcademicPrograms())
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

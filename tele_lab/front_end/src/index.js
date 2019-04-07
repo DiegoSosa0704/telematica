@@ -7,8 +7,15 @@ import configureStore from './store'
 import {persistStore} from 'redux-persist'
 import {Router} from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css'
-import App from "./App";
 import {createBrowserHistory} from 'history'
+import {Route, Switch} from "react-router";
+import routes from "./routes";
+import Login from "./containers/Login";
+import SignUp from "./containers/SignUp";
+import VerifyEmail from "./containers/VerifyEmail";
+import MessageSignUp from "./containers/MessageSignUp";
+import HomePage from "./containers/Home";
+import PrivateRoute from "./containers/PrivateRouter";
 
 const history = createBrowserHistory();
 const store = configureStore(history);
@@ -18,7 +25,13 @@ ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
       <Router history={history}>
-        <App/>
+        <Switch>
+          <Route exact path={routes.login} component={Login}/>
+          <Route exact path={routes.signup} component={SignUp}/>
+          <Route path={routes.verify_email} component={VerifyEmail}/>
+          <Route path="/signup/message/" component={MessageSignUp}/>
+          <PrivateRoute path={routes.home} component={HomePage}/>
+        </Switch>
       </Router>
     </PersistGate>
   </Provider>

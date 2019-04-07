@@ -25,6 +25,8 @@ export const GET_USER_REQUEST = '@@auth/GET_USER_REQUEST';
 export const GET_USER_SUCCESS = '@@auth/GET_USER_SUCCESS';
 export const GET_USER_FAILURE = '@@auth/GET_USER_FAILURE';
 
+
+
 const client_id = "ZV4Bc3z42fMnwsWOtsR1PQ3YYOhtFojtEUDbtg2e";
 const client_secret = "gsS1jWSPuB4IennQwcsYZvf4M7RUvetCnsKYHPEBoShNFKS1ljr6djKJ6Nmeccxs9kHDK0RnwNjJfkG9sJoyDr4clLpdI2Jz6UqQbRb4XH1GdL54iMhO4za1gKkWjKM1";
 
@@ -109,13 +111,3 @@ export const is_admin = (token) => ({
 });
 
 
-export const getUserData = (token) => ({
-  [RSAA]: {
-    endpoint: `/api/v1/get_user_data/${token}`,
-    method: 'GET',
-    headers: withAuth({'Content-Type': 'application/json'}),
-    types: [
-      GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE
-    ]
-  }
-});

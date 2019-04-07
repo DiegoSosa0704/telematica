@@ -9,9 +9,6 @@ const typeUser = [
   {key: 'DO', text: 'Docente', value: 'DO'},
 ];
 
-const academicPrograms = [
-  {key: '78', text: 'Ing Sistemas y Computación', value: '78'},
-];
 
 class LoginBox extends React.Component {
   constructor(props) {
@@ -20,6 +17,21 @@ class LoginBox extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputEmail = this.handleInputEmail.bind(this);
   }
+
+  getDataAcademicPrograms = () => {
+    let listAcademicPrograms = [];
+    let listData = this.props.academic_programs;
+    if (listData) {
+      listData.forEach(function (element) {
+        listAcademicPrograms.push({
+          key: element.code,
+          text: element.name,
+          value: element.code
+        });
+      })
+    }
+    return listAcademicPrograms
+  };
 
   state = {
     first_name: '',
@@ -64,7 +76,6 @@ class LoginBox extends React.Component {
   render() {
     if (this.props.signup) {
       return <Redirect to="/signup/message/"/>
-
     }
     return (
       <div className='login-form'>
@@ -90,7 +101,7 @@ class LoginBox extends React.Component {
               <Segment stacked textAlign='left'>
                 <Form.Group widths='equal'>
                   <Form.Field>
-                    <label>Nombre: </label>
+                    <label>Nombres: </label>
                     <Form.Input
                       fluid
                       type='text'
@@ -99,7 +110,7 @@ class LoginBox extends React.Component {
                     />
                   </Form.Field>
                   <Form.Field>
-                    <label>Apellido: </label>
+                    <label>Apellidos: </label>
                     <Form.Input
                       fluid
                       type='text'
@@ -112,7 +123,7 @@ class LoginBox extends React.Component {
                   <Form.Field
                     control={Select}
                     options={typeUser}
-                    label={{children: 'Tipo', htmlFor: 'form-select-control-type'}}
+                    label={{children: 'Ocupación', htmlFor: 'form-select-control-type'}}
                     search
                     searchInput={{id: 'form-select-control-gender-type'}}
                     name='type'
@@ -130,7 +141,7 @@ class LoginBox extends React.Component {
                 </Form.Group>
                 <Form.Field
                   control={Select}
-                  options={academicPrograms}
+                  options={this.getDataAcademicPrograms()}
                   label={{
                     children: 'Programa Académico',
                     htmlFor: 'form-select-control-academic-program'
