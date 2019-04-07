@@ -71,8 +71,8 @@ class UserRegisterDRF(viewsets.ModelViewSet, CsrfExemptMixin, OAuthLibMixin):
             try:
                 try:
                     user = serializer.save()
-                except Exception:
-                    return Response({"detail": "Error to save user"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+                except Exception as e:
+                    return Response({"detail": e.args}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
                 # url, headers, body, token_status = self.create_token_response(request)
                 assign_role(user, 'academic')
                 token = utils_token.generate_email_token(user.id)

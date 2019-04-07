@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     code = serializers.CharField(max_length=25, required=True)
     first_name = serializers.CharField(max_length=25)
     last_name = serializers.CharField(max_length=25)
-    academic_program = serializers.CharField(max_length=2)
+    id_academic_program = serializers.IntegerField()
 
     class Meta:
         model = User
@@ -21,13 +21,14 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create(email=validated_data.get('email'), password=validated_data.get('password'))
         user.set_password(validated_data['password'])
+        academic_program = telematics_models.AcademicProgram.objects.get(id=validated_data.get('id_academic_program'))
         academic = telematics_models.Academic.objects.create(
             user=user,
             first_name=validated_data.get('first_name'),
             last_name=validated_data.get('last_name'),
             code=validated_data.get('code'),
             type=validated_data.get('type'),
-            academic_program=validated_data.get('id_academic_program'),
+            id_academic_program=academic_program,
         )
         user.save()
         academic.save()

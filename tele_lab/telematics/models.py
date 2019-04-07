@@ -19,11 +19,17 @@ class AcademicProgram(models.Model):
 
 
 class Academic(models.Model):
+    STUDENT = 'ES'
+    TEACHER = 'TE'
+    TYPE_USER_CHOICES = (
+        (STUDENT, 'Estudiante'),
+        (TEACHER, 'Docente'),
+    )
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE
     )
-    type = models.CharField(verbose_name='Tipo de usuario', choices=[], default='NA', max_length=2)
+    type = models.CharField(verbose_name='Tipo de usuario', choices=TYPE_USER_CHOICES, default=STUDENT, max_length=2)
     code = models.CharField(verbose_name='Código', max_length=25)
     first_name = models.CharField(verbose_name='Nombres', max_length=25)
     last_name = models.CharField(verbose_name='Apellidos', max_length=25)

@@ -6,7 +6,7 @@ import {auth} from '../../actions'
 
 const typeUser = [
   {key: 'ES', text: 'Estudiante', value: 'ES'},
-  {key: 'DO', text: 'Docente', value: 'DO'},
+  {key: 'TE', text: 'Docente', value: 'TE'},
 ];
 
 
@@ -18,21 +18,6 @@ class LoginBox extends React.Component {
     this.handleInputEmail = this.handleInputEmail.bind(this);
   }
 
-  getDataAcademicPrograms = () => {
-    let listAcademicPrograms = [];
-    let listData = this.props.academic_programs;
-    if (listData) {
-      listData.forEach(function (element) {
-        listAcademicPrograms.push({
-          key: element.code,
-          text: element.name,
-          value: element.code
-        });
-      })
-    }
-    return listAcademicPrograms
-  };
-
   state = {
     first_name: '',
     last_name: '',
@@ -42,6 +27,21 @@ class LoginBox extends React.Component {
     email: '',
     password: '',
     password_2: ''
+  };
+
+  getDataAcademicPrograms = () => {
+    let listAcademicPrograms = [];
+    let listData = this.props.academic_programs;
+    if (listData) {
+      listData.forEach(function (element) {
+        listAcademicPrograms.push({
+          key: element.id,
+          text: element.name,
+          value: element.id
+        });
+      })
+    }
+    return listAcademicPrograms
   };
 
   handleInputChange = (event) => {
@@ -71,7 +71,7 @@ class LoginBox extends React.Component {
     }
   }
 
-  handleChange = (e, {name, value}) => this.setState({[name]: value})
+  handleChange = (e, {name, value}) => this.setState({[name]: value});
 
   render() {
     if (this.props.signup) {
@@ -199,7 +199,6 @@ class LoginBox extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isAuth: state.auth.isAuth,
     signup: state.auth.signup
   }
 };
