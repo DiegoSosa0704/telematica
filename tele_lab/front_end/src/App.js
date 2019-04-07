@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import 'semantic-ui-css/semantic.min.css'
-import HomePage from "./containers/HomePage";
 import {Route, Switch} from "react-router";
 import Login from "./containers/Login";
 import SignUp from "./containers/SignUp";
@@ -8,6 +7,7 @@ import VerifyEmail from "./containers/VerifyEmail";
 import MessageSignUp from "./containers/MessageSignUp";
 import PrivateRoute from "./containers/PrivateRouter";
 import routes from "./routes"
+import HomePage from "./containers/Home";
 
 
 class App extends Component {

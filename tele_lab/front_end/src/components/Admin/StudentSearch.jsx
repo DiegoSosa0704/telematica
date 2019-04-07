@@ -36,16 +36,13 @@ export default class StudentSearchEngine extends Component {
   render() {
     const {isLoading, value, results} = this.state;
     return (
-      <div>
-        <Search
-          loading={isLoading}
-          onResultSelect={this.handleResultSelect}
-          onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
-          results={results}
-          value={value}
-          {...this.props}
-        />
-      </div>
+      <Search
+        loading={isLoading}
+        onResultSelect={this.handleResultSelect}
+        onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
+        results={results}
+        value={value}
+      />
     )
   }
 }

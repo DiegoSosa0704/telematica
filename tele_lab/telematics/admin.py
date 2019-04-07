@@ -1,4 +1,6 @@
 from django.contrib import admin
-from .models import *
+from . import models
 
-admin.site.register(Academic)
+admin.site.register(models.Academic)
+admin.site.register(models.Administrator)
+admin.site.register(models.Component)

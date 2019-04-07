@@ -1,16 +1,14 @@
 import React, {Component} from 'react'
 import {Route, Switch} from "react-router-dom";
-import AdminMenu from "../components/AdminMenu";
-import NotFound from "../components/NotFound";
-import {Grid, Segment} from "semantic-ui-react";
-import Loan from '../containers/Loan'
+import {Grid} from "semantic-ui-react";
+import Loan from './Loan'
+import NotFound from "../NotFound";
 
 
 class AdminContainer extends Component {
   render() {
     return (
       <div>
-        <AdminMenu/>
         <div style={{
           marginLeft: '250px',
           minWidth: '300px',

@@ -135,7 +135,8 @@ REST_FRAMEWORK = {
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     )
 }
 
@@ -149,7 +150,7 @@ OAUTH2_PROVIDER = {
 AUTH_USER_MODEL = 'users.User'
 
 # Client ID - Oauth2 Toolkit configuration
-OAUTH2_CLIENT_ID = 'ukY88NOauQWUmInWyYKomkf60yEMTZ4UNOnueFdj'
+OAUTH2_CLIENT_ID = 'ZV4Bc3z42fMnwsWOtsR1PQ3YYOhtFojtEUDbtg2e'
 
 # Email settings
 EMAIL_USE_TLS = True

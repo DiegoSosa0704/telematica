@@ -25,14 +25,17 @@ export const GET_USER_REQUEST = '@@auth/GET_USER_REQUEST';
 export const GET_USER_SUCCESS = '@@auth/GET_USER_SUCCESS';
 export const GET_USER_FAILURE = '@@auth/GET_USER_FAILURE';
 
+const client_id = "ZV4Bc3z42fMnwsWOtsR1PQ3YYOhtFojtEUDbtg2e";
+const client_secret = "gsS1jWSPuB4IennQwcsYZvf4M7RUvetCnsKYHPEBoShNFKS1ljr6djKJ6Nmeccxs9kHDK0RnwNjJfkG9sJoyDr4clLpdI2Jz6UqQbRb4XH1GdL54iMhO4za1gKkWjKM1";
+
 
 export const login = (username, password, token) => ({
   [RSAA]: {
     endpoint: '/api/v1/get_token/',
     method: 'POST',
     body: JSON.stringify({
-      client_id: "ukY88NOauQWUmInWyYKomkf60yEMTZ4UNOnueFdj",
-      client_secret: "OsBhQxWZgZBuHrQa7lbpJ6XCPz83wdBRt7E6S8UGDM8t7UwTNSZA4bGPnLxKgUnGfh4ANjm2OhcBAzoOctAoJu0y1aczYg9rqxtgIym5NIRcr9yP6TAJGDJeu4TiNL6h",
+      client_id: client_id,
+      client_secret: client_secret,
       grant_type: "password",
       username: username,
       password: password
@@ -69,8 +72,8 @@ export const refreshAccessToken = (token) => ({
     endpoint: '/api/v1/get_token/',
     method: 'POST',
     body: JSON.stringify({
-      client_id: "ukY88NOauQWUmInWyYKomkf60yEMTZ4UNOnueFdj",
-      client_secret: "OsBhQxWZgZBuHrQa7lbpJ6XCPz83wdBRt7E6S8UGDM8t7UwTNSZA4bGPnLxKgUnGfh4ANjm2OhcBAzoOctAoJu0y1aczYg9rqxtgIym5NIRcr9yP6TAJGDJeu4TiNL6h",
+      client_id: client_id,
+      client_secret: client_secret,
       grant_type: "refresh_token",
       refresh_token: token,
     }),

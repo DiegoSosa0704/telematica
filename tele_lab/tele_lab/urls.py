@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('api/v1/', include('users.urls')),
+    path('api/v1/', include('telematics.urls')),
     # path('api/v1/', include('telematics.urls')),
     url(r'^', TemplateView.as_view(template_name="index.html")),
 ]

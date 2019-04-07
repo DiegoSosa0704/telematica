@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
-import StudentSearchEngine from '../components/StudentSearch'
 import {Divider, Dropdown, Form, Grid, Header, Segment} from "semantic-ui-react";
+import StudentSearchEngine from "../../components/Admin/StudentSearch";
 
 const caseSensitiveSearch = (options, query) => {
   const re = new RegExp(_.escapeRegExp(query));
@@ -80,7 +80,6 @@ class Loan extends Component {
             </Grid.Row>
           </Grid>
         </Segment>
-
       </div>
     );
   }

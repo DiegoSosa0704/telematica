@@ -22,37 +22,50 @@ class Administrator(models.Model):
     cc = models.CharField(verbose_name='Cédula de ciudadania', max_length=25)
     first_name = models.CharField(verbose_name='Nombres', max_length=25)
     last_name = models.CharField(verbose_name='Apellidos', max_length=25)
+    phone = models.CharField(verbose_name='Teléfono', max_length=25)
+    address = models.CharField(verbose_name='Dirección', max_length=25)
 
 
-class Inventory(models.Model):
-    name = models.CharField(verbose_name='', max_length=25)
-    serial = models.CharField(verbose_name='', max_length=25)
-    uptc_serial = models.CharField(verbose_name='', max_length=25)
-    state = models.CharField(verbose_name='', max_length=2, choices=[], default='')
-    type = models.CharField(verbose_name='', max_length=2, choices=[], default='')
-    location = models.CharField(verbose_name='', max_length=2, choices=[], default='')
-    description = models.CharField(verbose_name='', max_length=50)
-    observations = models.CharField(verbose_name='', max_length=50)
-    level = models.CharField(verbose_name='', max_length=2, choices=[], default='')
+class Component(models.Model):
+    name = models.CharField(verbose_name='Nombre', max_length=25)
+    serial = models.CharField(verbose_name='Serial', max_length=25)
+    uptc_serial = models.CharField(verbose_name='UPTC-Serial', max_length=25)
+    state = models.CharField(verbose_name='Estado', max_length=2, choices=[], default='')
+    type = models.CharField(verbose_name='Tipo', max_length=2, choices=[], default='')
+    location = models.CharField(verbose_name='Locación', max_length=2, choices=[], default='')
+    description = models.CharField(verbose_name='Descripción', max_length=50)
+    observations = models.CharField(verbose_name='Observaciones', max_length=50)
+    level = models.CharField(verbose_name='Nivel', max_length=2, choices=[], default='')
 
 
 class Loan(models.Model):
-    id_administrator = models.ForeignKey(Administrator, models.DO_NOTHING, db_column='id_administrator')
-    id_academic = models.ForeignKey(Academic, models.DO_NOTHING, db_column='id_academic')
-    id_inventory = models.ForeignKey(Inventory, models.DO_NOTHING, db_column='id_inventory')
-    start_date = models.DateField(verbose_name='Fecha de inicio')
-    delivery_date = models.DateField(verbose_name='Fecha de inicio')
-    state = models.CharField(verbose_name='', max_length=2, choices=[], default='')
+    STATUS_PENDING = 0
+    STATUS_FINALIZED = 1
+    STATUS_CHOICES = (
+        (STATUS_PENDING, 'pending'),
+        (STATUS_FINALIZED, 'finalized'),
+    )
+    id_administrator = models.ForeignKey(Administrator, models.CASCADE, db_column='id_administrator')
+    id_academic = models.ForeignKey(Academic, models.CASCADE, db_column='id_academic')
+    id_component = models.ForeignKey(Component, models.CASCADE, db_column='id_inventory')
+    date_start = models.DateField(verbose_name='Fecha de inicio', blank=False)
+    date_end = models.DateField(verbose_name='Fecha de finalización', blank=True)
+    state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_PENDING, blank=False)
 
 
 class Sanction(models.Model):
-    id_loan = models.ForeignKey(Loan, models.DO_NOTHING, db_column='id_loan')
-    state = models.DateField(verbose_name='Estado', choices=[], default='')
+    STATUS_SANCTIONED = 0
+    STATUS_FINALIZED = 1
+    STATUS_CHOICES = (
+        (STATUS_SANCTIONED, 'sanctioned'),
+        (STATUS_FINALIZED, 'finalized'),
+    )
+    id_loan = models.ForeignKey(Loan, models.CASCADE, db_column='id_loan')
+    state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_SANCTIONED, blank=False)
     observation = models.CharField(verbose_name='', max_length=50)
 
 
 class ComputerEquipment(models.Model):
-    id_inventory = models.ForeignKey(Inventory, models.DO_NOTHING, db_column='id_inventory')
     brand = models.CharField(verbose_name='', max_length=25)
     model = models.CharField(verbose_name='', max_length=25)
     room_id = models.IntegerField()
@@ -67,9 +80,22 @@ class ComputerEquipment(models.Model):
 
 
 class Maintenance(models.Model):
-    id_inventory = models.ForeignKey(Inventory, models.DO_NOTHING, db_column='id_inventory')
-    id_administrator = models.ForeignKey(Administrator, models.DO_NOTHING, db_column='id_administrator')
-    date = models.DateField(verbose_name='')
-    maintenance_type = models.CharField(verbose_name='', max_length=2, choices=[], default='')
-    maintenance = models.CharField(verbose_name='', max_length=50)
-    recommendations = models.CharField(verbose_name='', max_length=50)
+    STATUS_IN_MAINTENANCE = 0
+    STATUS_FINALIZED = 1
+    STATUS_CHOICES = (
+        (STATUS_IN_MAINTENANCE, 'in maintenance'),
+        (STATUS_FINALIZED, 'finalized'),
+    )
+    MAINTENANCE_PREVENTIVE = 0
+    MAINTENANCE_CORRECTIVE = 1
+    MAINTENANCE_TYPE = (
+        (MAINTENANCE_PREVENTIVE, 'preventive'),
+        (MAINTENANCE_CORRECTIVE, 'corrective')
+    )
+    id_administrator = models.ForeignKey(Administrator, models.CASCADE, db_column='id_administrator')
+    date_start = models.DateField(verbose_name='Fecha de inicio', blank=False)
+    date_end = models.DateField(verbose_name='Fecha de finalización', blank=True)
+    maintenance_type = models.SmallIntegerField(choices=MAINTENANCE_TYPE, default=MAINTENANCE_CORRECTIVE, blank=False)
+    state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_IN_MAINTENANCE, blank=False)
+    maintenance = models.CharField(verbose_name='Mantenimiento', max_length=50, blank=False)
+    recommendations = models.CharField(verbose_name='', max_length=50, blank=True)

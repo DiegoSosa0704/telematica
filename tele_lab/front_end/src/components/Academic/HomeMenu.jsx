@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {Container, Menu} from "semantic-ui-react";
 import {Link} from "react-router-dom";
-import * as reducers from "../reducers";
-import {auth} from "../actions";
+import * as reducers from "../../reducers";
+import {auth} from "../../actions";
 import {connect} from "react-redux";
 
 class HomeMenu extends Component {
