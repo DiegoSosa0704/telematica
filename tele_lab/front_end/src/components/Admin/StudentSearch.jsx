@@ -1,48 +1,75 @@
 import _ from 'lodash'
-import faker from 'faker'
 import React, {Component} from 'react'
 import {Search} from 'semantic-ui-react'
+import {loan} from "../../actions";
+import {connect} from "react-redux";
+import LoanTableUser from '../../components/Admin/LoanTableUser'
 
-const source = _.times(5, () => ({
-  title: faker.company.companyName(),
-  description: faker.company.catchPhrase(),
-}));
 
-export default class StudentSearchEngine extends Component {
+class StudentSearchEngine extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {isLoading: false, results: [], value: '', object: {}}
+  }
+
   componentWillMount() {
+    this.props.getUsers();
     this.resetComponent()
   }
 
-  resetComponent = () => this.setState({isLoading: false, results: [], value: ''});
+  resetComponent = () => this.setState({isLoading: false, results: [], value: '', object: {}});
 
-  handleResultSelect = (e, {result}) => this.setState({value: result.title});
+  handleResultSelect = (e, {result}) => {
+    console.log(result);
+    this.setState({object: result, value: result.code})
+  };
 
   handleSearchChange = (e, {value}) => {
     this.setState({isLoading: true, value});
 
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent();
-
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
-      const isMatch = result => re.test(result.title);
-
+      const isMatch = result => re.test(result.code);
       this.setState({
         isLoading: false,
-        results: _.filter(source, isMatch),
+        results: _.filter(this.props.listUsers, isMatch),
       })
     }, 300)
   };
 
   render() {
-    const {isLoading, value, results} = this.state;
+    let table;
+    if (this.state.object) {
+      table = <LoanTableUser dataUser={this.state.object}/>;
+    }
     return (
-      <Search
-        loading={isLoading}
-        onResultSelect={this.handleResultSelect}
-        onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
-        results={results}
-        value={value}
-      />
+      <div>
+        <Search
+          loading={this.state.isLoading}
+          onResultSelect={this.handleResultSelect}
+          onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
+          results={this.state.results}
+          value={this.state.value}
+        />
+        {table}
+      </div>
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    listUsers: state.loan.users
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getUsers: () => {
+      return dispatch(loan.getListUsers());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StudentSearchEngine)

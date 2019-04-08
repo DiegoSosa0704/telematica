@@ -1,17 +1,7 @@
-import _ from 'lodash'
 import React, {Component} from 'react'
-import {Divider, Dropdown, Form, Grid, Header, Input, Segment} from "semantic-ui-react";
-import StudentSearchEngine from "../../components/Admin/StudentSearch";
-
-const caseSensitiveSearch = (options, query) => {
-  const re = new RegExp(_.escapeRegExp(query));
-  return options.filter(opt => re.test(opt.text))
-};
-
-const options = [
-  {key: 'm', text: 'Male', value: 'male'},
-  {key: 'f', text: 'Female', value: 'female'},
-];
+import {Divider, Form, Grid, Header, Input, Segment} from "semantic-ui-react";
+import AcademicSearchEngine from "../../components/Admin/StudentSearch";
+import LoanTableUser from '../../components/Admin/LoanTableUser'
 
 const stateOptions = [
   {key: 'AL', value: 'AL', text: 'Router'},
@@ -19,12 +9,9 @@ const stateOptions = [
   {key: 'AR', value: 'AR', text: 'Arduino Uno'},
 ];
 
-
 class Loan extends Component {
   state = {searchQuery: ''};
-
   handleChange = (e, {searchQuery, value}) => this.setState({searchQuery, value});
-
   handleSearchChange = (e, {searchQuery}) => this.setState({searchQuery});
 
   render() {
@@ -33,34 +20,23 @@ class Loan extends Component {
       <div>
         <Header as='h1'>Prestamos</Header>
         <Segment raised>
-          <Grid padded columns='equal'>
-            <Grid.Row>
+          <Grid padded>
+            <Grid.Row columns={2}>
               <Grid.Column>
                 <Form>
-                  <Form.Field>
-                    <label>Componentes</label>
-                    <Input as={StudentSearchEngine} placeholder='Código'/>
-                  </Form.Field>
                   <Divider horizontal>
                     <Header as='h4'>
-                      Estudiante
+                      Usuairo
                     </Header>
                   </Divider>
-                  <Form.Group widths='equal'>
-                    <Form.Input fluid label='Nombres' placeholder='Nombres'/>
-                    <Form.Input fluid label='Apellidos' placeholder='Apellidos'/>
-                  </Form.Group>
                   <Form.Field>
-                    <label>Programa Académico</label>
-                    <Dropdown
-                      fluid
-                      options={options}
-                      placeholder={'Try to search for case or CASE'}
-                      search={caseSensitiveSearch}
-                      selection
-                    />
+                    <label>Usuario</label>
+                    <Input as={AcademicSearchEngine}/>
                   </Form.Field>
-                  <Form.Button>Submit</Form.Button>
+                </Form>
+              </Grid.Column>
+              <Grid.Column>
+                <Form>
                   <Divider horizontal>
                     <Header as='h4'>
                       Equipos
@@ -80,6 +56,9 @@ class Loan extends Component {
                   />
                 </Form>
               </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Form.Button>Submit</Form.Button>
             </Grid.Row>
           </Grid>
         </Segment>

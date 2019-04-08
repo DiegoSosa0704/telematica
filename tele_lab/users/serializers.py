@@ -4,10 +4,15 @@ from .models import User, PasswordRestore
 from telematics import models as telematics_models
 
 
+class UserDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email',)
+
+
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
     email = serializers.EmailField(validators=[UniqueValidator(queryset=User.objects.all())])
-
     type = serializers.CharField(max_length=2)
     code = serializers.CharField(max_length=25, required=True)
     first_name = serializers.CharField(max_length=25)
@@ -16,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'first_name', 'last_name', 'code', 'type', 'id_academic_program')
+        fields = ('email', 'password', 'last_name', 'first_name', 'code', 'type', 'id_academic_program')
 
     def create(self, validated_data):
         user = User.objects.create(email=validated_data.get('email'), password=validated_data.get('password'))
@@ -48,7 +53,6 @@ class AdminSerializer(serializers.ModelSerializer):
         fields = ('email', 'password', 'first_name', 'last_name', 'cc')
 
     def create(self, validated_data):
-        print(validated_data)
         user = User.objects.create(email=validated_data.get('email'), password=validated_data.get('password'),
                                    is_admin=True)
         user.set_password(validated_data['password'])

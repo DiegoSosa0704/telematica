@@ -20,12 +20,13 @@ from rest_framework import viewsets
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rolepermissions.roles import assign_role
-from django.views.decorators.csrf import ensure_csrf_cookie
 
 from email_manager.service import EmailSender
 from utils import utils_token
 from . import models, serializers
 from .models import User
+from telematics import models as models_telematics
+from telematics import serializers as serializers_telematics
 
 
 @api_view(['GET'])
@@ -224,3 +225,10 @@ class TokenView(OAuthLibMixin, View):
             body = {"error": "unverify email"}
             response = JsonResponse(body, status=status_rest.HTTP_401_UNAUTHORIZED)
             return response
+
+
+class UserView(viewsets.ViewSet):
+    def list(self, request, *args, **kwargs):
+        academic_user = models_telematics.Academic.objects.all()
+        serializer_academic = serializers_telematics.AcademicSerializer(academic_user, many=True)
+        return Response(serializer_academic.data, status.HTTP_200_OK)

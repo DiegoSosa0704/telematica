@@ -51,7 +51,7 @@ export const login = (username, password, token) => ({
 
 export const signUp = (states) => ({
   [RSAA]: {
-    endpoint: '/api/v1/user/create_user/',
+    endpoint: '/api/v1/user/registry/create_user/',
     method: 'POST',
     body: JSON.stringify({
       first_name: states.first_name,
@@ -88,7 +88,7 @@ export const refreshAccessToken = (token) => ({
 
 export const verifyEmail = (token) => ({
   [RSAA]: {
-    endpoint: '/api/v1/user/verify_email/',
+    endpoint: '/api/v1/user/registry/verify_email/',
     method: 'POST',
     body: JSON.stringify({token: token}),
     headers: {'Content-Type': 'application/json'},

@@ -2,10 +2,12 @@ import {combineReducers} from 'redux'
 import {routerReducer} from 'react-router-redux'
 import auth, * as fromAuth from './auth'
 import academicProgram from './academicProgram'
+import loan from './loan'
 
 export default combineReducers({
   auth: auth,
   academicProgram: academicProgram,
+  loan: loan,
   router: routerReducer
 })
 
