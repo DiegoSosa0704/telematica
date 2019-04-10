@@ -8,6 +8,9 @@ class Headquarters(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = 'Sedes'
+
 
 class AcademicProgram(models.Model):
     name = models.CharField(verbose_name="Nombre", max_length=255, blank=False, null=False)
@@ -16,6 +19,9 @@ class AcademicProgram(models.Model):
 
     def __str__(self):
         return str(self.code) + " -> " + self.name
+
+    class Meta:
+        verbose_name_plural = 'Programas Académicos'
 
 
 class Academic(models.Model):
@@ -34,6 +40,9 @@ class Academic(models.Model):
     academic_program = models.ForeignKey(AcademicProgram, models.CASCADE, blank=False, null=False,
                                          verbose_name='Programa Académico')
 
+    def __str__(self):
+        return self.last_name + " " + self.first_name
+
 
 class Administrator(models.Model):
     user = models.OneToOneField(
@@ -47,10 +56,13 @@ class Administrator(models.Model):
     phone = models.CharField(verbose_name='Teléfono', max_length=25, blank=True, null=True)
     address = models.CharField(verbose_name='Dirección', max_length=25, blank=True, null=True)
 
+    def __str__(self):
+        return self.last_name + " " + self.first_name
+
 
 class ComputerEquipment(models.Model):
     brand = models.CharField(verbose_name='Marca', max_length=25, blank=False, null=False)
-    model = models.CharField(verbose_name='Modelo', max_length=25, blank=False, null=False)
+    model_computer = models.CharField(verbose_name='Modelo', max_length=25, blank=False, null=False)
     room_id = models.IntegerField(verbose_name='ID', blank=False, null=False)
     ram_memory = models.IntegerField(verbose_name='Memoria RAM (GB)', blank=True, null=True)
     hdd = models.IntegerField(verbose_name='Memoria HDD (GB)', blank=True, null=True)
@@ -60,17 +72,35 @@ class ComputerEquipment(models.Model):
     optical_unit = models.BooleanField(verbose_name='Unidad Óptica', blank=True)
     briefcase = models.BooleanField(verbose_name='Maletín', blank=True)
 
+    def __str__(self):
+        return self.brand + " " + self.model_computer
+
+    class Meta:
+        verbose_name_plural = 'Computadores'
+
 
 class TypeComponent(models.Model):
     name = models.CharField(verbose_name='Nombre', max_length=25, blank=False, null=False)
     description = models.CharField(verbose_name='Nombre', max_length=255, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Tipos de componentes'
+
 
 class Warehouse(models.Model):
     name = models.CharField(verbose_name='Nombre', max_length=25, blank=False, null=False)
-    description = models.CharField(verbose_name='Nombre', max_length=255, blank=True, null=True)
+    description = models.CharField(verbose_name='Descripción', max_length=255, blank=True, null=True)
     headquarters = models.ForeignKey(Headquarters, on_delete=models.CASCADE, blank=False, null=False,
                                      verbose_name='Sede')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Bodegas'
 
 
 class Component(models.Model):
@@ -128,6 +158,9 @@ class Component(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = 'Componentes'
+
 
 class Loan(models.Model):
     STATUS_PENDING = 0
@@ -143,6 +176,9 @@ class Loan(models.Model):
                                       verbose_name='Administrador')
     academic = models.ForeignKey(Academic, models.CASCADE, blank=False, null=False, verbose_name='Usuario')
 
+    class Meta:
+        verbose_name_plural = 'Prestamos'
+
 
 class LoanComponent(models.Model):
     loan = models.ForeignKey(Loan, on_delete=models.CASCADE, verbose_name='Prestamo', blank=False, null=False)
@@ -151,6 +187,7 @@ class LoanComponent(models.Model):
 
     class Meta:
         unique_together = ('loan', 'component')
+        verbose_name_plural = 'Prestamos Componentes'
 
 
 class Sanction(models.Model):
@@ -165,6 +202,9 @@ class Sanction(models.Model):
     observation = models.CharField(verbose_name='Observación', max_length=50, blank=True, null=True)
     loan = models.ForeignKey(Loan, models.CASCADE, blank=False, null=False,
                              verbose_name='Prestamo')
+
+    class Meta:
+        verbose_name_plural = 'Sanciones'
 
 
 class Maintenance(models.Model):
@@ -192,9 +232,15 @@ class Maintenance(models.Model):
     administrator = models.ForeignKey(Administrator, models.CASCADE, blank=False,
                                       null=False, verbose_name='Administrador')
 
+    class Meta:
+        verbose_name_plural = 'Mantenimientos'
+
 
 class MaintenanceComponent(models.Model):
     maintenance = models.ForeignKey(Maintenance, on_delete=models.CASCADE, blank=False, null=False,
                                     verbose_name='Mantenimiento')
     component = models.ForeignKey(Component, on_delete=models.CASCADE, blank=False, null=False,
                                   verbose_name='Componente')
+
+    class Meta:
+        verbose_name_plural = 'Mantenimientos Componentes'
