@@ -36,7 +36,7 @@ class AcademicSerializer(serializers.ModelSerializer):
     },
     """
     user = user_serializers.UserDataSerializer(read_only=True)
-    id_academic_program = AcademicProgramSerializer(read_only=True)
+    academic_program = AcademicProgramSerializer(read_only=True)
 
     class Meta:
         model = Academic
@@ -45,7 +45,7 @@ class AcademicSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         response_dict = dict(
             email=instance.user.email,
-            academic_program=instance.id_academic_program.name,
+            academic_program=instance.academic_program.name,
             title=instance.last_name + " " + instance.first_name,
             description="Estudiante" if instance.type == "ES" else "Docente",
             code=instance.code

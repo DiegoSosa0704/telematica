@@ -5,7 +5,6 @@ import {connect} from "react-redux";
 import {auth} from "../actions";
 import * as reducers from "../reducers";
 import Loan from "./Admin/Loan";
-import AdminContainer from "./Admin/AdminContainer";
 import Schedule from "./Academic/Schedule";
 import Record from "./Academic/Record";
 import Recommended from "./Academic/Recommended";
@@ -46,7 +45,6 @@ class HomePage extends Component {
                 <Route exact path="/" component={Schedule}/>
                 <Route exact path="/record" component={Record}/>
                 <Route exact path="/recommended" component={Recommended}/>
-                <Route exact path="/admin/home" component={AdminContainer}/>
               </Switch>
             </Container>
             <HomeFooter/>

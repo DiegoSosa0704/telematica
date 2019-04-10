@@ -27,8 +27,8 @@ export const GET_USER_FAILURE = '@@auth/GET_USER_FAILURE';
 
 
 
-const client_id = "ZV4Bc3z42fMnwsWOtsR1PQ3YYOhtFojtEUDbtg2e";
-const client_secret = "gsS1jWSPuB4IennQwcsYZvf4M7RUvetCnsKYHPEBoShNFKS1ljr6djKJ6Nmeccxs9kHDK0RnwNjJfkG9sJoyDr4clLpdI2Jz6UqQbRb4XH1GdL54iMhO4za1gKkWjKM1";
+const client_id = "v9PKHSrXKtr5xW3cimh3DIn5IpNaB90Xpr0IfzvO";
+const client_secret = "n4jVyYiQz1QmR0xrhNxl8YfpzXq3siAQ0nq3ekl0XZKgRqM2VrCQxkUaL4kvHvcHURAD8mtLrGXVG44eoRmW0h5rL1r9zMSMaTXdDe91lch6WB91cZb7gtLwIQb5iZMI";
 
 
 export const login = (username, password, token) => ({

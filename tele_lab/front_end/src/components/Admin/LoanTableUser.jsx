@@ -9,7 +9,7 @@ class LoanTableUser extends Component {
   render() {
     return (
       <Segment>
-        <Table basic='very' celled collapsing>
+        <Table basic='very' celled collapsing unstackable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Usuario</Table.HeaderCell>

@@ -16,6 +16,7 @@ import VerifyEmail from "./containers/VerifyEmail";
 import MessageSignUp from "./containers/MessageSignUp";
 import HomePage from "./containers/Home";
 import PrivateRoute from "./containers/PrivateRouter";
+import './custom.css'
 
 const history = createBrowserHistory();
 const store = configureStore(history);
