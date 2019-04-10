@@ -27,7 +27,7 @@ class Academic(models.Model):
     )
     type = models.CharField(verbose_name='Tipo de usuario', choices=TYPE_USER_CHOICES, default=STUDENT, max_length=2,
                             blank=False, null=False)
-    code = models.CharField(verbose_name='Código', max_length=25, blank=False, null=False)
+    code = models.CharField(verbose_name='Código', max_length=25, unique=True, blank=False, null=False)
     first_name = models.CharField(verbose_name='Nombres', max_length=25, blank=False, null=False)
     last_name = models.CharField(verbose_name='Apellidos', max_length=25, blank=False, null=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=False, null=False, verbose_name='Usuario')
@@ -41,7 +41,7 @@ class Administrator(models.Model):
         on_delete=models.CASCADE, blank=False, null=False,
         verbose_name='Usuario'
     )
-    cc = models.CharField(verbose_name='Cédula de ciudadania', max_length=25, blank=False, null=False)
+    cc = models.CharField(verbose_name='Cédula de ciudadania', unique=True, max_length=25, blank=False, null=False)
     first_name = models.CharField(verbose_name='Nombres', max_length=25, blank=False, null=False)
     last_name = models.CharField(verbose_name='Apellidos', max_length=25, blank=False, null=False)
     phone = models.CharField(verbose_name='Teléfono', max_length=25, blank=True, null=True)

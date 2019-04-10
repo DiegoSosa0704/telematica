@@ -58,7 +58,7 @@ export const signUp = (states) => ({
       last_name: states.last_name,
       code: states.code,
       type: states.type,
-      id_academic_program: states.academic_program,
+      academic_program: states.academic_program,
       email: states.email,
       password: states.password,
     }),
