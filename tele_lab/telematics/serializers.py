@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Loan, Sanction, AcademicProgram, Academic
+from .models import Loan, Sanction, AcademicProgram, Academic, Component
 from users import serializers as user_serializers
 
 
@@ -51,3 +51,9 @@ class AcademicSerializer(serializers.ModelSerializer):
             code=instance.code
         )
         return response_dict
+
+
+class ComponentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Component
+        fields = '__all__'
