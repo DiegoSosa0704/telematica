@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {Header, Image, Segment, Table} from "semantic-ui-react";
+import {Header, Table} from "semantic-ui-react";
+import {connect} from "react-redux";
 
 class LoanTableUser extends Component {
   constructor(props) {
@@ -8,8 +9,8 @@ class LoanTableUser extends Component {
 
   render() {
     return (
-      <Segment>
-        <Table basic='very' celled collapsing unstackable>
+      <div>
+        <Table celled unstackable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Usuario</Table.HeaderCell>
@@ -22,19 +23,25 @@ class LoanTableUser extends Component {
               <Table.Cell>
                 <Header as='h4' image>
                   <Header.Content>
-                    {this.props.dataUser.title}
-                    <Header.Subheader>{this.props.dataUser.description}</Header.Subheader>
+                    {this.props.userLoan.title}
+                    <Header.Subheader>{this.props.userLoan.description}</Header.Subheader>
                   </Header.Content>
                 </Header>
               </Table.Cell>
-              <Table.Cell>{this.props.dataUser.code}</Table.Cell>
-              <Table.Cell>{this.props.dataUser.academic_program}</Table.Cell>
+              <Table.Cell>{this.props.userLoan.code}</Table.Cell>
+              <Table.Cell>{this.props.userLoan.academic_program}</Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>
-      </Segment>
+      </div>
     );
   }
 }
 
-export default LoanTableUser;
+const mapStateToProps = state => {
+  return {
+    userLoan: state.loan.userLoan,
+  }
+};
+
+export default connect(mapStateToProps, null)(LoanTableUser);

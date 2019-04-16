@@ -1,7 +1,8 @@
 import * as loan from '../actions/loan'
 
 const initialState = {
-  users: undefined
+  users: undefined,
+  userLoan: {}
 };
 
 export default (state = initialState, action) => {
@@ -9,9 +10,15 @@ export default (state = initialState, action) => {
     case loan.GET_USERS_REQUEST:
     case loan.GET_USERS_SUCCESS:
       return {
-        users: action.payload
+        ...state,
+        users: action.payload,
       };
     case loan.GET_USERS_FAILURE:
+    case loan.GET_USERS_LOAN:
+      return {
+        ...state,
+        userLoan: action.payload,
+      };
     default:
       return state
   }

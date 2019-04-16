@@ -8,7 +8,7 @@ const limitOptions = [
   {key: '3', value: '100', text: '100'},
 ];
 
-export const VehiclePageSizeSelect = (props) => (
+export const ComponentPageSizeSelect = (props) => (
   <React.Fragment>
     Records per page:
     {' '}
@@ -19,4 +19,4 @@ export const VehiclePageSizeSelect = (props) => (
       onChange={props.onChangeLimit}
     />
   </React.Fragment>
-)
+);

@@ -3,25 +3,27 @@ import React, {Component} from 'react'
 import {Search} from 'semantic-ui-react'
 import {loan} from "../../actions";
 import {connect} from "react-redux";
-import LoanTableUser from '../../components/Admin/LoanTableUser'
 
 
 class StudentSearchEngine extends Component {
   constructor(props) {
     super(props);
-    this.state = {isLoading: false, results: [], value: '', object: {}}
+    this.state = {isLoading: false, results: [], value: '', object: {}};
   }
 
   componentWillMount() {
+    this.resetComponent();
     this.props.getUsers();
-    this.resetComponent()
   }
 
-  resetComponent = () => this.setState({isLoading: false, results: [], value: '', object: {}});
+  resetComponent = () => {
+    this.setState({isLoading: false, results: [], value: '', object: {}});
+    this.props.getDataUser({});
+  };
 
   handleResultSelect = (e, {result}) => {
-    console.log(result);
-    this.setState({object: result, value: result.code})
+    this.setState({object: result, value: result.code});
+    this.props.getDataUser(result);
   };
 
   handleSearchChange = (e, {value}) => {
@@ -39,10 +41,6 @@ class StudentSearchEngine extends Component {
   };
 
   render() {
-    let table;
-    if (this.state.object) {
-      table = <LoanTableUser dataUser={this.state.object}/>;
-    }
     return (
       <div>
         <Search
@@ -52,7 +50,6 @@ class StudentSearchEngine extends Component {
           results={this.state.results}
           value={this.state.value}
         />
-        {table}
       </div>
     )
   }
@@ -68,6 +65,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getUsers: () => {
       return dispatch(loan.getListUsers());
+    },
+    getDataUser: (data) => {
+      return dispatch(loan.getDataUserLoan(data))
     }
   };
 };

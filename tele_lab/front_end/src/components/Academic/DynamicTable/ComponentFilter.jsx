@@ -4,7 +4,7 @@ import {Form, Popup} from 'semantic-ui-react';
 
 const regex = new RegExp("^[a-zA-Z0-9 ]+$");
 
-export class VehicleFilter extends React.Component {
+export class ComponentFilter extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -24,7 +24,7 @@ export class VehicleFilter extends React.Component {
   }
 
   render() {
-    const { filter } = this.state;
+    const {filter} = this.state;
     let popupMessage = '';
     if (!this.state.filterValid) {
       popupMessage = 'Invalid character.';
@@ -59,7 +59,7 @@ export class VehicleFilter extends React.Component {
   }
 }
 
-VehicleFilter.propTypes = {
+ComponentFilter.propTypes = {
   onSubmitFilter: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
   totalCount: PropTypes.number.isRequired,

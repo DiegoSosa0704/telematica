@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {Divider, Form, Grid, Header, Input, Rail, Segment, Sticky} from "semantic-ui-react";
+import {Button, Divider, Form, Grid, Header, Input, Rail, Segment, Sticky} from "semantic-ui-react";
 import AcademicSearchEngine from "../../components/Admin/StudentSearch";
-import Vehicle from '../../Vehicle/VehicleList'
+import ComponentList from "../../components/Academic/DynamicTable/ComponentList";
+import LoanSticky from "../../components/Admin/Loan/LoanSticky";
 
 class Loan extends Component {
   state = {searchQuery: '', context: null};
@@ -15,6 +16,7 @@ class Loan extends Component {
           <Grid.Column width={11}>
             <Segment raised>
               <Grid padded>
+
                 <Grid.Row>
                   <Grid.Column>
                     <Form>
@@ -30,6 +32,7 @@ class Loan extends Component {
                     </Form>
                   </Grid.Column>
                 </Grid.Row>
+
                 <Grid.Row>
                   <Grid.Column>
                     <Divider horizontal>
@@ -37,11 +40,14 @@ class Loan extends Component {
                         Equipos
                       </Header>
                     </Divider>
-                    <Vehicle/>
+                    <ComponentList/>
                   </Grid.Column>
                 </Grid.Row>
+
                 <Grid.Row>
-                  <Form.Button>Submit</Form.Button>
+                  <Button>
+                    Submit
+                  </Button>
                 </Grid.Row>
               </Grid>
             </Segment>
@@ -53,9 +59,7 @@ class Loan extends Component {
                       offset={50}
                       pushing
               >
-                <Segment raised>
-                  <Header as='h3'>Stuck Content</Header>
-                </Segment>
+                <LoanSticky/>
               </Sticky>
             </Rail>
           </Grid.Column>
