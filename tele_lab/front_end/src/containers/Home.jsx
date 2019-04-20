@@ -12,6 +12,7 @@ import AdminMenu from "../components/Admin/AdminMenu";
 import HomeMenu from "../components/Academic/HomeMenu";
 import HomeFooter from "../components/Academic/Footer";
 import NotFound from "./NotFound";
+import routes from '../routes'
 
 
 class HomePage extends Component {
@@ -28,8 +29,8 @@ class HomePage extends Component {
               <Grid padded>
                 <Grid.Column>
                   <Switch>
-                    <Route exact path="/admin/home" component={NotFound}/>
-                    <Route exact path="/admin/loans/" component={Loan}/>
+                    <Route exact path={routes.home} component={NotFound}/>
+                    <Route exact path={routes.admin_user.loans} component={Loan}/>
                   </Switch>
                 </Grid.Column>
               </Grid>
@@ -42,9 +43,9 @@ class HomePage extends Component {
             <HomeMenu/>
             <Container style={{minHeight: '80vh'}}>
               <Switch>
-                <Route exact path="/" component={Schedule}/>
-                <Route exact path="/record" component={Record}/>
-                <Route exact path="/recommended" component={Recommended}/>
+                <Route exact path={routes.home} component={Schedule}/>
+                <Route exact path={routes.education_user.record} component={Record}/>
+                <Route exact path={routes.education_user.recommended} component={Recommended}/>
               </Switch>
             </Container>
             <HomeFooter/>

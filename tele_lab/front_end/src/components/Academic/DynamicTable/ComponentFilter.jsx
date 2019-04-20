@@ -27,9 +27,9 @@ export class ComponentFilter extends React.Component {
     const {filter} = this.state;
     let popupMessage = '';
     if (!this.state.filterValid) {
-      popupMessage = 'Invalid character.';
+      popupMessage = 'Carácter no válido.';
     } else if (this.props.totalCount === 0) {
-      popupMessage = 'No results found.'
+      popupMessage = 'Sin resultados.'
     }
 
     return (
@@ -38,11 +38,11 @@ export class ComponentFilter extends React.Component {
           <Form.Field>
             <Popup
               trigger={<Form.Input
-                placeholder='Enter the filter.'
+                placeholder='Componente.'
                 name='filter'
                 value={filter}
                 error={!this.state.filterValid}
-                label='Filter'
+                label='Búsqueda'
                 onChange={this.handleOnChange}
                 icon='search'
                 loading={this.props.loading}

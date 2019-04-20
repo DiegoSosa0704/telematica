@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {Button, Divider, Form, Grid, Header, Input, Rail, Segment, Sticky} from "semantic-ui-react";
-import AcademicSearchEngine from "../../components/Admin/StudentSearch";
+import {Divider, Grid, Header, Input, Rail, Segment, Sticky} from "semantic-ui-react";
 import ComponentList from "../../components/Academic/DynamicTable/ComponentList";
 import LoanSticky from "../../components/Admin/Loan/LoanSticky";
+import LoanCalendar from "../../components/Admin/Loan/LoanCalendar";
 
 class Loan extends Component {
   state = {searchQuery: '', context: null};
@@ -11,52 +11,39 @@ class Loan extends Component {
   render() {
     return (
       <div ref={this.handleContextRef}>
-        <Header as='h1'>Prestamos</Header>
-        <Grid columns='equal'>
+        <Grid centered columns='equal'>
           <Grid.Column width={11}>
-            <Segment raised>
-              <Grid padded>
-
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form>
-                      <Divider horizontal>
-                        <Header as='h4'>
-                          Usuario
-                        </Header>
-                      </Divider>
-                      <Form.Field>
-                        <label>Usuario</label>
-                        <Input as={AcademicSearchEngine}/>
-                      </Form.Field>
-                    </Form>
-                  </Grid.Column>
+            <Header as='h2' attached='top'>
+              Componentes
+            </Header>
+            <Segment raised attached>
+{/*              <Header as='h3'>Selección de usuario</Header>
+              <Grid>
+                <Grid.Row centered>
+                  <Input as={AcademicSearchEngine}/>
                 </Grid.Row>
-
+              </Grid>
+              <Divider section/>*/}
+              {/*<Header as='h3'>Selección de componentes</Header>*/}
+              <Grid padded>
                 <Grid.Row>
                   <Grid.Column>
-                    <Divider horizontal>
-                      <Header as='h4'>
-                        Equipos
-                      </Header>
-                    </Divider>
                     <ComponentList/>
                   </Grid.Column>
                 </Grid.Row>
-
-                <Grid.Row>
-                  <Button>
-                    Submit
-                  </Button>
-                </Grid.Row>
               </Grid>
+             {/* <Divider section/>
+              <Header as='h3'>Duración del préstamo</Header>
+              <Grid>
+                <Grid.Row centered>
+                  <LoanCalendar/>
+                </Grid.Row>
+              </Grid>*/}
             </Segment>
           </Grid.Column>
           <Grid.Column>
             <Rail className='my_rail' position='right'>
               <Sticky context={this.state.context}
-                      bottomOffset={50}
-                      offset={50}
                       pushing
               >
                 <LoanSticky/>

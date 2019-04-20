@@ -52,8 +52,7 @@ export default (state = initialState, action) => {
           {'non_field_errors': action.payload.statusText},
       };
     case auth.LOGOUT_SUCCESSFUL:
-      return {};
-    case auth.VERIFY_EMAIL_REQUEST:
+      return initialState;
     case auth.VERIFY_EMAIL_SUCCESS:
       return {
         ...state
@@ -71,7 +70,6 @@ export default (state = initialState, action) => {
         is_admin: action.payload.is_admin
       };
     case auth.ROLE_USER_FAILURE:
-    case auth.GET_USER_REQUEST:
     case auth.GET_USER_SUCCESS:
     case auth.GET_USER_FAILURE:
     default:

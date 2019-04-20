@@ -1,7 +1,27 @@
+body {
+    background-color: ghostwhite;
+}
+
 .ui.right.rail {
     margin: 0 0 0 0;
     with: 100%;
     min-width: 95%;
     padding: 0 0 0 0;
     left: 0;
+}
+
+.ui.card.cardSticky {
+    width: 100%;
+    height: 95vh;
+    float: right;
+    top: 15px;
+}
+
+.ui.card.cardSticky .content.contentSticky {
+    max-height: 90%;
+}
+
+.ui.card.cardSticky .content .ui.list {
+    overflow: auto;
+    max-height: 50%;
 }

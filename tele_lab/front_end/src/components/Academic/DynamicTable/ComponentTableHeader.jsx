@@ -7,10 +7,10 @@ export function ComponentTableHeader(props) {
       <Table.Row>
         <Table.HeaderCell width={1} sorted={props.column === 'id' ? props.direction : null}
                           onClick={() => props.handleSort('id')}>
-          #
+          ID
         </Table.HeaderCell>
 
-        <Table.HeaderCell width={1} sorted={props.column === 'name' ? props.direction : null}
+        <Table.HeaderCell width={4} sorted={props.column === 'name' ? props.direction : null}
                           onClick={() => props.handleSort('name')}>
           Nombre
         </Table.HeaderCell>
@@ -25,14 +25,12 @@ export function ComponentTableHeader(props) {
           Serial UPTC
         </Table.HeaderCell>
 
-        <Table.HeaderCell width={1} sorted={props.column === 'state' ? props.direction : null}
-                          onClick={() => props.handleSort('state')}>
-          Estado
-        </Table.HeaderCell>
-
         <Table.HeaderCell width={1} sorted={props.column === 'status' ? props.direction : null}
                           onClick={() => props.handleSort('status')}>
           Estado
+        </Table.HeaderCell>
+
+        <Table.HeaderCell width={1}>
         </Table.HeaderCell>
       </Table.Row>
     </Table.Header>

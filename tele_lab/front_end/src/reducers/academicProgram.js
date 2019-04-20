@@ -6,7 +6,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case auth.GET_ACADEMIC_PROGRAMS_REQUEST:
     case auth.GET_ACADEMIC_PROGRAMS_SUCCESS:
       return {
         academic_programs: action.payload

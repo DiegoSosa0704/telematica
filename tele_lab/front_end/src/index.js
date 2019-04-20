@@ -19,7 +19,7 @@ import PrivateRoute from "./containers/PrivateRouter";
 import './custom.css'
 
 const history = createBrowserHistory();
-const store = configureStore(history);
+export const store = configureStore(history);
 const persistor = persistStore(store);
 
 ReactDOM.render(

@@ -6,6 +6,7 @@ from . import views
 router = DefaultRouter()
 router.register('loan', views.LoanView, base_name='loan')
 router.register('academic_program', views.AcademicProgramView, base_name='academic_program')
+router.register('components', views.ComponentView, base_name='components')
 
 urlpatterns = [
                   path('read_data/', views.read_data, name='read_data'),

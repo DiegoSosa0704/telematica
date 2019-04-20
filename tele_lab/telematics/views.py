@@ -30,8 +30,21 @@ class AcademicProgramView(viewsets.ViewSet):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
-@api_view(['GET'])
+class ComponentView(viewsets.ModelViewSet):
+    queryset = Component.objects.all()
+    serializer_class = ComponentSerializer
+
+
+@api_view(['POST', 'GET'])
 def search_components(request):
+    newListComponents = []
+    try:
+        if request.data['components']:
+            for component in request.data['components']:
+                newListComponents.append(component['id'])
+    except KeyError as e:
+        print(e.args)
+
     if 'q' in request.GET \
             and '_page' in request.GET \
             and '_sort' in request.GET \
@@ -48,11 +61,17 @@ def search_components(request):
             Q(name__icontains=q) |
             Q(serial__icontains=q) |
             Q(uptc_serial__icontains=q)
-        ).order_by(order_sort)
+        ).exclude(id__in=newListComponents).order_by(order_sort)
         paginator = Paginator(components, int(limit))
         components_paginate = paginator.get_page(page)
+        countComponents = components.count()
         serializer = ComponentSerializer(components_paginate, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"components": serializer.data, "totalCount": countComponents}, status=status.HTTP_200_OK)
+
+    """
+    else:
+        components = Component.objects.all().exclude(id__in=newListComponents).count()
+        return Response(components, status=status.HTTP_200_OK)
     elif 'q' in request.GET:
         q = request.GET.get('q')
         components = Component.objects.filter(
@@ -60,11 +79,6 @@ def search_components(request):
             Q(name__icontains=q) |
             Q(serial__icontains=q) |
             Q(uptc_serial__icontains=q)
-        ).order_by('id')
-        serializer = ComponentSerializer(components, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    else:
-        components = Component.objects.all().order_by('id')
-        serializer = ComponentSerializer(components, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
+        ).exclude(id__in=newListComponents).count()
+        return Response(components, status=status.HTTP_200_OK)
+    """

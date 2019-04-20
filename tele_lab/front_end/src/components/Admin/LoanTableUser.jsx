@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Header, Table} from "semantic-ui-react";
+import {Header, Item} from "semantic-ui-react";
 import {connect} from "react-redux";
 
 class LoanTableUser extends Component {
@@ -9,31 +9,19 @@ class LoanTableUser extends Component {
 
   render() {
     return (
-      <div>
-        <Table celled unstackable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Usuario</Table.HeaderCell>
-              <Table.HeaderCell>Código</Table.HeaderCell>
-              <Table.HeaderCell>Programa Académico</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell>
-                <Header as='h4' image>
-                  <Header.Content>
-                    {this.props.userLoan.title}
-                    <Header.Subheader>{this.props.userLoan.description}</Header.Subheader>
-                  </Header.Content>
-                </Header>
-              </Table.Cell>
-              <Table.Cell>{this.props.userLoan.code}</Table.Cell>
-              <Table.Cell>{this.props.userLoan.academic_program}</Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </div>
+        <Item>
+          <Item.Content>
+            <Header as='a' content={this.props.userLoan.title}/>
+            <Item.Meta>{this.props.userLoan.description}</Item.Meta>
+            <Item.Description>
+            </Item.Description>
+            <Item.Extra>
+              {this.props.userLoan.code}
+              <br/>
+              {this.props.userLoan.academic_program}
+            </Item.Extra>
+          </Item.Content>
+        </Item>
     );
   }
 }

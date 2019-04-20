@@ -1,12 +1,17 @@
 import React from 'react';
-import {Container, Divider, Segment} from 'semantic-ui-react';
+import {Container} from 'semantic-ui-react';
 
-import {ComponentTable} from './ComponentTable.jsx';
+import ComponentTable from './ComponentTable.jsx';
 import {ComponentFilter} from './ComponentFilter.jsx';
+import {connect} from "react-redux";
+import {loan} from "../../../actions";
+import {store} from "../../../index";
 
 const queryParams = ['_limit', '_order', '_sort', 'q', '_page'];
 
-export default class ComponentList extends React.Component {
+class ComponentList extends React.Component {
+  _isMounted = false;
+
   constructor() {
     super();
     this.state = {
@@ -14,7 +19,7 @@ export default class ComponentList extends React.Component {
       _sort: 'id',
       _page: 1,
       _order: null,
-      _limit: 10,
+      _limit: 5,
       q: '',
       totalCount: 0,
       loading: false,
@@ -25,6 +30,11 @@ export default class ComponentList extends React.Component {
     this.onChangePage = this.onChangePage.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.handleSort = this.handleSort.bind(this);
+    store.subscribe(() => {
+      if (this._isMounted) {
+        this.setState({totalCount: store.getState().loan.countComponents})
+      }
+    })
   }
 
   directionConverter(order) {
@@ -59,7 +69,12 @@ export default class ComponentList extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.loadData({});
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   onChangeLimit(event, data) {
@@ -124,40 +139,13 @@ export default class ComponentList extends React.Component {
       .map(k => esc(k) + '=' + esc(params[k]))
       .join('&');
 
-    // Make a request without limit first to get the total number of data.
-    let totalCountQuery = '';
-    if (params.q !== "") {
-      totalCountQuery = `q=${params.q}`;
-    }
-
-    fetch(`/api/v1/components/search?${totalCountQuery}`).then(response => {
-      if (response.ok) {
-        response.json().then(data => {
-          this.setState({totalCount: data.length});
-        })
-      } else {
-        response.json().then(error => {
-          console.log(`Failed to load data: ${error.message}`);
-        });
-      }
-      this.setState({loading: false});
-    });
-
-    fetch('/api/v1/components/search?' + query).then(response => {
-      if (response.ok) {
-        response.json().then(data => {
-          this.setState({vehicles: data});
-        })
-      } else {
-        response.json().then(error => {
-          console.log(`Failed to load data: ${error.message}`);
-        });
-      }
-      this.setState({loading: false});
-    })
+    this.props.saveLastQuery(query);
+    this.props.getListComponents(query, this.props.components);
+    this.setState({loading: false});
   }
 
   render() {
+
     return (
       <Container>
         <ComponentFilter
@@ -166,7 +154,6 @@ export default class ComponentList extends React.Component {
           onSubmitFilter={this.onSubmitFilter}
           loading={this.state.loading}
         />
-        <Divider/>
         <ComponentTable
           vehicles={this.state.vehicles}
           totalCount={this.state.totalCount}
@@ -184,3 +171,22 @@ export default class ComponentList extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    components: state.loan.components,
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getListComponents: (query, post) => {
+      return dispatch(loan.listComponents(query, post));
+    },
+    saveLastQuery: (query) => {
+      return dispatch(loan.lastQuery(query))
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ComponentList)

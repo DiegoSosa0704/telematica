@@ -4,7 +4,6 @@ import {Search} from 'semantic-ui-react'
 import {loan} from "../../actions";
 import {connect} from "react-redux";
 
-
 class StudentSearchEngine extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +17,6 @@ class StudentSearchEngine extends Component {
 
   resetComponent = () => {
     this.setState({isLoading: false, results: [], value: '', object: {}});
-    this.props.getDataUser({});
   };
 
   handleResultSelect = (e, {result}) => {
@@ -44,6 +42,7 @@ class StudentSearchEngine extends Component {
     return (
       <div>
         <Search
+          noResultsMessage="Sin resultados."
           loading={this.state.isLoading}
           onResultSelect={this.handleResultSelect}
           onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
@@ -57,7 +56,8 @@ class StudentSearchEngine extends Component {
 
 const mapStateToProps = state => {
   return {
-    listUsers: state.loan.users
+    listUsers: state.loan.users,
+    userLoan: state.loan.userLoan
   }
 };
 

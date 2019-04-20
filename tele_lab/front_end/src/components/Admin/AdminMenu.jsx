@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
-import {Dropdown, Icon, Image, Input, Menu} from "semantic-ui-react";
+import {Image, Menu} from "semantic-ui-react";
 import {Link} from "react-router-dom";
 import * as reducers from "../../reducers";
 import {auth} from "../../actions";
 import {connect} from "react-redux";
+import routes from '../../routes'
 
 class AdminMenu extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class AdminMenu extends Component {
             active={activeItem === 'loans'}
             onClick={this.handleItemClick}
             as={Link}
-            to='/admin/loans/'
+            to={routes.admin_user.loans}
           >
             Prestamos
           </Menu.Item>
@@ -73,7 +74,7 @@ class AdminMenu extends Component {
             active={activeItem === 'signup'}
             onClick={this.handleLogoutClick}
             as={Link}
-            to='/login/'
+            to={routes.login}
           >
             Cerrar Sesión
           </Menu.Item>
