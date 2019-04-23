@@ -13,9 +13,9 @@ class Loan extends Component {
         <Grid centered columns='equal'>
           <Grid.Column width={11}>
             <Header as='h2' attached='top'>
-              Componentes
+              Préstamos
             </Header>
-            <Segment raised attached>
+            <Segment raised>
               <Grid padded>
                 <Grid.Row>
                   <Grid.Column>

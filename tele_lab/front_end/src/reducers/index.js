@@ -3,11 +3,13 @@ import {routerReducer} from 'react-router-redux'
 import auth, * as fromAuth from './auth'
 import academicProgram from './academicProgram'
 import loan from './loan'
+import returnComponent from './returnComponent'
 
 export default combineReducers({
   auth: auth,
   academicProgram: academicProgram,
   loan: loan,
+  returnComponent: returnComponent,
   router: routerReducer
 })
 
