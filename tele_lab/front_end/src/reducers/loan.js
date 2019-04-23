@@ -54,6 +54,13 @@ export default (state = initialState, action) => {
       };
     case auth.LOGOUT_SUCCESSFUL:
       return initialState;
+    case loan.CREATE_LOAN_SUCCESS:
+      return {
+        ...state,
+        userLoan: {},
+        components: []
+      };
+    case loan.CREATE_LOAN_FAILURE:
     default:
       return state
   }

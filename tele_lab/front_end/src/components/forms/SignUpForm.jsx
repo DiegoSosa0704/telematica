@@ -98,7 +98,7 @@ class LoginBox extends React.Component {
               TaxDuitama
             </Header>
             <Form onSubmit={this.handleSubmit} size='large'>
-              <Segment stacked textAlign='left'>
+               <Segment stacked textAlign='left'>
                 <Form.Group widths='equal'>
                   <Form.Field>
                     <label>Nombres: </label>

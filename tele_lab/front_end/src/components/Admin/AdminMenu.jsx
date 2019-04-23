@@ -35,14 +35,28 @@ class AdminMenu extends Component {
           <Menu.Item>
             <Image src={'https://react.semantic-ui.com/logo.png'} size='tiny' centered/>
           </Menu.Item>
-          <Menu.Item
-            name='loans'
-            active={activeItem === 'loans'}
-            onClick={this.handleItemClick}
-            as={Link}
-            to={routes.admin_user.loans}
-          >
-            Prestamos
+          <Menu.Item>
+            Préstamos
+            <Menu.Menu>
+              <Menu.Item
+                name='loans'
+                active={activeItem === 'loans'}
+                onClick={this.handleItemClick}
+                as={Link}
+                to={routes.admin_user.loans}
+              >
+                Préstamos
+              </Menu.Item>
+              <Menu.Item
+                name='returns'
+                active={activeItem === 'returns'}
+                onClick={this.handleItemClick}
+                as={Link}
+                to={routes.admin_user.returns}
+              >
+                Devoluciones
+              </Menu.Item>
+            </Menu.Menu>
           </Menu.Item>
           <Menu.Item>
             Inventario

@@ -13,6 +13,7 @@ import HomeMenu from "../components/Academic/HomeMenu";
 import HomeFooter from "../components/Academic/Footer";
 import NotFound from "./NotFound";
 import routes from '../routes'
+import Return from './Admin/Return'
 
 
 class HomePage extends Component {
@@ -31,6 +32,7 @@ class HomePage extends Component {
                   <Switch>
                     <Route exact path={routes.home} component={NotFound}/>
                     <Route exact path={routes.admin_user.loans} component={Loan}/>
+                    <Route exact path={routes.admin_user.returns} component={Return}/>
                   </Switch>
                 </Grid.Column>
               </Grid>

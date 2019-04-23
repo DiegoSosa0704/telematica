@@ -166,12 +166,11 @@ class Loan(models.Model):
     STATUS_PENDING = 0
     STATUS_FINALIZED = 1
     STATUS_CHOICES = (
-        (STATUS_PENDING, 'pending'),
-        (STATUS_FINALIZED, 'finalized'),
+        (STATUS_PENDING, 'Pendiente'),
+        (STATUS_FINALIZED, 'Finalizado'),
     )
-    date_start = models.DateField(verbose_name='Fecha de inicio', blank=False)
-    date_end = models.DateField(verbose_name='Fecha de finalización', blank=True)
-    state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_PENDING, blank=False)
+    date_start = models.DateField(verbose_name='Fecha de inicio', blank=False, null=False)
+    state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_PENDING, blank=False, null=False)
     administrator = models.ForeignKey(Administrator, models.CASCADE, blank=False, null=False,
                                       verbose_name='Administrador')
     academic = models.ForeignKey(Academic, models.CASCADE, blank=False, null=False, verbose_name='Usuario')
@@ -181,12 +180,20 @@ class Loan(models.Model):
 
 
 class LoanComponent(models.Model):
-    loan = models.ForeignKey(Loan, on_delete=models.CASCADE, verbose_name='Prestamo', blank=False, null=False)
+    STATUS_PENDING = 0
+    STATUS_FINALIZED = 1
+    STATUS_CHOICES = (
+        (STATUS_PENDING, 'Pendiente'),
+        (STATUS_FINALIZED, 'Entregado'),
+    )
+    date_end = models.DateField(verbose_name='Fecha de finalización', blank=False, null=False)
+    state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_PENDING, blank=False, null=False)
+    loan = models.ForeignKey(Loan, on_delete=models.CASCADE, verbose_name='Prestamo', blank=False, null=False, )
     component = models.ForeignKey(Component, on_delete=models.CASCADE, verbose_name='Componente', blank=False,
                                   null=False)
 
     class Meta:
-        unique_together = ('loan', 'component')
+        unique_together = (("loan", "component"),)
         verbose_name_plural = 'Prestamos Componentes'
 
 
@@ -200,7 +207,7 @@ class Sanction(models.Model):
     state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_SANCTIONED, blank=False, null=False,
                                      verbose_name='Tipo de sanción')
     observation = models.CharField(verbose_name='Observación', max_length=50, blank=True, null=True)
-    loan = models.ForeignKey(Loan, models.CASCADE, blank=False, null=False,
+    loan = models.ForeignKey(LoanComponent, models.CASCADE, blank=False, null=False,
                              verbose_name='Prestamo')
 
     class Meta:

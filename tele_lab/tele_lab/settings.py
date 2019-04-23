@@ -150,7 +150,7 @@ OAUTH2_PROVIDER = {
 AUTH_USER_MODEL = 'users.User'
 
 # Client ID - Oauth2 Toolkit configuration
-OAUTH2_CLIENT_ID = 'v9PKHSrXKtr5xW3cimh3DIn5IpNaB90Xpr0IfzvO'
+OAUTH2_CLIENT_ID = 'JV3yHjpcCvGLj0rPKUmQ8d944f3czVgzg4UEoASk'
 
 # Email settings
 EMAIL_USE_TLS = True

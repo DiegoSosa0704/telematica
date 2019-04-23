@@ -16,6 +16,10 @@ export const COUNT_COMPONENTS_SUCCESS = '@@loan/COUNT_COMPONENTS_SUCCESS';
 export const COUNT_COMPONENTS_FAILURE = '@@loan/COUNT_COMPONENTS_FAILURE';
 export const SAVE_LAST_QUERY = '@@loan/SAVE_LAST_QUERY';
 
+export const CREATE_LOAN_REQUEST = '@@loan/CREATE_LOAN_REQUEST';
+export const CREATE_LOAN_SUCCESS = '@@loan/CREATE_LOAN_SUCCESS';
+export const CREATE_LOAN_FAILURE = '@@loan/CREATE_LOAN_FAILURE';
+
 
 export const getListUsers = () => ({
   [RSAA]: {
@@ -83,3 +87,18 @@ export const lastQuery = (query) => {
     payload: query
   }
 };
+
+export const createLoan = (components, user) => ({
+  [RSAA]: {
+    endpoint: '/api/v1/loan/create_loan/',
+    method: 'POST',
+    body: JSON.stringify({
+      components: components,
+      user: user
+    }),
+    headers: withAuth({'Content-Type': 'application/json'}),
+    types: [
+      CREATE_LOAN_REQUEST, CREATE_LOAN_SUCCESS, CREATE_LOAN_FAILURE
+    ]
+  }
+});

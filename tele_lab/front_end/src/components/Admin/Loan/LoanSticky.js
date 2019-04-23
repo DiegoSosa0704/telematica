@@ -1,14 +1,20 @@
 import React, {Component} from 'react'
-import {Button, Card, Divider, Grid, Header, Icon, Input, Label, List, Segment, Transition} from "semantic-ui-react";
+import {Button, Card, Divider, Grid, Header, Icon, Input, List, Transition} from "semantic-ui-react";
 import LoanTableUser from "../LoanTableUser";
 import {connect} from 'react-redux'
 import ListSticky from '../../Admin/Loan/ListSticky'
 import AcademicSearchEngine from "../../../components/Admin/StudentSearch";
+import {loan} from "../../../actions";
 
 
 class LoanSticky extends Component {
   constructor(props) {
     super(props);
+    this.handlerCreateLoan = this.handlerCreateLoan.bind(this)
+  }
+
+  handlerCreateLoan() {
+    this.props.createLoan(this.props.listComponents, this.props.user)
   }
 
   render() {
@@ -56,7 +62,7 @@ class LoanSticky extends Component {
         <Card.Content
           extra>
           <div className='ui two buttons'>
-            <Button color='green'>
+            <Button onClick={this.handlerCreateLoan} color='green'>
               Realizar préstamo
             </Button>
           </div>
@@ -68,8 +74,17 @@ class LoanSticky extends Component {
 
 const mapStateToProps = state => {
   return {
-    listComponents: state.loan.components
+    listComponents: state.loan.components,
+    user: state.loan.userLoan
   };
 };
 
-export default connect(mapStateToProps, null)(LoanSticky);
+const mapDispatchToProps = dispatch => {
+  return {
+    createLoan: (components, user) => {
+      return dispatch(loan.createLoan(components, user))
+    }
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoanSticky);

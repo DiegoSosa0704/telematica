@@ -4,27 +4,50 @@ import {loan} from "../../../actions";
 import {connect} from "react-redux";
 import {store} from "../../../index";
 
+const daysLevel = {
+  "L1": 2,
+  "L2": 4,
+  "L3": 6,
+  "L4": 8,
+  "L5": 10,
+};
+
 class ListSticky extends Component {
   constructor(props) {
     super(props);
-    this.handleRemoveItem = this.handleRemoveItem.bind(this)
+    this.handleRemoveItem = this.handleRemoveItem.bind(this);
   }
 
   handleRemoveItem() {
-    this.props.removeItem(this.props.component)
+    this.props.removeItem(this.props.component);
     this.props.getListComponents(store.getState().loan.lastQuery, store.getState().loan.components)
-
   }
 
   render() {
+    const dateEnd = () => {
+      let sumDays = 0;
+      let date = new Date(Date.now());
+      for (const prop in daysLevel) {
+        if (prop === this.props.component.level) {
+          sumDays = daysLevel[prop]
+        }
+      }
+      date.setDate(date.getDate() + sumDays);
+      return date.toLocaleDateString('es-CO')
+    };
+
     return (
       <React.Fragment>
         <List.Content floated='right'>
           <Button onClick={this.handleRemoveItem} size='mini' circular icon='close'/>
         </List.Content>
+        <List.Content floated='right'>
+          <List.Header>Fecha de entrega:</List.Header>
+          <List.Description>{dateEnd()}</List.Description>
+        </List.Content>
         <List.Content>
           <List.Header as='a'>{this.props.component.name}</List.Header>
-          <List.Description as='a'>{this.props.component.status}</List.Description>
+          <List.Description>{this.props.component.status}</List.Description>
         </List.Content>
       </React.Fragment>
     );

@@ -1,10 +1,13 @@
+from datetime import datetime
+
+from django.core.paginator import Paginator
+from django.db.models import Q
 from rest_framework import status, viewsets
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
-from django.db.models import Q
-from django.core.paginator import Paginator
 
-from .models import Loan, Sanction, AcademicProgram, Component
+from utils.utils_token import get_user_token
+from .models import Loan, Sanction, AcademicProgram, Component, LoanComponent, Administrator, Academic
 from .serializers import LoanSerializer, SanctionSerializer, AcademicProgramSerializer, ComponentSerializer
 
 
@@ -16,6 +19,47 @@ def read_data(request):
 class LoanView(viewsets.ModelViewSet):
     queryset = Loan.objects.all()
     serializer_class = LoanSerializer
+
+    @action(methods=['post'], detail=False)
+    def create_loan(self, request):
+        """
+        {
+            "components": [{},{}],
+            "user": {}
+        }
+        :param request:
+        :return:
+        """
+
+        user_admin = get_user_token(request.auth)
+        administrator = Administrator.objects.get(user=user_admin)
+        components = request.data['components']
+        user = request.data['user']
+        academic = Academic.objects.get(code=user.get('code'))
+        date_start = datetime.today().strftime('%Y-%m-%d')
+        date_end = datetime.today().strftime('%Y-%m-%d')
+
+        try:
+            # Crear préstamo
+            loan = Loan.objects.create(
+                date_start=date_start,
+                state=0,
+                academic=academic,
+                administrator=administrator
+            )
+            loan.save()
+        except Exception as e:
+            return Response({"details", e.args}, status.HTTP_404_NOT_FOUND)
+
+        # Crear préstamo componentes
+        for component in components:
+            LoanComponent.objects.create(
+                date_end=date_end,
+                state=0,
+                loan=loan,
+                component_id=component.get('id')
+            ).save()
+        return Response({"detail": "Loan created"}, status.HTTP_200_OK)
 
 
 class SanctionView(viewsets.ModelViewSet):
@@ -67,18 +111,3 @@ def search_components(request):
         countComponents = components.count()
         serializer = ComponentSerializer(components_paginate, many=True)
         return Response({"components": serializer.data, "totalCount": countComponents}, status=status.HTTP_200_OK)
-
-    """
-    else:
-        components = Component.objects.all().exclude(id__in=newListComponents).count()
-        return Response(components, status=status.HTTP_200_OK)
-    elif 'q' in request.GET:
-        q = request.GET.get('q')
-        components = Component.objects.filter(
-            Q(id__icontains=q) |
-            Q(name__icontains=q) |
-            Q(serial__icontains=q) |
-            Q(uptc_serial__icontains=q)
-        ).exclude(id__in=newListComponents).count()
-        return Response(components, status=status.HTTP_200_OK)
-    """

@@ -48,6 +48,8 @@ class StudentSearchEngine extends Component {
           onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
           results={this.state.results}
           value={this.state.value}
+          selectFirstResult
+          size='small'
         />
       </div>
     )

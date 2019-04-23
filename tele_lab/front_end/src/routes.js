@@ -11,6 +11,7 @@ export default {
   },
   admin_user: {
     loans: "/loans",
+    returns: "/returns",
     loanComponent: {
       user: "/loans/user",
       component: "/loans/component",
