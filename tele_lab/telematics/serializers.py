@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Loan, Sanction, AcademicProgram, Academic, Component
+from .models import Loan, Sanction, AcademicProgram, Academic, Component, LoanComponent
 from users import serializers as user_serializers
 
 
@@ -57,3 +57,12 @@ class ComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Component
         fields = '__all__'
+
+
+class LoanComponentSerializer(serializers.ModelSerializer):
+    component_object = ComponentSerializer(read_only=True, source='component')
+    loan_object = LoanSerializer(read_only=True, source='loan')
+
+    class Meta:
+        model = LoanComponent
+        fields = ('id', 'date_end', 'state', 'loan_object', 'component_object',)

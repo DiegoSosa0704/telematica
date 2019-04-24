@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Grid, Header, Icon, Label, Menu, Segment, Table} from "semantic-ui-react";
+import {Divider, Grid, Header, Icon, Label, List, Menu, Segment, Table} from "semantic-ui-react";
 import StudentSearchEngine from "../../components/Admin/StudentSearch";
 
 class ReturnComponents extends Component {
@@ -11,61 +11,66 @@ class ReturnComponents extends Component {
             Devoluciones
           </Header>
           <Segment raised>
-            <Grid padded>
+            <Grid padded relaxed='very' stackable>
               <Grid.Row>
                 <Grid.Column>
-                  <StudentSearchEngine/>
+{/*                  <StudentSearchEngine/>*/}
                 </Grid.Column>
               </Grid.Row>
-              <Grid.Row>
-
-                <Table celled>
-                  <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell>Header</Table.HeaderCell>
-                      <Table.HeaderCell>Header</Table.HeaderCell>
-                      <Table.HeaderCell>Header</Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Header>
-                  <Table.Body>
-                    <Table.Row>
-                      <Table.Cell>
-                        <Label ribbon>First</Label>
-                      </Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                      <Table.Cell>Cell</Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                      <Table.Cell>Cell</Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                    </Table.Row>
-                  </Table.Body>
-
-                  <Table.Footer>
-                    <Table.Row>
-                      <Table.HeaderCell colSpan='3'>
-                        <Menu floated='right' pagination>
-                          <Menu.Item as='a' icon>
-                            <Icon name='chevron left'/>
-                          </Menu.Item>
-                          <Menu.Item as='a'>1</Menu.Item>
-                          <Menu.Item as='a'>2</Menu.Item>
-                          <Menu.Item as='a'>3</Menu.Item>
-                          <Menu.Item as='a'>4</Menu.Item>
-                          <Menu.Item as='a' icon>
-                            <Icon name='chevron right'/>
-                          </Menu.Item>
-                        </Menu>
-                      </Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Footer>
-                </Table>
+              <Grid.Row columns={2}>
+                <Divider vertical/>
+                <Grid.Column>
+                  <Header as='h3'>Préstamos</Header>
+                  <List selection divided relaxed>
+                    <List.Item>
+                      <List.Icon name='github' size='large' verticalAlign='middle'/>
+                      <List.Content>
+                        <List.Header as='a'>Semantic-Org/Semantic-UI</List.Header>
+                        <List.Description as='a'>Updated 10 mins ago</List.Description>
+                      </List.Content>
+                    </List.Item>
+                    <List.Item>
+                      <List.Icon name='github' size='large' verticalAlign='middle'/>
+                      <List.Content>
+                        <List.Header as='a'>Semantic-Org/Semantic-UI-Docs</List.Header>
+                        <List.Description as='a'>Updated 22 mins ago</List.Description>
+                      </List.Content>
+                    </List.Item>
+                    <List.Item>
+                      <List.Icon name='github' size='large' verticalAlign='middle'/>
+                      <List.Content>
+                        <List.Header as='a'>Semantic-Org/Semantic-UI-Meteor</List.Header>
+                        <List.Description as='a'>Updated 34 mins ago</List.Description>
+                      </List.Content>
+                    </List.Item>
+                  </List>
+                </Grid.Column>
+                <Grid.Column>
+                  <Header as='h3'>Componentes</Header>
+                  <List selection divided relaxed>
+                    <List.Item>
+                      <List.Icon name='github' size='large' verticalAlign='middle'/>
+                      <List.Content>
+                        <List.Header as='a'>Semantic-Org/Semantic-UI</List.Header>
+                        <List.Description as='a'>Updated 10 mins ago</List.Description>
+                      </List.Content>
+                    </List.Item>
+                    <List.Item>
+                      <List.Icon name='github' size='large' verticalAlign='middle'/>
+                      <List.Content>
+                        <List.Header as='a'>Semantic-Org/Semantic-UI-Docs</List.Header>
+                        <List.Description as='a'>Updated 22 mins ago</List.Description>
+                      </List.Content>
+                    </List.Item>
+                    <List.Item>
+                      <List.Icon name='github' size='large' verticalAlign='middle'/>
+                      <List.Content>
+                        <List.Header as='a'>Semantic-Org/Semantic-UI-Meteor</List.Header>
+                        <List.Description as='a'>Updated 34 mins ago</List.Description>
+                      </List.Content>
+                    </List.Item>
+                  </List>
+                </Grid.Column>
               </Grid.Row>
             </Grid>
           </Segment>

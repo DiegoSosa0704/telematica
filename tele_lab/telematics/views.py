@@ -8,7 +8,8 @@ from rest_framework.response import Response
 
 from utils.utils_token import get_user_token
 from .models import Loan, Sanction, AcademicProgram, Component, LoanComponent, Administrator, Academic
-from .serializers import LoanSerializer, SanctionSerializer, AcademicProgramSerializer, ComponentSerializer
+from .serializers import LoanSerializer, SanctionSerializer, AcademicProgramSerializer, ComponentSerializer, \
+    LoanComponentSerializer
 
 
 @api_view(['GET'])
@@ -61,6 +62,12 @@ class LoanView(viewsets.ModelViewSet):
             ).save()
         return Response({"detail": "Loan created"}, status.HTTP_200_OK)
 
+    @action(methods=['get'], detail=False)
+    def get_pending_loan(self, request):
+        pending_loan = Loan.objects.filter(state=0).order_by('date_start')
+        serializer_loan = LoanSerializer(pending_loan, many=True)
+        return Response(serializer_loan.data, status.HTTP_200_OK)
+
 
 class SanctionView(viewsets.ModelViewSet):
     queryset = Sanction.objects.all()
@@ -111,3 +118,24 @@ def search_components(request):
         countComponents = components.count()
         serializer = ComponentSerializer(components_paginate, many=True)
         return Response({"components": serializer.data, "totalCount": countComponents}, status=status.HTTP_200_OK)
+
+
+"""
+Loan Components
+"""
+
+
+@api_view(['GET'])
+def get_components_pending_loan(request):
+    # components_loan = LoanComponent.objects.filter(state=0).order_by('state')
+    components_loan = LoanComponent.objects.all()
+    serializer_component_loan = LoanComponentSerializer(components_loan, many=True)
+    return Response(serializer_component_loan.data, status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_components(request):
+    # components_loan = LoanComponent.objects.filter(state=0).order_by('state')
+    components_loan = Component.objects.all()
+    serializer_component = ComponentSerializer(components_loan, many=True)
+    return Response(serializer_component.data, status.HTTP_200_OK)

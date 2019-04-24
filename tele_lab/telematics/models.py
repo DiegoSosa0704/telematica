@@ -190,7 +190,7 @@ class LoanComponent(models.Model):
     state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_PENDING, blank=False, null=False)
     loan = models.ForeignKey(Loan, on_delete=models.CASCADE, verbose_name='Prestamo', blank=False, null=False, )
     component = models.ForeignKey(Component, on_delete=models.CASCADE, verbose_name='Componente', blank=False,
-                                  null=False)
+                                  null=False, related_name='test')
 
     class Meta:
         unique_together = (("loan", "component"),)
