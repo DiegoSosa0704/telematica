@@ -9,7 +9,6 @@ router.register('academic_program', views.AcademicProgramView, base_name='academ
 router.register('components', views.ComponentView, base_name='components')
 
 urlpatterns = [
-                  path('read_data/', views.read_data, name='read_data'),
                   path('components/search', views.search_components, name='get_data_table'),
                   path('loan/pending/components', views.get_components_pending_loan,
                        name='get_components_pending_loan'),

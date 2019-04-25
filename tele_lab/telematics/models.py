@@ -31,7 +31,7 @@ class Academic(models.Model):
         (STUDENT, 'Estudiante'),
         (TEACHER, 'Docente'),
     )
-    type = models.CharField(verbose_name='Tipo de usuario', choices=TYPE_USER_CHOICES, default=STUDENT, max_length=2,
+    type = models.CharField(verbose_name='Tipo de usuario', choices=TYPE_USER_CHOICES, max_length=2,
                             blank=False, null=False)
     code = models.CharField(verbose_name='Código', max_length=25, unique=True, blank=False, null=False)
     first_name = models.CharField(verbose_name='Nombres', max_length=25, blank=False, null=False)
@@ -140,14 +140,12 @@ class Component(models.Model):
     name = models.CharField(verbose_name='Nombre', max_length=50, blank=False, null=False)
     serial = models.CharField(verbose_name='Serial', max_length=50, blank=True, null=True)
     uptc_serial = models.CharField(verbose_name='UPTC-Serial', max_length=25, blank=True, null=True)
-    state = models.CharField(verbose_name='Estado', max_length=2, choices=STATE_CHOICES, default=IN_SERVICE,
-                             blank=False, null=False)
-    status = models.CharField(verbose_name='Disponibilidad', max_length=2, choices=STATUS_CHOICES, default=AVAILABLE,
-                              blank=False, null=False)
+    state = models.CharField(verbose_name='Estado', max_length=2, choices=STATE_CHOICES, blank=False, null=False)
+    status = models.CharField(verbose_name='Disponibilidad', max_length=2, choices=STATUS_CHOICES, blank=False,
+                              null=False)
     description = models.CharField(verbose_name='Descripción', max_length=50, blank=True, null=True)
     observations = models.CharField(verbose_name='Observaciones', max_length=50, blank=True, null=True)
-    level = models.CharField(verbose_name='Nivel', max_length=2, choices=LEVEL_CHOICES, default=LEVEL_2, blank=False,
-                             null=False)
+    level = models.CharField(verbose_name='Nivel', max_length=2, choices=LEVEL_CHOICES, blank=False, null=False)
     type_component = models.ForeignKey(TypeComponent, on_delete=models.CASCADE, blank=False, null=False,
                                        verbose_name='Tipo de Componente')
     warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, blank=False, null=False,
@@ -170,7 +168,7 @@ class Loan(models.Model):
         (STATUS_FINALIZED, 'Finalizado'),
     )
     date_start = models.DateField(verbose_name='Fecha de inicio', blank=False, null=False)
-    state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_PENDING, blank=False, null=False)
+    state_loan = models.SmallIntegerField(choices=STATUS_CHOICES, blank=False, null=False)
     administrator = models.ForeignKey(Administrator, models.CASCADE, blank=False, null=False,
                                       verbose_name='Administrador')
     academic = models.ForeignKey(Academic, models.CASCADE, blank=False, null=False, verbose_name='Usuario')
@@ -187,7 +185,7 @@ class LoanComponent(models.Model):
         (STATUS_FINALIZED, 'Entregado'),
     )
     date_end = models.DateField(verbose_name='Fecha de finalización', blank=False, null=False)
-    state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_PENDING, blank=False, null=False)
+    state = models.SmallIntegerField(choices=STATUS_CHOICES, blank=False, null=False)
     loan = models.ForeignKey(Loan, on_delete=models.CASCADE, verbose_name='Prestamo', blank=False, null=False, )
     component = models.ForeignKey(Component, on_delete=models.CASCADE, verbose_name='Componente', blank=False,
                                   null=False, related_name='test')
@@ -204,7 +202,7 @@ class Sanction(models.Model):
         (STATUS_SANCTIONED, 'sanctioned'),
         (STATUS_FINALIZED, 'finalized'),
     )
-    state = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_SANCTIONED, blank=False, null=False,
+    state = models.SmallIntegerField(choices=STATUS_CHOICES, blank=False, null=False,
                                      verbose_name='Tipo de sanción')
     observation = models.CharField(verbose_name='Observación', max_length=50, blank=True, null=True)
     loan = models.ForeignKey(LoanComponent, models.CASCADE, blank=False, null=False,
@@ -230,10 +228,8 @@ class Maintenance(models.Model):
     date_start = models.DateField(verbose_name='Fecha de inicio', blank=False, null=False)
     date_end = models.DateField(verbose_name='Fecha de finalización', blank=True, null=False)
     maintenance_type = models.SmallIntegerField(verbose_name='Tipo de mantenimiento', choices=MAINTENANCE_TYPE,
-                                                default=MAINTENANCE_CORRECTIVE, blank=False,
-                                                null=False)
-    state = models.SmallIntegerField(verbose_name='Estado', choices=STATUS_CHOICES, default=STATUS_IN_MAINTENANCE,
-                                     blank=False, null=False)
+                                                blank=False, null=False)
+    state = models.SmallIntegerField(verbose_name='Estado', choices=STATUS_CHOICES, blank=False, null=False)
     maintenance = models.CharField(verbose_name='Mantenimiento', max_length=50, blank=False, null=False)
     recommendations = models.CharField(verbose_name='Recomendaciones', max_length=50, blank=True, null=True)
     administrator = models.ForeignKey(Administrator, models.CASCADE, blank=False,

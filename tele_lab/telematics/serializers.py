@@ -3,12 +3,6 @@ from .models import Loan, Sanction, AcademicProgram, Academic, Component, LoanCo
 from users import serializers as user_serializers
 
 
-class LoanSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Loan
-        fields = '__all__'
-
-
 class SanctionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sanction
@@ -53,12 +47,81 @@ class AcademicSerializer(serializers.ModelSerializer):
         return response_dict
 
 
+class LoanComponentSerializer(serializers.Serializer):
+    # Loan
+    date_start = serializers.DateTimeField(required=True)
+    state_loan = serializers.IntegerField(required=True)
+    academic = serializers.IntegerField(required=True)
+    administrator = serializers.IntegerField(required=True)
+    # Loan Component
+    date_end = serializers.DateTimeField(required=True)
+    state_loan_component = serializers.IntegerField(required=True)
+    loan = serializers.IntegerField(required=True)
+    component = serializers.IntegerField(required=True)
+
+    def create(self, validated_data):
+        loan = Loan.objects.create(
+            date_start=validated_data.get('date_start'),
+            state=validated_data.get('state_loan'),
+            academic=validated_data.get('academic'),
+            administrator=validated_data.get('administrator'),
+        ).save()
+        LoanComponent.objects.create(
+            date_end=validated_data.get('date_end'),
+            state=validated_data.get('state_loan_component'),
+            loan=loan,
+            component=validated_data.get('component_id'),
+        ).save()
+
+
 class ComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Component
         fields = '__all__'
 
 
+class LoanComponentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LoanComponent
+        fields = '__all__'
+
+
+class LoanSerializer(serializers.ModelSerializer):
+    components = serializers.ListField(required=True)
+    date_end = serializers.DateField(required=True)
+    state_loan_component = serializers.IntegerField(required=True)
+
+    class Meta:
+        model = Loan
+        fields = (
+            'date_start',
+            'state_loan',
+            'academic',
+            'administrator',
+            'state_loan_component',
+            'components',
+            'date_end',
+        )
+
+    def create(self, validated_data):
+        components_data = validated_data.pop('components')
+        loan = Loan.objects.create(
+            date_start=validated_data.get('date_start'),
+            state_loan=validated_data.get('state_loan'),
+            academic=validated_data.get('academic'),
+            administrator=validated_data.get('administrator'),
+        )
+        for component in components_data:
+            LoanComponent.objects.create(
+                date_end=validated_data.get('date_end'),
+                state=validated_data.get('state_loan_component'),
+                component_id=component,
+                loan=loan,
+            )
+        return loan
+
+
+"""
 class LoanComponentSerializer(serializers.ModelSerializer):
     component_object = ComponentSerializer(read_only=True, source='component')
     loan_object = LoanSerializer(read_only=True, source='loan')
@@ -66,3 +129,4 @@ class LoanComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoanComponent
         fields = ('id', 'date_end', 'state', 'loan_object', 'component_object',)
+"""

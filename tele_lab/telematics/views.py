@@ -2,6 +2,8 @@ from datetime import datetime
 
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status, viewsets
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
@@ -9,12 +11,7 @@ from rest_framework.response import Response
 from utils.utils_token import get_user_token
 from .models import Loan, Sanction, AcademicProgram, Component, LoanComponent, Administrator, Academic
 from .serializers import LoanSerializer, SanctionSerializer, AcademicProgramSerializer, ComponentSerializer, \
-    LoanComponentSerializer
-
-
-@api_view(['GET'])
-def read_data(request):
-    return Response({'detail': 'keyword search completed'}, status.HTTP_200_OK)
+    LoanComponentSerializer, LoanComponentsSerializer
 
 
 class LoanView(viewsets.ModelViewSet):
@@ -31,7 +28,7 @@ class LoanView(viewsets.ModelViewSet):
         :param request:
         :return:
         """
-
+        """
         user_admin = get_user_token(request.auth)
         administrator = Administrator.objects.get(user=user_admin)
         components = request.data['components']
@@ -61,6 +58,18 @@ class LoanView(viewsets.ModelViewSet):
                 component_id=component.get('id')
             ).save()
         return Response({"detail": "Loan created"}, status.HTTP_200_OK)
+        """
+        """
+        serializer = LoanComponentSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        """
+        request_data = request.data
+        print(request_data)
+        loan_serializer = LoanSerializer(data=request_data)
+        if loan_serializer.is_valid(raise_exception=True):
+            loan_serializer.save()
+        return Response({'detail': 'good'}, status.HTTP_201_CREATED)
 
     @action(methods=['get'], detail=False)
     def get_pending_loan(self, request):
@@ -120,14 +129,8 @@ def search_components(request):
         return Response({"components": serializer.data, "totalCount": countComponents}, status=status.HTTP_200_OK)
 
 
-"""
-Loan Components
-"""
-
-
 @api_view(['GET'])
 def get_components_pending_loan(request):
-    # components_loan = LoanComponent.objects.filter(state=0).order_by('state')
     components_loan = LoanComponent.objects.all()
     serializer_component_loan = LoanComponentSerializer(components_loan, many=True)
     return Response(serializer_component_loan.data, status.HTTP_200_OK)
@@ -135,7 +138,6 @@ def get_components_pending_loan(request):
 
 @api_view(['GET'])
 def get_components(request):
-    # components_loan = LoanComponent.objects.filter(state=0).order_by('state')
     components_loan = Component.objects.all()
     serializer_component = ComponentSerializer(components_loan, many=True)
     return Response(serializer_component.data, status.HTTP_200_OK)
