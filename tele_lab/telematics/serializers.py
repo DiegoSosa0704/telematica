@@ -86,7 +86,14 @@ class LoanComponentsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class AcademicsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Academic
+        fields = '__all__'
+
+
 class LoanSerializer(serializers.ModelSerializer):
+    academic_object = AcademicsSerializer(read_only=True, source='academic')
     components = serializers.ListField(required=True)
     date_end = serializers.DateField(required=True)
     state_loan_component = serializers.IntegerField(required=True)
@@ -96,11 +103,11 @@ class LoanSerializer(serializers.ModelSerializer):
         fields = (
             'date_start',
             'state_loan',
-            'academic',
             'administrator',
             'state_loan_component',
             'components',
             'date_end',
+            'academic_object',
         )
 
     def create(self, validated_data):
@@ -119,6 +126,16 @@ class LoanSerializer(serializers.ModelSerializer):
                 loan=loan,
             )
         return loan
+
+    def to_representation(self, instance):
+        response_dict = dict(
+            date_start=instance.date_start,
+            state_loan=instance.state_loan,
+            administrator=instance.administrator.id,
+            academic=instance.academic.id,
+            academic_object=instance.academic_object
+        )
+        return response_dict
 
 
 """

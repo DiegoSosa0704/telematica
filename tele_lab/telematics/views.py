@@ -28,52 +28,14 @@ class LoanView(viewsets.ModelViewSet):
         :param request:
         :return:
         """
-        """
-        user_admin = get_user_token(request.auth)
-        administrator = Administrator.objects.get(user=user_admin)
-        components = request.data['components']
-        user = request.data['user']
-        academic = Academic.objects.get(code=user.get('code'))
-        date_start = datetime.today().strftime('%Y-%m-%d')
-        date_end = datetime.today().strftime('%Y-%m-%d')
-
-        try:
-            # Crear préstamo
-            loan = Loan.objects.create(
-                date_start=date_start,
-                state=0,
-                academic=academic,
-                administrator=administrator
-            )
-            loan.save()
-        except Exception as e:
-            return Response({"details", e.args}, status.HTTP_404_NOT_FOUND)
-
-        # Crear préstamo componentes
-        for component in components:
-            LoanComponent.objects.create(
-                date_end=date_end,
-                state=0,
-                loan=loan,
-                component_id=component.get('id')
-            ).save()
-        return Response({"detail": "Loan created"}, status.HTTP_200_OK)
-        """
-        """
-        serializer = LoanComponentSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-        """
-        request_data = request.data
-        print(request_data)
-        loan_serializer = LoanSerializer(data=request_data)
+        loan_serializer = LoanSerializer(data=request.data)
         if loan_serializer.is_valid(raise_exception=True):
             loan_serializer.save()
         return Response({'detail': 'good'}, status.HTTP_201_CREATED)
 
     @action(methods=['get'], detail=False)
     def get_pending_loan(self, request):
-        pending_loan = Loan.objects.filter(state=0).order_by('date_start')
+        pending_loan = Loan.objects.filter(state_loan=0).order_by('date_start')
         serializer_loan = LoanSerializer(pending_loan, many=True)
         return Response(serializer_loan.data, status.HTTP_200_OK)
 
