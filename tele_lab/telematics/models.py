@@ -167,7 +167,8 @@ class Loan(models.Model):
         (STATUS_PENDING, 'Pendiente'),
         (STATUS_FINALIZED, 'Finalizado'),
     )
-    date_start = models.DateField(verbose_name='Fecha de inicio', blank=False, null=False)
+    date_start = models.DateTimeField(verbose_name='Fecha de inicio', blank=False, null=False)
+    date_end = models.DateTimeField(verbose_name='Fecha final', blank=True, null=True)
     state_loan = models.SmallIntegerField(choices=STATUS_CHOICES, blank=False, null=False)
     administrator = models.ForeignKey(Administrator, models.CASCADE, blank=False, null=False,
                                       verbose_name='Administrador')
@@ -184,7 +185,6 @@ class LoanComponent(models.Model):
         (STATUS_PENDING, 'Pendiente'),
         (STATUS_FINALIZED, 'Entregado'),
     )
-    date_end = models.DateField(verbose_name='Fecha de finalización', blank=False, null=False)
     state = models.SmallIntegerField(choices=STATUS_CHOICES, blank=False, null=False)
     loan = models.ForeignKey(Loan, on_delete=models.CASCADE, verbose_name='Prestamo', blank=False, null=False, )
     component = models.ForeignKey(Component, on_delete=models.CASCADE, verbose_name='Componente', blank=False,
@@ -196,17 +196,29 @@ class LoanComponent(models.Model):
 
 
 class Sanction(models.Model):
+    # type
+    EXCEEDED_TIME = 0
+    DAMAGE = 1
+    LOSS = 2
+    TYPE_CHOICES = (
+        (EXCEEDED_TIME, 'Exedió tiempo de préstamos'),
+        (DAMAGE, 'Daño'),
+        (LOSS, 'Pérdida'),
+    )
+
+    # state
     STATUS_SANCTIONED = 0
     STATUS_FINALIZED = 1
     STATUS_CHOICES = (
         (STATUS_SANCTIONED, 'sanctioned'),
         (STATUS_FINALIZED, 'finalized'),
     )
+    type = models.SmallIntegerField(choices=TYPE_CHOICES, blank=False, null=False)
     state = models.SmallIntegerField(choices=STATUS_CHOICES, blank=False, null=False,
                                      verbose_name='Tipo de sanción')
-    observation = models.CharField(verbose_name='Observación', max_length=50, blank=True, null=True)
-    loan = models.ForeignKey(LoanComponent, models.CASCADE, blank=False, null=False,
-                             verbose_name='Prestamo')
+    description = models.TextField(verbose_name='Descripción', max_length=255, blank=False, null=False)
+    loan_component = models.ForeignKey(LoanComponent, models.CASCADE, blank=False, null=False,
+                                       verbose_name='Prestamo')
 
     class Meta:
         verbose_name_plural = 'Sanciones'

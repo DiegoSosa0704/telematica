@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import Loan, Sanction, AcademicProgram, Academic, Component, LoanComponent
+
 from users import serializers as user_serializers
+from .models import Loan, Sanction, AcademicProgram, Academic, Component, LoanComponent, Administrator
 
 
 class SanctionSerializer(serializers.ModelSerializer):
@@ -16,6 +17,12 @@ class AcademicProgramSerializer(serializers.ModelSerializer):
 
 
 class AcademicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Academic
+        fields = '__all__'
+
+
+class SearchAcademicSerializer(serializers.ModelSerializer):
     """
      {
         "user": {
@@ -47,55 +54,95 @@ class AcademicSerializer(serializers.ModelSerializer):
         return response_dict
 
 
-class LoanComponentSerializer(serializers.Serializer):
-    # Loan
-    date_start = serializers.DateTimeField(required=True)
-    state_loan = serializers.IntegerField(required=True)
-    academic = serializers.IntegerField(required=True)
-    administrator = serializers.IntegerField(required=True)
-    # Loan Component
-    date_end = serializers.DateTimeField(required=True)
-    state_loan_component = serializers.IntegerField(required=True)
-    loan = serializers.IntegerField(required=True)
-    component = serializers.IntegerField(required=True)
-
-    def create(self, validated_data):
-        loan = Loan.objects.create(
-            date_start=validated_data.get('date_start'),
-            state=validated_data.get('state_loan'),
-            academic=validated_data.get('academic'),
-            administrator=validated_data.get('administrator'),
-        ).save()
-        LoanComponent.objects.create(
-            date_end=validated_data.get('date_end'),
-            state=validated_data.get('state_loan_component'),
-            loan=loan,
-            component=validated_data.get('component_id'),
-        ).save()
-
-
 class ComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Component
         fields = '__all__'
 
 
-class LoanComponentsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = LoanComponent
-        fields = '__all__'
-
-
-class AcademicsSerializer(serializers.ModelSerializer):
+class AcademicLoanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Academic
         fields = '__all__'
 
 
+class AdministratorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Administrator
+        fields = '__all__'
+
+
+class ComponentLoanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LoanComponent
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        response_dict = dict(
+            id=instance.component.id,
+            name=instance.component.name,
+            serial=instance.component.serial,
+            uptc_serial=instance.component.uptc_serial,
+            state=instance.component.state,
+        )
+        return response_dict
+
+
+class LoanHistorySerializer(serializers.ModelSerializer):
+    academic_object = AcademicSerializer(read_only=True, source='academic')
+    administrator_object = AdministratorSerializer(read_only=True, source='administrator')
+
+    class Meta:
+        model = Loan
+        fields = (
+            'date_start',
+            'date_end',
+            'state_loan',
+            'academic_object',
+            'administrator_object',
+        )
+
+
+class LoanComponentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Loan
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        response_dict = dict(
+            loan=instance.loan.id,
+            date_start=instance.loan.date_start,
+            date_end=instance.loan.date_end,
+            state_loan=instance.loan.state_loan,
+            academic=dict(
+                type=instance.loan.academic.type,
+                code=instance.loan.academic.code,
+                first_name=instance.loan.academic.first_name,
+                last_name=instance.loan.academic.last_name,
+                academic_program=instance.loan.academic.academic_program.name,
+            ),
+            administrator=dict(
+                first_name=instance.loan.administrator.first_name,
+                last_name=instance.loan.administrator.last_name
+            )
+        )
+        return response_dict
+
+
+class ChangeLoanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LoanComponent
+        fields = '__all__'
+
+
+class LoanBaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Loan
+        fields = '__all__'
+
+
 class LoanSerializer(serializers.ModelSerializer):
-    academic_object = AcademicsSerializer(read_only=True, source='academic')
     components = serializers.ListField(required=True)
-    date_end = serializers.DateField(required=True)
     state_loan_component = serializers.IntegerField(required=True)
 
     class Meta:
@@ -106,8 +153,7 @@ class LoanSerializer(serializers.ModelSerializer):
             'administrator',
             'state_loan_component',
             'components',
-            'date_end',
-            'academic_object',
+            'academic',
         )
 
     def create(self, validated_data):
@@ -120,20 +166,28 @@ class LoanSerializer(serializers.ModelSerializer):
         )
         for component in components_data:
             LoanComponent.objects.create(
-                date_end=validated_data.get('date_end'),
+                # date_end=validated_data.get('date_end'),
                 state=validated_data.get('state_loan_component'),
                 component_id=component,
-                loan=loan,
+                loan=loan
             )
         return loan
 
     def to_representation(self, instance):
         response_dict = dict(
             date_start=instance.date_start,
+            date_end=instance.date_end,
             state_loan=instance.state_loan,
             administrator=instance.administrator.id,
-            academic=instance.academic.id,
-            academic_object=instance.academic_object
+            academic=dict(
+                id=instance.academic.id,
+                type=instance.academic.type,
+                code=instance.academic.code,
+                first_name=instance.academic.first_name,
+                last_name=instance.academic.last_name,
+                user=instance.academic.user_id,
+                academic_program=instance.academic.academic_program_id
+            )
         )
         return response_dict
 

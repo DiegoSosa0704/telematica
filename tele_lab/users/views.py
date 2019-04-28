@@ -230,5 +230,5 @@ class TokenView(OAuthLibMixin, View):
 class UserView(viewsets.ViewSet):
     def list(self, request, *args, **kwargs):
         academic_user = models_telematics.Academic.objects.all()
-        serializer_academic = serializers_telematics.AcademicSerializer(academic_user, many=True)
+        serializer_academic = serializers_telematics.SearchAcademicSerializer(academic_user, many=True)
         return Response(serializer_academic.data, status.HTTP_200_OK)
