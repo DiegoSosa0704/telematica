@@ -151,7 +151,6 @@ class LoanSerializer(serializers.ModelSerializer):
             'date_start',
             'state_loan',
             'administrator',
-            'state_loan_component',
             'components',
             'academic',
         )
@@ -167,11 +166,23 @@ class LoanSerializer(serializers.ModelSerializer):
         for component in components_data:
             LoanComponent.objects.create(
                 # date_end=validated_data.get('date_end'),
-                state=validated_data.get('state_loan_component'),
+                state=0,
                 component_id=component,
                 loan=loan
             )
         return loan
+
+    def update(self, instance, validated_data):
+        new_components = validated_data.pop('components')
+        instance.academic = validated_data.get('academic')
+        LoanComponent.objects.filter(loan_id=instance.id).delete()
+        for component in new_components:
+            LoanComponent.objects.create(
+                # date_end=validated_data.get('date_end'),
+                state=0,
+                component_id=component,
+                loan=instance
+            )
 
     def to_representation(self, instance):
         response_dict = dict(

@@ -60,6 +60,16 @@ class LoanView(mixins.UpdateModelMixin, viewsets.GenericViewSet):
             loan_serializer.save()
         return Response({"detail": "Loan created."}, status.HTTP_201_CREATED)
 
+    @action(methods=['put'], detail=False)
+    def edit_loan(self, request, pk):
+        instance = get_object_or_404(Loan.objects.all(), pk=pk)
+        serializer = LoanSerializer(instance, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({"detaul": "Loan edited."}, status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": "Error of edited."}, status.HTTP_404_NOT_FOUND)
+
     @action(methods=['get'], detail=False)
     def get_pending_loan(self, request):
         pending_loan = Loan.objects.filter(state_loan=0).order_by('date_start')
@@ -133,9 +143,24 @@ class LoanView(mixins.UpdateModelMixin, viewsets.GenericViewSet):
         return self.partial_update(request, *args, **kwargs)
 
 
-class SanctionView(viewsets.ModelViewSet):
+class SanctionsView(mixins.CreateModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    viewsets.GenericViewSet):
     queryset = Sanction.objects.all()
     serializer_class = SanctionSerializer
+
+    @action(methods=['post'], detail=True)
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    @action(methods=['patch'], detail=True)
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    @action(methods='delete', detail=True)
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
 
 class AcademicProgramView(viewsets.ViewSet):
