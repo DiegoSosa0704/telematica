@@ -85,7 +85,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5433',
     }
 }
 
@@ -150,7 +150,7 @@ OAUTH2_PROVIDER = {
 AUTH_USER_MODEL = 'users.User'
 
 # Client ID - Oauth2 Toolkit configuration
-OAUTH2_CLIENT_ID = 'JV3yHjpcCvGLj0rPKUmQ8d944f3czVgzg4UEoASk'
+OAUTH2_CLIENT_ID = 'qJhgMQxAnr41MmOfjh33JvBkPWGsDIxK081YIaSI'
 
 # Email settings
 EMAIL_USE_TLS = True
