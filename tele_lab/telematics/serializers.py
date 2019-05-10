@@ -103,38 +103,6 @@ class LoanHistorySerializer(serializers.ModelSerializer):
         )
 
 
-class LoanComponentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Loan
-        fields = '__all__'
-
-    def to_representation(self, instance):
-        response_dict = dict(
-            loan=instance.loan.id,
-            date_start=instance.loan.date_start,
-            date_end=instance.loan.date_end,
-            state_loan=instance.loan.state_loan,
-            academic=dict(
-                type=instance.loan.academic.type,
-                code=instance.loan.academic.code,
-                first_name=instance.loan.academic.first_name,
-                last_name=instance.loan.academic.last_name,
-                academic_program=instance.loan.academic.academic_program.name,
-            ),
-            administrator=dict(
-                first_name=instance.loan.administrator.first_name,
-                last_name=instance.loan.administrator.last_name
-            )
-        )
-        return response_dict
-
-
-class ChangeLoanSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = LoanComponent
-        fields = '__all__'
-
-
 class LoanBaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Loan
@@ -153,6 +121,7 @@ class LoanSerializer(serializers.ModelSerializer):
             'administrator',
             'components',
             'academic',
+            'state_loan_component',
         )
 
     def create(self, validated_data):
@@ -175,14 +144,20 @@ class LoanSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         new_components = validated_data.pop('components')
         instance.academic = validated_data.get('academic')
-        LoanComponent.objects.filter(loan_id=instance.id).delete()
-        for component in new_components:
+        objects = LoanComponent.objects.filter(loan_id=instance.id)
+        old_components = {loan.component_id for loan in objects}
+        new_components = {loan_id for loan_id in new_components}
+        remove = old_components - new_components
+        add = new_components - old_components
+        for remove_id in remove:
+            LoanComponent.objects.filter(component_id=remove_id).delete()
+        for add_id in add:
             LoanComponent.objects.create(
-                # date_end=validated_data.get('date_end'),
                 state=0,
-                component_id=component,
+                component_id=add_id,
                 loan=instance
             )
+        return instance
 
     def to_representation(self, instance):
         response_dict = dict(
@@ -201,6 +176,19 @@ class LoanSerializer(serializers.ModelSerializer):
             )
         )
         return response_dict
+
+
+class LoanComponentSerializer(serializers.ModelSerializer):
+    component_object = ComponentSerializer(read_only=True, source='component')
+    loan_object = LoanSerializer(read_only=True, source='loan')
+
+    class Meta:
+        model = LoanComponent
+        fields = (
+            'state',
+            'loan_object',
+            'component_object',
+        )
 
 
 """

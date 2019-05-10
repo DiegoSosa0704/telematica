@@ -91,7 +91,7 @@ class LoanView(mixins.UpdateModelMixin, viewsets.GenericViewSet):
         serializer = LoanBaseSerializer(instance, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return Response({"detaul": "Loan updated."}, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({"detail": "Error of update."}, status.HTTP_404_NOT_FOUND)
 
