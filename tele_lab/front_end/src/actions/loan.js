@@ -55,7 +55,7 @@ export const removeToLoan = (component) => {
 
 export const listComponents = (query, post) => ({
   [RSAA]: {
-    endpoint: `/api/v1/components/search?${query}`,
+    endpoint: `/api/v1/loan/components/search?${query}`,
     method: 'POST',
     body: JSON.stringify({
       components: post

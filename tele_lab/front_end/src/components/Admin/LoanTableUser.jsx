@@ -3,10 +3,6 @@ import {Header, Item} from "semantic-ui-react";
 import {connect} from "react-redux";
 
 class LoanTableUser extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
         <Item>

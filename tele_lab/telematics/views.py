@@ -40,7 +40,11 @@ class LoanView(mixins.UpdateModelMixin, viewsets.GenericViewSet):
                 Q(name__icontains=q) |
                 Q(serial__icontains=q) |
                 Q(uptc_serial__icontains=q)
-            ).exclude(id__in=components_exclude).order_by(order_sort)
+            )
+            if components_exclude:
+                components = components.exclude(id__in=components_exclude).order_by(order_sort)
+            else:
+                components = components.order_by(order_sort)
             paginator = Paginator(components, int(limit))
             components_paginate = paginator.get_page(page)
             count_components = components.count()
