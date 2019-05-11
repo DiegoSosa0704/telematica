@@ -23,3 +23,13 @@ export const changeStatus = (status) => {
     return "NA"
   }
 };
+
+export const formatDate = (today) => {
+  return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+};
+
+export const formatDateTime = (today) => {
+  let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  return date + ' ' + time;
+};

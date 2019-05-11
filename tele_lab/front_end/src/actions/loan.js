@@ -88,13 +88,15 @@ export const lastQuery = (query) => {
   }
 };
 
-export const createLoan = (components, user) => ({
+export const createLoan = (components, academicId, dateStart) => ({
   [RSAA]: {
-    endpoint: '/api/v1/loan/create_loan/',
+    endpoint: '/api/v1/loan/create/',
     method: 'POST',
     body: JSON.stringify({
       components: components,
-      user: user
+      academic: academicId,
+      state_loan: 0,
+      date_start: dateStart
     }),
     headers: withAuth({'Content-Type': 'application/json'}),
     types: [

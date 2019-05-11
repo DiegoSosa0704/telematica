@@ -7,7 +7,8 @@ const initialState = {
   components: [],
   listComponents: [],
   countComponents: 0,
-  lastQuery: undefined
+  lastQuery: undefined,
+  success: false
 };
 
 export default (state = initialState, action) => {
@@ -58,7 +59,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userLoan: {},
-        components: []
+        components: [],
       };
     case loan.CREATE_LOAN_FAILURE:
     default:

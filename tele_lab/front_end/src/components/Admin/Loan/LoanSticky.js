@@ -5,16 +5,34 @@ import {connect} from 'react-redux'
 import ListSticky from '../../Admin/Loan/ListSticky'
 import AcademicSearchEngine from "../../../components/Admin/StudentSearch";
 import {loan} from "../../../actions";
-
+import {formatDateTime} from "../../../utils";
+/*import {SemanticToastContainer, toast} from 'react-semantic-toasts';
+import 'react-semantic-toasts/styles/react-semantic-alert.css';
+import {store} from "../../../index";*/
 
 class LoanSticky extends Component {
   constructor(props) {
     super(props);
-    this.handlerCreateLoan = this.handlerCreateLoan.bind(this)
+    this.handlerCreateLoan = this.handlerCreateLoan.bind(this);
   }
 
   handlerCreateLoan() {
-    this.props.createLoan(this.props.listComponents, this.props.user)
+    /*setTimeout(() => {
+      toast(
+        {
+          type: 'success',
+          icon: 'check',
+          title: 'Registro agregado',
+          description: 'El prestamo fue realizado satisfactoriamente',
+          animation: 'fade left',
+          time: 2500,
+        }
+      );
+    }, 300);*/
+    let listComponents = [];
+    this.props.listComponents.forEach(val => listComponents.push(val.id));
+    const dateTime = formatDateTime(new Date());
+    this.props.createLoan(listComponents, this.props.user.code, dateTime)
   }
 
   render() {
@@ -31,6 +49,7 @@ class LoanSticky extends Component {
         raised>
         <Card.Content
           className='contentSticky'>
+          {/*<SemanticToastContainer/>*/}
           <Divider horizontal>
             <Header as='h4'>
               <Icon name='user'/>
@@ -81,8 +100,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createLoan: (components, user) => {
-      return dispatch(loan.createLoan(components, user))
+    createLoan: (components, academicId, dateStart) => {
+      return dispatch(loan.createLoan(components, academicId, dateStart))
     }
   }
 };

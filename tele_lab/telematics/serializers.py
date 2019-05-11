@@ -111,7 +111,7 @@ class LoanBaseSerializer(serializers.ModelSerializer):
 
 class LoanSerializer(serializers.ModelSerializer):
     components = serializers.ListField(required=True)
-    state_loan_component = serializers.IntegerField(required=True)
+    # state_loan_component = serializers.IntegerField(required=True)
 
     class Meta:
         model = Loan
@@ -121,7 +121,7 @@ class LoanSerializer(serializers.ModelSerializer):
             'administrator',
             'components',
             'academic',
-            'state_loan_component',
+            # 'state_loan_component',
         )
 
     def create(self, validated_data):

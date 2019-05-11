@@ -59,7 +59,7 @@ class LoanView(mixins.UpdateModelMixin, viewsets.GenericViewSet):
             return Response({"detail": e.args}, status.HTTP_400_BAD_REQUEST)
         request_data = request.data
         request_data.update(dict(administrator=admin.id))
-        loan_serializer = LoanSerializer(data=request.data)
+        loan_serializer = LoanSerializer(data=request_data)
         if loan_serializer.is_valid(raise_exception=True):
             loan_serializer.save()
         return Response({"detail": "Loan created."}, status.HTTP_201_CREATED)

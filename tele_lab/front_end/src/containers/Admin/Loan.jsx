@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, Grid, Header, Image, Modal, Rail, Segment, Sticky} from "semantic-ui-react";
+import {Grid, Header, Rail, Segment, Sticky} from "semantic-ui-react";
 import ComponentList from "../../components/Academic/DynamicTable/ComponentList";
 import LoanSticky from "../../components/Admin/Loan/LoanSticky";
 
