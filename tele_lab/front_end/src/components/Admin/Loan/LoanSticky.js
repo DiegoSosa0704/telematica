@@ -6,6 +6,7 @@ import ListSticky from '../../Admin/Loan/ListSticky'
 import AcademicSearchEngine from "../../../components/Admin/StudentSearch";
 import {loan} from "../../../actions";
 import {formatDateTime} from "../../../utils";
+
 /*import {SemanticToastContainer, toast} from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 import {store} from "../../../index";*/
@@ -63,16 +64,16 @@ class LoanSticky extends Component {
           </Grid>
           <Divider/>
           <LoanTableUser/>
-          <Divider horizontal>
-            <Header as='h4'>
-              <Icon name='list'/>
-              Componentes
-            </Header>
-          </Divider>
+        </Card.Content>
+        <Card.Content className='contentList'>
+          <Header as='h4' textAlign='center'>
+            <Icon name='list'/>
+            Componentes
+          </Header>
           <Transition.Group
             as={List}
             animation='scale'
-            divided
+            celled
             ordered
           >
             {listComponents}
@@ -80,11 +81,9 @@ class LoanSticky extends Component {
         </Card.Content>
         <Card.Content
           extra>
-          <div className='ui two buttons'>
-            <Button onClick={this.handlerCreateLoan} color='green'>
-              Realizar préstamo
-            </Button>
-          </div>
+          <Button fluid onClick={this.handlerCreateLoan} color='green'>
+            Realizar préstamo
+          </Button>
         </Card.Content>
       </Card>
     );

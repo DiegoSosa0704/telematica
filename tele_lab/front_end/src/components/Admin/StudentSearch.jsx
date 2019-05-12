@@ -50,6 +50,7 @@ class StudentSearchEngine extends Component {
           value={this.state.value}
           selectFirstResult
           size='small'
+          minCharacters={4}
         />
       </div>
     )

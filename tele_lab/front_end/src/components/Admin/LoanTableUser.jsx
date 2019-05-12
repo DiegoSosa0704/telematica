@@ -6,7 +6,7 @@ class LoanTableUser extends Component {
   render() {
     return (
         <Item>
-          <Item.Content>
+          <Item.Content className="content-user">
             <Header as='a' content={this.props.userLoan.title}/>
             <Item.Meta>{this.props.userLoan.description}</Item.Meta>
             <Item.Description>
