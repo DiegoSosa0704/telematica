@@ -8,7 +8,8 @@ const initialState = {
   listComponents: [],
   countComponents: 0,
   lastQuery: undefined,
-  success: false
+  success: false,
+  addComponentState: false
 };
 
 export default (state = initialState, action) => {
@@ -25,7 +26,6 @@ export default (state = initialState, action) => {
         userLoan: action.payload,
       };
     case loan.ADD_COMPONENT_TO_LOAN:
-      // Agregar datos a una lista
       return {
         ...state,
         components: [...state.components, action.payload],
@@ -35,11 +35,17 @@ export default (state = initialState, action) => {
         ...state,
         components: state.components.filter((item) => item.id !== action.payload.id)
       };
+    case loan.LIST_COMPONENTS_REQUEST:
+      return {
+        ...state,
+        addComponentState: true
+      };
     case loan.LIST_COMPONENTS_SUCCESS:
       return {
         ...state,
         listComponents: action.payload.components,
-        countComponents: action.payload.totalCount
+        countComponents: action.payload.totalCount,
+        addComponentState: false
       };
     case loan.LIST_COMPONENTS_FAILURE:
     case loan.COUNT_COMPONENTS_SUCCESS:

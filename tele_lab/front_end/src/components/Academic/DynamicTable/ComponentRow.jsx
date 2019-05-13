@@ -14,8 +14,10 @@ class ComponentRow extends React.Component {
   }
 
   addToLoan(component) {
-    this.props.addComponentToLoan(component);
-    this.props.getListComponents(store.getState().loan.lastQuery, store.getState().loan.components)
+    if (!store.getState().loan.addComponentState) {
+      this.props.addComponentToLoan(component);
+      this.props.getListComponents(store.getState().loan.lastQuery, store.getState().loan.components)
+    }
   }
 
   render() {
