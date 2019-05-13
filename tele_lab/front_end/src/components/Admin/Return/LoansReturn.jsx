@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Header, Placeholder} from 'semantic-ui-react'
 import {returnComponent} from "../../../actions";
 import {connect} from "react-redux";
-import {ListPendingLoans} from "./ListPendingLoans";
+import ListPendingLoans from "./ListPendingLoans";
 
 class LoansReturn extends Component {
   constructor(props) {
