@@ -24,11 +24,36 @@ export const changeStatus = (status) => {
   }
 };
 
+export const changeTypeAcademic = (type) => {
+  if (type === "ES") {
+    return "Estudiante"
+  } else if (type === "TE") {
+    return "Docente"
+  } else {
+    return "NA"
+  }
+};
+
+export const dateToString = (date) => {
+  return new Date(date).toLocaleDateString('es-CO', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC'
+  })
+};
+
+export const dateTimeToString = (dateTime) => {
+  let options = {hour: "numeric", hour12:"false"};
+  return new Date(dateTime).toLocaleTimeString('es-CO', {timeZone: 'UTC'});
+};
+
 export const formatDate = (today) => {
   return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 };
 
 export const formatDateTime = (today) => {
+  console.log(today)
   let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   return date + ' ' + time;

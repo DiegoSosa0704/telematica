@@ -166,9 +166,8 @@ class LoanSerializer(serializers.ModelSerializer):
             state_loan=instance.state_loan,
             administrator=instance.administrator.id,
             academic=dict(
-                id=instance.academic.id,
-                type=instance.academic.type,
                 code=instance.academic.code,
+                type=instance.academic.type,
                 first_name=instance.academic.first_name,
                 last_name=instance.academic.last_name,
                 user=instance.academic.user_id,

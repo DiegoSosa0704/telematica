@@ -1,17 +1,17 @@
 import {RSAA} from "redux-api-middleware";
 import {withAuth} from "../reducers";
 
-export const TEST = '@@returnComponent/TEST';
-/*
+export const GET_PENDING_LOANS_REQUEST = '@@returnComponent/GET_PENDING_LOANS_REQUEST';
+export const GET_PENDING_LOANS_SUCCESS = '@@returnComponent/GET_PENDING_LOANS_SUCCESS';
+export const GET_PENDING_LOANS_FAILURE = '@@returnComponent/GET_PENDING_LOANS_FAILURE';
 
-export const getAcademicPrograms = () => ({
+export const getPendingLoans = () => ({
   [RSAA]: {
-    endpoint: '/api/v1/academic_program/',
+    endpoint: '/api/v1/loan/pending/',
     method: 'GET',
     headers: withAuth({'Content-Type': 'application/json'}),
     types: [
-      GET_ACADEMIC_PROGRAMS_REQUEST, GET_ACADEMIC_PROGRAMS_SUCCESS, GET_ACADEMIC_PROGRAMS_FAILURE
+      GET_PENDING_LOANS_REQUEST, GET_PENDING_LOANS_SUCCESS, GET_PENDING_LOANS_FAILURE
     ]
   }
 });
-*/

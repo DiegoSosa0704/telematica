@@ -1,37 +1,48 @@
 import React, {Component} from 'react'
-import {Header, List} from 'semantic-ui-react'
+import {Header, Placeholder} from 'semantic-ui-react'
+import {returnComponent} from "../../../actions";
+import {connect} from "react-redux";
+import {ListPendingLoans} from "./ListPendingLoans";
 
 class LoansReturn extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.props.getPendingLoans();
+  }
+
   render() {
     return (
       <React.Fragment>
         <Header as='h3'>Préstamos</Header>
-        <List selection divided relaxed>
-          <List.Item>
-            <List.Icon name='github' size='large' verticalAlign='middle'/>
-            <List.Content>
-              <List.Header as='a'>Semantic-Org/Semantic-UI</List.Header>
-              <List.Description as='a'>Updated 10 mins ago</List.Description>
-            </List.Content>
-          </List.Item>
-          <List.Item>
-            <List.Icon name='github' size='large' verticalAlign='middle'/>
-            <List.Content>
-              <List.Header as='a'>Semantic-Org/Semantic-UI-Docs</List.Header>
-              <List.Description as='a'>Updated 22 mins ago</List.Description>
-            </List.Content>
-          </List.Item>
-          <List.Item>
-            <List.Icon name='github' size='large' verticalAlign='middle'/>
-            <List.Content>
-              <List.Header as='a'>Semantic-Org/Semantic-UI-Meteor</List.Header>
-              <List.Description as='a'>Updated 34 mins ago</List.Description>
-            </List.Content>
-          </List.Item>
-        </List>
+        {this.props.pendingLoans !== undefined ?
+          <ListPendingLoans pendingLoans={this.props.pendingLoans}/> :
+          <Placeholder>
+            <Placeholder.Line length='full'/>
+            <Placeholder.Line length='very long'/>
+            <Placeholder.Line length='long'/>
+            <Placeholder.Line length='medium'/>
+          </Placeholder>
+        }
       </React.Fragment>
     );
   }
 }
 
-export default LoansReturn
+const mapStateToProps = state => {
+  return {
+    pendingLoans: state.returnComponent.pendingLoans
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getPendingLoans: () => {
+      return dispatch(returnComponent.getPendingLoans());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoansReturn)

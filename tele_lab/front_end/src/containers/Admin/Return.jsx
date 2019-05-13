@@ -13,11 +13,6 @@ class ReturnComponents extends Component {
           </Header>
           <Segment raised>
             <Grid padded relaxed='very' stackable>
-              <Grid.Row>
-                <Grid.Column>
-                  {/*                  <StudentSearchEngine/>*/}
-                </Grid.Column>
-              </Grid.Row>
               <Grid.Row columns={2}>
                 <Divider vertical/>
                 <Grid.Column>

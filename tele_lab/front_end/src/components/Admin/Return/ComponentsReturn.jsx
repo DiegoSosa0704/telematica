@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
-import {Grid, Header, List} from "semantic-ui-react";
-
+import {Header, List} from "semantic-ui-react";
 
 class LoansReturn extends Component {
   render() {
@@ -31,8 +30,8 @@ class LoansReturn extends Component {
           </List.Item>
         </List>
       </React.Fragment>
-  );
+    );
   }
-  }
+}
 
-  export default LoansReturn
+export default LoansReturn
