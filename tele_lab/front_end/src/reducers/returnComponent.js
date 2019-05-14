@@ -21,6 +21,12 @@ export default (state = initialState, action) => {
       };
     case returnComponent.GET_COMPONENTS_FAILURE:
       return state;
+    case returnComponent.PATCH_LOAN_COMPONENT_REQUEST:
+      return state;
+    case returnComponent.PATCH_LOAN_COMPONENT_SUCCESS:
+      return state;
+    case returnComponent.PATCH_LOAN_COMPONENT_FAILURE:
+      return state;
     default:
       return state
   }
