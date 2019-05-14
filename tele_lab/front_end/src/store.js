@@ -15,7 +15,7 @@ export default (history) => {
     {
       key: 'polls',
       storage: storage,
-      whitelist: ['auth', 'loan'],
+      whitelist: ['auth'],
       transforms: [persistedFilter]
     },
     rootReducer);

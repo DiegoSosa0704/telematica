@@ -1,4 +1,4 @@
-export const changeState = (state) => {
+export const changeStateComponent = (state) => {
   if (state === "IN") {
     return "En servicio"
   } else if (state === "OU") {
@@ -10,7 +10,7 @@ export const changeState = (state) => {
   }
 };
 
-export const changeStatus = (status) => {
+export const changeStatusComponent = (status) => {
   if (status === "AV") {
     return "Disponible"
   } else if (status === "OL") {

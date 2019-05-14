@@ -16,7 +16,9 @@ class LoansReturn extends Component {
   render() {
     return (
       <React.Fragment>
-        <Header as='h3'>Préstamos</Header>
+        <Header as='h3' dividing>
+          Préstamos
+        </Header>
         {this.props.pendingLoans !== undefined ?
           <ListPendingLoans pendingLoans={this.props.pendingLoans}/> :
           <Placeholder>

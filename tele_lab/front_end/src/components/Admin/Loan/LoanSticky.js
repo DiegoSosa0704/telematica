@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Button, Card, Divider, Grid, Header, Icon, Input, List, Transition} from "semantic-ui-react";
-import LoanTableUser from "../LoanTableUser";
+import {DataUserLoan} from "../LoanTableUser";
 import {connect} from 'react-redux'
 import ListSticky from '../../Admin/Loan/ListSticky'
 import AcademicSearchEngine from "../../../components/Admin/StudentSearch";
@@ -63,21 +63,26 @@ class LoanSticky extends Component {
             </Grid.Row>
           </Grid>
           <Divider/>
-          <LoanTableUser/>
+          <DataUserLoan userLoan={this.props.user}/>
         </Card.Content>
         <Card.Content className='contentList'>
           <Header as='h4' textAlign='center'>
             <Icon name='list'/>
             Componentes
           </Header>
-          <Transition.Group
-            as={List}
-            animation='scale'
-            celled
-            ordered
-          >
-            {listComponents}
-          </Transition.Group>
+          {Object.keys(this.props.listComponents).length > 0 ?
+            <Transition.Group
+              as={List}
+              animation='scale'
+              celled
+              ordered
+            >
+              {listComponents}
+            </Transition.Group> :
+            <Header as='h3' disabled textAlign='center'>
+              No ha seleccionado ningun componente
+            </Header>
+          }
         </Card.Content>
         <Card.Content
           extra>

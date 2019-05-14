@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {Header, List} from "semantic-ui-react";
 import {changeTypeAcademic, dateTimeToString, dateToString} from '../../../utils'
+import {connect} from "react-redux";
+import {returnComponent} from "../../../actions";
 
 class ListPendingLoans extends Component {
   constructor(props) {
@@ -8,7 +10,7 @@ class ListPendingLoans extends Component {
   }
 
   handlerListItem(component) {
-    console.log(component.date_start)
+    this.props.getComponentsByPendingLoan(component.id);
   }
 
   render() {
@@ -16,7 +18,7 @@ class ListPendingLoans extends Component {
       const listLoans = this.props.pendingLoans.map((component, index) => {
         return (
           <React.Fragment key={index}>
-            <List.Item onClick={this.handlerListItem(component)}>
+            <List.Item onClick={() => this.handlerListItem(component)}>
               <List.Content floated='right'>
                 <List.Header>Fecha:</List.Header>
                 <List.Description>{dateToString(component.date_start)}</List.Description>
@@ -32,7 +34,7 @@ class ListPendingLoans extends Component {
         );
       });
       return (
-        <List animated selection divided relaxed>
+        <List animated selection divided>
           {listLoans}
         </List>
       );
@@ -46,4 +48,12 @@ class ListPendingLoans extends Component {
   }
 }
 
-export default ListPendingLoans;
+const mapDispatchToProps = dispatch => {
+  return {
+    getComponentsByPendingLoan: (loanId) => {
+      return dispatch(returnComponent.getComponentsByPendingLoan(loanId));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ListPendingLoans);

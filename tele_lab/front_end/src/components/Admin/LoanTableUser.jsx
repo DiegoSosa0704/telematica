@@ -1,31 +1,28 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Header, Item} from "semantic-ui-react";
-import {connect} from "react-redux";
 
-class LoanTableUser extends Component {
-  render() {
-    return (
-        <Item>
-          <Item.Content className="content-user">
-            <Header as='a' content={this.props.userLoan.title}/>
-            <Item.Meta>{this.props.userLoan.description}</Item.Meta>
-            <Item.Description>
-            </Item.Description>
-            <Item.Extra>
-              {this.props.userLoan.code}
-              <br/>
-              {this.props.userLoan.academic_program}
-            </Item.Extra>
-          </Item.Content>
-        </Item>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    userLoan: state.loan.userLoan,
-  }
+export const DataUserLoan = (props) => {
+  return (
+    <React.Fragment>
+      {
+        Object.keys(props.userLoan).length > 0 ?
+          <Item>
+            <Item.Content className="content-user">
+              <Header as='a' content={props.userLoan.title}/>
+              <Item.Meta>{props.userLoan.description}</Item.Meta>
+              <Item.Description>
+              </Item.Description>
+              <Item.Extra>
+                {props.userLoan.code}
+                <br/>
+                {props.userLoan.academic_program}
+              </Item.Extra>
+            </Item.Content>
+          </Item> :
+          <Header as='h3' disabled textAlign='center'>
+            No ha seleccionado un usuario
+          </Header>
+      }
+    </React.Fragment>
+  );
 };
-
-export default connect(mapStateToProps, null)(LoanTableUser);

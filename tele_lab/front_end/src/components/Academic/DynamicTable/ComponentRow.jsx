@@ -1,7 +1,7 @@
 import React from "react";
 import {Button, Icon, Table} from "semantic-ui-react";
 import PropTypes from "prop-types";
-import {changeStatus} from '../../../utils'
+import {changeStatusComponent} from '../../../utils'
 import {loan} from "../../../actions";
 import {connect} from "react-redux";
 import {store} from "../../../index";
@@ -27,7 +27,7 @@ class ComponentRow extends React.Component {
         <Table.Cell>{this.props.vehicle.name}</Table.Cell>
         <Table.Cell>{this.props.vehicle.serial}</Table.Cell>
         <Table.Cell>{this.props.vehicle.uptc_serial}</Table.Cell>
-        <Table.Cell>{changeStatus(this.props.vehicle.status)}</Table.Cell>
+        <Table.Cell>{changeStatusComponent(this.props.vehicle.status)}</Table.Cell>
         <Table.Cell>
           <Button size='mini' circular icon onClick={() => this.addToLoan(this.props.vehicle)}>
             <Icon name="plus"/>

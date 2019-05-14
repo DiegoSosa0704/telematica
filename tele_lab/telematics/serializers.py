@@ -83,7 +83,7 @@ class ComponentLoanSerializer(serializers.ModelSerializer):
             name=instance.component.name,
             serial=instance.component.serial,
             uptc_serial=instance.component.uptc_serial,
-            state=instance.component.state,
+            state=instance.state,
         )
         return response_dict
 
@@ -161,6 +161,7 @@ class LoanSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         response_dict = dict(
+            id=instance.id,
             date_start=instance.date_start,
             date_end=instance.date_end,
             state_loan=instance.state_loan,
