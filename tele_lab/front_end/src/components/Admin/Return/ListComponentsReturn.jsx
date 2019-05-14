@@ -1,6 +1,7 @@
 import React from 'react'
-import {List, Radio} from "semantic-ui-react";
+import {List} from "semantic-ui-react";
 import {changeStateComponent} from '../../../utils'
+import ButtonToggleReturnLoan from "./ButtonToggleReturnLoan";
 
 export const ListComponentsReturn = (props) => {
   const listLoans = props.componentsLoan.map((component, index) => {
@@ -8,8 +9,7 @@ export const ListComponentsReturn = (props) => {
       <React.Fragment key={index}>
         <List.Item>
           <List.Content floated='right'>
-            {/*TODO Poner un boton :v */}
-            Botón
+            <ButtonToggleReturnLoan component={component}/>
           </List.Content>
           <List.Content floated='left'>
             <List.Header>{component.name}</List.Header>
