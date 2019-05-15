@@ -79,7 +79,8 @@ class ComponentLoanSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         response_dict = dict(
-            id=instance.component.id,
+            loan_id=instance.id,
+            component_id=instance.component.id,
             name=instance.component.name,
             serial=instance.component.serial,
             uptc_serial=instance.component.uptc_serial,
