@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button} from 'semantic-ui-react'
+import {Radio} from 'semantic-ui-react'
 
 class ButtonToggleReturnLoan extends Component {
   constructor(props) {
@@ -8,11 +8,7 @@ class ButtonToggleReturnLoan extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({active: this.props.component.state === 1 ? true : false})
-  }
-
-  handleClick = () => {
+  patchLoanComponent() {
     fetch(`/api/v1/loan/component/update/${this.props.component.loan_id}/`, {
       method: 'PATCH',
       headers: {'Content-Type': 'application/json'},
@@ -22,7 +18,8 @@ class ButtonToggleReturnLoan extends Component {
     }).then(response => {
       if (response.ok) {
         response.json().then(data => {
-          this.setState({active: data.state === 1 ? true : false})
+          console.log("Ahora -> " + data.state);
+          this.changeState(data.state);
         })
       } else {
         response.json().then(error => {
@@ -30,18 +27,40 @@ class ButtonToggleReturnLoan extends Component {
         });
       }
     });
-    /*this.setState(prevState => ({active: !prevState.active}))*/
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    this.changeState(nextProps.component.state)
+  }
+
+  componentDidMount() {
+    this.changeState(this.props.component.state)
+  }
+
+  changeState = (state) => {
+    switch (state) {
+      case 0:
+        this.setState({active: false});
+        break;
+      case 1:
+        this.setState({active: true});
+        break;
+      default:
+        this.setState({active: false});
+        break;
+    }
+  };
+
+  handleClick = () => {
+    this.patchLoanComponent()
   };
 
   render() {
     const {active} = this.state;
     return (
-      <Button
+      <Radio
         toggle
-        active={active}
-        color={active ? "green" : "red"}
-        content={active ? "Entregado" : "Péndiente"}
-        icon={active ? "check" : "cancel"}
+        checked={active}
         onClick={this.handleClick}
       />
     )

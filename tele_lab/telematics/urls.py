@@ -10,6 +10,7 @@ urlpatterns = [
     path('loan/create/', views.LoanView.as_view({'post': 'create_loan'}), name='create_loan'),
     path('loan/edit/<int:pk>/', views.LoanView.as_view({'put': 'edit_loan'}), name='edit_loan'),
     path('loan/pending/', views.LoanView.as_view({'get': 'get_pending_loan'}), name='get_pending_loan'),
+    path('loan/component/<int:pk>/', views.LoanView.as_view({'get': 'get'}), name='get_component'),
     path('loan/components/<int:loan_id>/', views.LoanView.as_view({'get': 'get_components_loan'}),
          name='get_pending_loan'),
     path('loan/component/update/<int:pk>/', views.LoanView.as_view({'patch': 'patch'}),

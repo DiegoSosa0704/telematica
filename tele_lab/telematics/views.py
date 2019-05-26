@@ -12,7 +12,9 @@ from .serializers import LoanSerializer, SanctionSerializer, AcademicProgramSeri
     ComponentLoanSerializer, LoanComponentSerializer, LoanBaseSerializer, LoanHistorySerializer
 
 
-class LoanView(mixins.UpdateModelMixin, viewsets.GenericViewSet):
+class LoanView(mixins.UpdateModelMixin,
+               mixins.RetrieveModelMixin,
+               viewsets.GenericViewSet):
     queryset = LoanComponent.objects.all()
     serializer_class = LoanComponentSerializer
 
@@ -82,7 +84,7 @@ class LoanView(mixins.UpdateModelMixin, viewsets.GenericViewSet):
 
     @action(methods=['get'], detail=False)
     def get_components_loan(self, request, loan_id):
-        components_loan = LoanComponent.objects.filter(loan=loan_id).order_by('state')
+        components_loan = LoanComponent.objects.filter(loan=loan_id).order_by('component__name')
         components_serializer = ComponentLoanSerializer(components_loan, many=True)
         if components_serializer.data:
             return Response(components_serializer.data, status.HTTP_200_OK)
@@ -145,6 +147,10 @@ class LoanView(mixins.UpdateModelMixin, viewsets.GenericViewSet):
     @action(methods=['patch'], detail=True)
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
+
+    @action(methods=['get'], detail=True)
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
 
 
 class SanctionsView(mixins.CreateModelMixin,

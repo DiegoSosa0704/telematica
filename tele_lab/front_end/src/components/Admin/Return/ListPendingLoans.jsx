@@ -10,6 +10,7 @@ class ListPendingLoans extends Component {
   }
 
   handlerListItem(component) {
+
     this.props.getComponentsByPendingLoan(component.id);
   }
 

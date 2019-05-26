@@ -34,6 +34,16 @@ export const changeTypeAcademic = (type) => {
   }
 };
 
+export const changeStateLoanComponent = (state) => {
+  if (state === 0) {
+    return "Péndiente"
+  } else if (state === 1) {
+    return "Entregado"
+  } else {
+    return "NA"
+  }
+};
+
 export const dateToString = (date) => {
   return new Date(date).toLocaleDateString('es-CO', {
     year: 'numeric',
