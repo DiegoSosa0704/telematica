@@ -1,6 +1,5 @@
 import React from 'react'
 import {List} from "semantic-ui-react";
-import {changeStateLoanComponent} from '../../../utils'
 import ButtonToggleReturnLoan from "./ButtonToggleReturnLoan";
 
 export const ListComponentsReturn = (props) => {
@@ -13,7 +12,6 @@ export const ListComponentsReturn = (props) => {
           </List.Content>
           <List.Content floated='left'>
             <List.Header>{component.name}</List.Header>
-            <List.Description>{changeStateLoanComponent(component.state)}</List.Description>
           </List.Content>
           <List.Content floated='left'>
             <List.Description><b>Serial: </b>{component.serial}</List.Description>

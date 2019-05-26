@@ -11,14 +11,14 @@ class ReturnComponents extends Component {
           <Header as='h2' attached='top'>
             Devoluciones
           </Header>
-          <Segment raised>
-            <Grid padded relaxed='very' stackable>
-              <Grid.Row columns={2}>
+          <Segment raised className='segment-return'>
+            <Grid padded relaxed='very' stackable className='grid-return'>
+              <Grid.Row columns={2} className='row-return-components'>
                 <Divider vertical/>
-                <Grid.Column>
+                <Grid.Column className='column-return-loans'>
                   <LoansReturn/>
                 </Grid.Column>
-                <Grid.Column>
+                <Grid.Column className='column-return-components'>
                   <ComponentsReturn/>
                 </Grid.Column>
               </Grid.Row>
