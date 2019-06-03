@@ -49,7 +49,7 @@ export const changeStateLoanComponent = (loanComponentId ,state) => ({
   }
 });
 
-export const searchPendingLoans = (text) => ({
+export const searchPendingLoans = (loanId) => ({
   [RSAA]: {
     endpoint: `/api/v1/loan/components/${loanId}/`,
     method: 'GET',

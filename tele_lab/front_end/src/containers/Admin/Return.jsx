@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Divider, Grid, Header, Input, Segment} from "semantic-ui-react";
 import LoansReturn from "../../components/Admin/Return/LoansReturn";
 import ComponentsReturn from "../../components/Admin/Return/ComponentsReturn";
+import LoansSearch from "../../components/Admin/Return/LoansSearch";
 
 class ReturnComponents extends Component {
   render() {
@@ -16,8 +17,7 @@ class ReturnComponents extends Component {
               <Grid.Row>
                 <Grid.Column>
                   <Header as='h3' content='Usuario'/>
-
-                  <Input loading onChange={(e, data) => console.log(data.value)} placeholder='Buscar...' />
+                  <LoansSearch />
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row columns={2} className='row-return-components'>
