@@ -1,16 +1,10 @@
 import React, {Component} from 'react'
 import {Header, Placeholder} from 'semantic-ui-react'
-import {returnComponent} from "../../../actions";
-import {connect} from "react-redux";
 import ListPendingLoans from "./ListPendingLoans";
 
 class LoansReturn extends Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    this.props.getPendingLoans();
   }
 
   render() {
@@ -19,8 +13,8 @@ class LoansReturn extends Component {
         <Header as='h3' dividing>
           Préstamos
         </Header>
-        {this.props.pendingLoans !== undefined ?
-          <ListPendingLoans pendingLoans={this.props.pendingLoans}/> :
+        {this.props.loansReturn !== undefined ?
+          <ListPendingLoans pendingLoans={this.props.loansReturn}/> :
           <Placeholder>
             <Placeholder.Line length='full'/>
             <Placeholder.Line length='very long'/>
@@ -33,18 +27,4 @@ class LoansReturn extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    pendingLoans: state.returnComponent.pendingLoans
-  }
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getPendingLoans: () => {
-      return dispatch(returnComponent.getPendingLoans());
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoansReturn)
+export default LoansReturn;

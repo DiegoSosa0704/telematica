@@ -2,9 +2,32 @@ import React, {Component} from 'react'
 import {Divider, Grid, Header, Input, Segment} from "semantic-ui-react";
 import LoansReturn from "../../components/Admin/Return/LoansReturn";
 import ComponentsReturn from "../../components/Admin/Return/ComponentsReturn";
-import LoansSearch from "../../components/Admin/Return/LoansSearch";
+import _ from "lodash";
+import {connect} from "react-redux";
+import {returnComponent} from "../../actions";
 
 class ReturnComponents extends Component {
+  state = {isLoading: false};
+
+  constructor(props) {
+    super(props);
+    this.getLoanSearch = this.getLoanSearch.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.getPendingLoans();
+  }
+
+  getLoanSearch(data) {
+    this.setState({isLoading: true});
+    setTimeout(() => {
+      const re = new RegExp(_.escapeRegExp(data.value), 'i');
+      const isMatch = result => re.test(result.academic.code);
+      let results = _.filter(this.props.pendingLoans, isMatch);
+      this.setState({result: results, isLoading: false});
+    }, 300)
+  }
+
   render() {
     return (
       <Grid centered columns='equal'>
@@ -17,13 +40,18 @@ class ReturnComponents extends Component {
               <Grid.Row>
                 <Grid.Column>
                   <Header as='h3' content='Usuario'/>
-                  <LoansSearch />
+                  <Input loading={this.state.isLoading}
+                         icon='users'
+                         iconPosition='left'
+                         placeholder='Buscar...'
+                         onChange={_.debounce((event, data) => this.getLoanSearch(data), 500, {leading: true})}/>
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row columns={2} className='row-return-components'>
                 <Divider vertical/>
                 <Grid.Column className='column-return-loans'>
-                  <LoansReturn/>
+                  <LoansReturn
+                    loansReturn={this.state.result !== undefined ? this.state.result : this.props.pendingLoans}/>
                 </Grid.Column>
                 <Grid.Column className='column-return-components'>
                   <ComponentsReturn/>
@@ -37,4 +65,18 @@ class ReturnComponents extends Component {
   }
 }
 
-export default ReturnComponents
+const mapStateToProps = state => {
+  return {
+    pendingLoans: state.returnComponent.pendingLoans,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getPendingLoans: () => {
+      return dispatch(returnComponent.getPendingLoans());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReturnComponents)
