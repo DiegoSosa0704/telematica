@@ -3,7 +3,7 @@ import * as returnComponent from '../actions/returnComponent'
 const initialState = {
   pendingLoans: undefined,
   componentsLoan: undefined,
-  stateItem: false
+  stateItem: 0
 };
 
 export default (state = initialState, action) => {
@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
     case returnComponent.STATE_ITEM_LIST:
       return {
         ...state,
-        stateItem: !action.payload
+        stateItem: action.payload
       };
     default:
       return state

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Header, List} from "semantic-ui-react";
 import ItemLoan from "./ItemLoan";
+import {connect} from "react-redux";
 
 class ListPendingLoans extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class ListPendingLoans extends Component {
       const listLoans = this.props.pendingLoans.map((component, index) => {
         return (
           <React.Fragment key={index}>
-            <ItemLoan component={component} />
+            <ItemLoan component={component} indexItem={index} stateItem={this.props.stateItem}/>
           </React.Fragment>
         );
       });
@@ -31,4 +32,10 @@ class ListPendingLoans extends Component {
   }
 }
 
-export default ListPendingLoans;
+const mapStateToProps = state => {
+  return {
+    stateItem: state.returnComponent.stateItem,
+  }
+};
+
+export default connect(mapStateToProps, null)(ListPendingLoans);

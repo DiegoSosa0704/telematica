@@ -62,9 +62,9 @@ export const searchPendingLoans = (loanId) => ({
   }
 });
 
-export const changeStateItemList = (state) => {
+export const changeStateItemList = (indexItem) => {
   return {
     type: STATE_ITEM_LIST,
-    payload: state
+    payload: indexItem
   };
 };
