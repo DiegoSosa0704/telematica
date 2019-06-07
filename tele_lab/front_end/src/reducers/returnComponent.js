@@ -2,7 +2,8 @@ import * as returnComponent from '../actions/returnComponent'
 
 const initialState = {
   pendingLoans: undefined,
-  componentsLoan: undefined
+  componentsLoan: undefined,
+  stateItem: false
 };
 
 export default (state = initialState, action) => {
@@ -27,6 +28,11 @@ export default (state = initialState, action) => {
       return state;
     case returnComponent.PATCH_LOAN_COMPONENT_FAILURE:
       return state;
+    case returnComponent.STATE_ITEM_LIST:
+      return {
+        ...state,
+        stateItem: !action.payload
+      };
     default:
       return state
   }

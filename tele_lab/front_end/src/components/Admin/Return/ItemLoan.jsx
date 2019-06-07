@@ -5,14 +5,17 @@ import {returnComponent} from "../../../actions";
 import {connect} from "react-redux";
 
 class ItemLoan extends Component {
+  state = {active: false};
 
   handlerListItem(component) {
     this.props.getComponentsByPendingLoan(component.id);
+    //this.props.changeStateItemList(this.props.stateItem);
+    this.setState({active: !this.state.active});
   }
 
   render() {
     return (
-      <List.Item onClick={() => this.handlerListItem(this.props.component)}>
+      <List.Item active={this.state.active} onClick={() => this.handlerListItem(this.props.component)}>
         <List.Content floated='right'>
           <List.Header>Fecha:</List.Header>
           <List.Description>{dateToString(this.props.component.date_start)}</List.Description>
@@ -28,12 +31,21 @@ class ItemLoan extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    stateItem: state.returnComponent.stateItem,
+  }
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     getComponentsByPendingLoan: (loanId) => {
       return dispatch(returnComponent.getComponentsByPendingLoan(loanId));
     },
+    changeStateItemList: (state) => {
+      return dispatch(returnComponent.changeStateItemList(state));
+    }
   };
 };
 
-export default connect(null, mapDispatchToProps)(ItemLoan);
+export default connect(mapStateToProps, mapDispatchToProps)(ItemLoan);
