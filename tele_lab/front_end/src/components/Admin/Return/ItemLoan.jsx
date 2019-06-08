@@ -16,24 +16,14 @@ class ItemLoan extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     if (this.props.indexItem === nextProps.stateItem ) {
       this.setState({active: true});
+      this.props.getComponentsByPendingLoan(nextProps.component.id);
     } else {
       this.setState({active: false})
     }
   }
 
-/*  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.indexItem === 0) {
-      if (prevState.active === false) {
-        this.setState({active: true});
-        this.props.getComponentsByPendingLoan(this.props.component.id);
-      } else {
-        this.props.getComponentsByPendingLoan(this.props.component.id);
-      }
-    }
-  }*/
-
   componentDidMount() {
-    if (this.props.indexItem === this.props.stateItem ) {
+    if (this.props.indexItem === this.props.stateItem) {
       this.setState({active: true});
       this.props.getComponentsByPendingLoan(this.props.component.id);
     } else {

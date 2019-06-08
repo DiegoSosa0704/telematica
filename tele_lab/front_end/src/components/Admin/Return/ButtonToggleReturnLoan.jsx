@@ -18,7 +18,6 @@ class ButtonToggleReturnLoan extends Component {
     }).then(response => {
       if (response.ok) {
         response.json().then(data => {
-          console.log("Ahora -> " + data.state);
           this.changeState(data.state);
         })
       } else {

@@ -2,10 +2,17 @@ import React, {Component} from 'react'
 import {Header, List} from "semantic-ui-react";
 import ItemLoan from "./ItemLoan";
 import {connect} from "react-redux";
+import {returnComponent} from "../../../actions";
+import _ from 'lodash'
 
 class ListPendingLoans extends Component {
-  constructor(props) {
-    super(props);
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.pendingLoans !== this.props.pendingLoans) {
+      if (!_.isEqual(nextProps.pendingLoans, this.props.pendingLoans)) {
+        this.props.changeStateItemList(0);
+      }
+    }
   }
 
   render() {
@@ -38,4 +45,12 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps, null)(ListPendingLoans);
+const mapDispatchToProps = dispatch => {
+  return {
+    changeStateItemList: (indexItem) => {
+      return dispatch(returnComponent.changeStateItemList(indexItem));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListPendingLoans);
