@@ -15,6 +15,8 @@ export const PATCH_LOAN_COMPONENT_FAILURE = '@@returnComponent/PATCH_LOAN_COMPON
 
 export const STATE_ITEM_LIST = '@@returnComponent/STATE_ITEM_LIST';
 
+export const END_LOAN = '@@returnComponent/END_LOAN';
+
 export const getPendingLoans = () => ({
   [RSAA]: {
     endpoint: '/api/v1/loan/pending/',
@@ -66,5 +68,15 @@ export const changeStateItemList = (indexItem) => {
   return {
     type: STATE_ITEM_LIST,
     payload: indexItem
+  };
+};
+
+export const endLoan = (componentId, state) => {
+  return {
+    type: END_LOAN,
+    payload: {
+      componentId: componentId,
+      state: state
+    }
   };
 };

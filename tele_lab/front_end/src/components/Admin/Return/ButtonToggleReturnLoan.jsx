@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import {Radio} from 'semantic-ui-react'
+import {connect} from "react-redux";
+import {returnComponent} from "../../../actions";
 
 class ButtonToggleReturnLoan extends Component {
   constructor(props) {
@@ -19,6 +21,7 @@ class ButtonToggleReturnLoan extends Component {
       if (response.ok) {
         response.json().then(data => {
           this.changeState(data.state);
+          this.props.endLoan(this.props.component.loan_id, data.state);
         })
       } else {
         response.json().then(error => {
@@ -66,4 +69,12 @@ class ButtonToggleReturnLoan extends Component {
   }
 }
 
-export default ButtonToggleReturnLoan
+const mapDispatchToProps = dispatch => {
+  return {
+    endLoan: (componentId, state) => {
+      return dispatch(returnComponent.endLoan(componentId, state));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ButtonToggleReturnLoan);
