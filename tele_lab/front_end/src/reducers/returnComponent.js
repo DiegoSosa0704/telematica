@@ -5,7 +5,7 @@ const initialState = {
   pendingLoans: undefined,
   componentsLoan: undefined,
   stateItem: 0,
-  countReturnedComponents: 0
+  endLoan: false,
 };
 
 export default (state = initialState, action) => {
@@ -36,30 +36,33 @@ export default (state = initialState, action) => {
         stateItem: action.payload
       };
     case returnComponent.END_LOAN:
-      //let returnedComponents = countInitialReturnedComponents(state.componentsLoan);
-      //console.log(returnedComponents);
-      console.log(action.payload);
-      console.log(state.componentsLoan);
+      const newState = changeStateComponent(state.componentsLoan, action.payload);
+      const returnedComponents = countReturnedComponents(newState);
+      const endLoan = state.componentsLoan.length === returnedComponents.true;
       return {
         ...state,
-        componentsLoan: _.set(state.componentsLoan, 'state', action.payload.state),
+        componentsLoan: newState,
+        endLoan: endLoan
       };
     default:
       return state
   }
 }
 
-const changeStateComponent = (listComponents) => {
+const changeStateComponent = (listComponents, payload) => {
+  let list = [];
   listComponents.forEach((component => {
-
-    list.push(_.set(component, 'state', action.payload.state))
-  }))
+    if (component.component_id === payload.componentId) {
+      list.push(_.set(component, 'state', payload.state))
+    } else {
+      list.push(component);
+    }
+  }));
+  return list;
 };
 
-const countInitialReturnedComponents = (componentsLoan) => {
+const countReturnedComponents = (componentsLoan) => {
   return _.countBy(componentsLoan, (val) => {
-    return val.state === 0
+    return val.state === 1
   });
-  //return _.filter(componentsLoan, (val) => {return val.state === 1}).length
-
 };

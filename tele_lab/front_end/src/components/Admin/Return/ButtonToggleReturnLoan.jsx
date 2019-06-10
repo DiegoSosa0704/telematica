@@ -21,7 +21,7 @@ class ButtonToggleReturnLoan extends Component {
       if (response.ok) {
         response.json().then(data => {
           this.changeState(data.state);
-          this.props.endLoan(this.props.component.loan_id, data.state);
+          this.props.endLoan(this.props.component.component_id, data.state);
         })
       } else {
         response.json().then(error => {
