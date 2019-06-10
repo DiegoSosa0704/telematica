@@ -9,7 +9,6 @@ class ItemLoan extends Component {
 
   handlerListItem(component) {
     this.setState({active: !this.state.active});
-    this.props.getComponentsByPendingLoan(component.id);
     this.props.changeStateItemList(this.props.indexItem);
   }
 
