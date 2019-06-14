@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Radio} from 'semantic-ui-react'
 import {connect} from "react-redux";
 import {returnComponent} from "../../../actions";
+import {store} from "../../../index";
 
 class ButtonToggleReturnLoan extends Component {
   constructor(props) {
@@ -11,24 +12,26 @@ class ButtonToggleReturnLoan extends Component {
   }
 
   patchLoanComponent() {
-    fetch(`/api/v1/loan/component/update/${this.props.component.loan_id}/`, {
-      method: 'PATCH',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        state: this.state.active ? 0 : 1,
-      }),
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(data => {
-          this.changeState(data.state);
-          this.props.endLoan(this.props.component.component_id, data.state);
-        })
-      } else {
-        response.json().then(error => {
-          console.log(`Failed to load data: ${error.message}`);
-        });
-      }
-    });
+    this.props.endLoan(this.props.component.component_id, this.state.active ? 0 : 1);
+    if (!store.getState().returnComponent.endLoan) {
+      fetch(`/api/v1/loan/component/update/${this.props.component.loan_id}/`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          state: this.state.active ? 0 : 1,
+        }),
+      }).then(response => {
+        if (response.ok) {
+          response.json().then(data => {
+            this.changeState(data.state);
+          })
+        } else {
+          response.json().then(error => {
+            console.log(`Failed to load data: ${error.message}`);
+          });
+        }
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -69,6 +72,12 @@ class ButtonToggleReturnLoan extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    endLoan: state.returnComponent.endLoan,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     endLoan: (componentId, state) => {
@@ -77,4 +86,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(ButtonToggleReturnLoan);
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonToggleReturnLoan);

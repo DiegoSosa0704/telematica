@@ -5,6 +5,7 @@ import ComponentsReturn from "../../components/Admin/Return/ComponentsReturn";
 import _ from "lodash";
 import {connect} from "react-redux";
 import {returnComponent} from "../../actions";
+import ModalEndLoan from "../../components/Admin/Return/ModalEndLoan";
 
 class ReturnComponents extends Component {
   state = {isLoading: false};
@@ -36,6 +37,7 @@ class ReturnComponents extends Component {
             Devoluciones
           </Header>
           <Segment raised className='segment-return'>
+            <ModalEndLoan endLoan={this.props.endLoan} />
             <Grid padded relaxed='very' stackable className='grid-return'>
               <Grid.Row>
                 <Grid.Column>
@@ -68,6 +70,7 @@ class ReturnComponents extends Component {
 const mapStateToProps = state => {
   return {
     pendingLoans: state.returnComponent.pendingLoans,
+    endLoan: state.returnComponent.endLoan,
   };
 };
 
