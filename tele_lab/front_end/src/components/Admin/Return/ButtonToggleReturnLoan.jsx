@@ -12,7 +12,7 @@ class ButtonToggleReturnLoan extends Component {
   }
 
   patchLoanComponent() {
-    this.props.endLoan(this.props.component.component_id, this.state.active ? 0 : 1);
+    this.props.endLoan(this.state.active ? 0 : 1, this.props.index);
     if (!store.getState().returnComponent.endLoan) {
       fetch(`/api/v1/loan/component/update/${this.props.component.loan_id}/`, {
         method: 'PATCH',
@@ -80,8 +80,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    endLoan: (componentId, state) => {
-      return dispatch(returnComponent.endLoan(componentId, state));
+    endLoan: (state, index) => {
+      return dispatch(returnComponent.endLoan(state, index));
     },
   };
 };

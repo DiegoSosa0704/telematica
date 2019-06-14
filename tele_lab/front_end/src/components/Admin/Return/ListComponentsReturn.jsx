@@ -8,7 +8,7 @@ export const ListComponentsReturn = (props) => {
       <React.Fragment key={index}>
         <List.Item>
           <List.Content floated='right'>
-            <ButtonToggleReturnLoan component={component}/>
+            <ButtonToggleReturnLoan component={component} index={index}/>
           </List.Content>
           <List.Content floated='left'>
             <List.Header>{component.name}</List.Header>

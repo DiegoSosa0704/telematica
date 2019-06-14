@@ -71,12 +71,12 @@ export const changeStateItemList = (indexItem) => {
   };
 };
 
-export const endLoan = (componentId, state) => {
+export const endLoan = (state, indexLastComponent) => {
   return {
     type: END_LOAN,
     payload: {
-      componentId: componentId,
-      state: state
+      state: state,
+      indexLastComponent: indexLastComponent
     }
   };
 };

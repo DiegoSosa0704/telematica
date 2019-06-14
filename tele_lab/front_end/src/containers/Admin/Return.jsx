@@ -37,7 +37,7 @@ class ReturnComponents extends Component {
             Devoluciones
           </Header>
           <Segment raised className='segment-return'>
-            <ModalEndLoan endLoan={this.props.endLoan} />
+            <ModalEndLoan propEndLoan={this.props.endLoan} />
             <Grid padded relaxed='very' stackable className='grid-return'>
               <Grid.Row>
                 <Grid.Column>

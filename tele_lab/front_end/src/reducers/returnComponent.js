@@ -42,7 +42,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         componentsLoan: newState,
-        endLoan: endLoan
+        endLoan: endLoan,
+        indexLastComponent: action.payload.indexLastComponent
       };
     default:
       return state
@@ -51,8 +52,8 @@ export default (state = initialState, action) => {
 
 const changeStateComponent = (listComponents, payload) => {
   let list = [];
-  listComponents.forEach((component => {
-    if (component.component_id === payload.componentId) {
+  listComponents.forEach(((component, index) => {
+    if (index === payload.indexLastComponent) {
       list.push(_.set(component, 'state', payload.state))
     } else {
       list.push(component);
