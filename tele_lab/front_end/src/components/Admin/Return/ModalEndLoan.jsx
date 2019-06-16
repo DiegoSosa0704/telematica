@@ -4,7 +4,7 @@ import {Button, Header, Icon, Modal} from "semantic-ui-react";
 import {returnComponent} from "../../../actions";
 
 class ModalEndLoan extends Component {
-  state = { modalOpen: false };
+  state = {modalOpen: false};
 
   componentWillReceiveProps(nextProps, nextContext) {
     this.setState({modalOpen: nextProps.propEndLoan})
@@ -16,12 +16,7 @@ class ModalEndLoan extends Component {
   };
 
   changeLoanState = () => {
-    let endComponent = null;
-    this.props.componentsLoan.forEach((component, index) => {
-      if (index === this.props.indexLastComponent) {
-        endComponent = component;
-      }
-    });
+    let endComponent = this.props.componentsLoan[this.props.indexLastComponent];
     if (endComponent !== null) {
       fetch(`/api/v1/loan/component/update/${endComponent.loan_id}/`, {
         method: 'PATCH',
@@ -33,7 +28,8 @@ class ModalEndLoan extends Component {
         if (response.ok) {
           response.json().then(data => {
             this.props.changeEndLoan(false);
-            this.setState({modalOpen: false})
+            this.fetchChangeLoanState();
+            this.setState({modalOpen: false});
           })
         } else {
           response.json().then(error => {
@@ -42,6 +38,27 @@ class ModalEndLoan extends Component {
         }
       });
     }
+  };
+
+  fetchChangeLoanState = () => {
+    let selectedLoan = this.props.pendingLoans[this.props.stateItem];
+    fetch(`/api/v1/loan/update/${selectedLoan.id}/`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        state_loan: 1,
+      }),
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(data => {
+          this.props.getPendingLoans();
+        })
+      } else {
+        response.json().then(error => {
+          console.log(`Failed to load data: ${error.message}`);
+        });
+      }
+    });
   };
 
   render() {
@@ -71,6 +88,8 @@ const mapStateToProps = state => {
   return {
     indexLastComponent: state.returnComponent.indexLastComponent,
     componentsLoan: state.returnComponent.componentsLoan,
+    stateItem: state.returnComponent.stateItem,
+    pendingLoans: state.returnComponent.pendingLoans,
   };
 };
 
@@ -81,7 +100,10 @@ const mapDispatchToProps = dispatch => {
     },
     changeEndLoan: (state) => {
       return dispatch(returnComponent.changeEndLoan(state));
-    }
+    },
+    getPendingLoans: () => {
+      return dispatch(returnComponent.getPendingLoans());
+    },
   };
 };
 

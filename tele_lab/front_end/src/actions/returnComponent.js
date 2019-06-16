@@ -54,17 +54,6 @@ export const changeStateLoanComponent = (loanComponentId ,state) => ({
   }
 });
 
-export const searchPendingLoans = (loanId) => ({
-  [RSAA]: {
-    endpoint: `/api/v1/loan/components/${loanId}/`,
-    method: 'GET',
-    headers: withAuth({'Content-Type': 'application/json'}),
-    types: [
-      GET_COMPONENTS_REQUEST, GET_COMPONENTS_SUCCESS, GET_COMPONENTS_FAILURE
-    ]
-  }
-});
-
 export const changeStateItemList = (indexItem) => {
   return {
     type: STATE_ITEM_LIST,

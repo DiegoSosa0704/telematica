@@ -13,7 +13,8 @@ export default (state = initialState, action) => {
     case returnComponent.GET_PENDING_LOANS_SUCCESS:
       return {
         ...state,
-        pendingLoans: action.payload
+        pendingLoans: action.payload,
+        componentsLoan: undefined
       };
     case returnComponent.GET_PENDING_LOANS_FAILURE:
       return state;
