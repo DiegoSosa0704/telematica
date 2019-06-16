@@ -32,6 +32,7 @@ class ModalEndLoan extends Component {
       }).then(response => {
         if (response.ok) {
           response.json().then(data => {
+            this.props.changeEndLoan(false);
             this.setState({modalOpen: false})
           })
         } else {
@@ -41,7 +42,6 @@ class ModalEndLoan extends Component {
         }
       });
     }
-
   };
 
   render() {
@@ -79,6 +79,9 @@ const mapDispatchToProps = dispatch => {
     endLoan: (state, index) => {
       return dispatch(returnComponent.endLoan(state, index));
     },
+    changeEndLoan: (state) => {
+      return dispatch(returnComponent.changeEndLoan(state));
+    }
   };
 };
 

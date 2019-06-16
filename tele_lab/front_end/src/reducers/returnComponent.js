@@ -24,8 +24,6 @@ export default (state = initialState, action) => {
       };
     case returnComponent.GET_COMPONENTS_FAILURE:
       return state;
-    case returnComponent.PATCH_LOAN_COMPONENT_REQUEST:
-      return state;
     case returnComponent.PATCH_LOAN_COMPONENT_SUCCESS:
       return state;
     case returnComponent.PATCH_LOAN_COMPONENT_FAILURE:
@@ -44,6 +42,11 @@ export default (state = initialState, action) => {
         componentsLoan: newState,
         endLoan: endLoan,
         indexLastComponent: action.payload.indexLastComponent
+      };
+    case returnComponent.CHANGE_END_LOAN:
+      return  {
+        ...state,
+        endLoan: action.payload
       };
     default:
       return state
