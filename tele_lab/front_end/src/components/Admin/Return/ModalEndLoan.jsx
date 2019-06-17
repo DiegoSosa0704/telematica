@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from "react-redux";
 import {Button, Header, Icon, Modal} from "semantic-ui-react";
 import {returnComponent} from "../../../actions";
+import toast from 'toasted-notes'
 
 class ModalEndLoan extends Component {
   state = {modalOpen: false};
@@ -52,6 +53,9 @@ class ModalEndLoan extends Component {
       if (response.ok) {
         response.json().then(data => {
           this.props.getPendingLoans();
+          toast.notify("Préstamo finalizado.", {
+            position: "bottom-left"
+          });
         })
       } else {
         response.json().then(error => {

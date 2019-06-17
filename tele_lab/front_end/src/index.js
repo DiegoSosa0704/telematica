@@ -17,6 +17,7 @@ import MessageSignUp from "./containers/MessageSignUp";
 import HomePage from "./containers/Home";
 import PrivateRoute from "./containers/PrivateRouter";
 import './custom.css'
+import 'toasted-notes/src/styles.css';
 
 const history = createBrowserHistory();
 export const store = configureStore(history);

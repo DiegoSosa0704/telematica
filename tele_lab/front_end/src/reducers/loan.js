@@ -1,5 +1,6 @@
 import * as loan from '../actions/loan'
 import * as auth from "../actions/auth";
+import toast from 'toasted-notes'
 
 const initialState = {
   users: undefined,
@@ -62,6 +63,9 @@ export default (state = initialState, action) => {
     case auth.LOGOUT_SUCCESSFUL:
       return initialState;
     case loan.CREATE_LOAN_SUCCESS:
+      toast.notify("Préstamo realizado.", {
+        position: "bottom-left"
+      });
       return {
         ...state,
         userLoan: {},

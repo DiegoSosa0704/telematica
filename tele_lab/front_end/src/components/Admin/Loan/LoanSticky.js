@@ -7,10 +7,6 @@ import AcademicSearchEngine from "../../../components/Admin/StudentSearch";
 import {loan} from "../../../actions";
 import {formatDateTime} from "../../../utils";
 
-/*import {SemanticToastContainer, toast} from 'react-semantic-toasts';
-import 'react-semantic-toasts/styles/react-semantic-alert.css';
-import {store} from "../../../index";*/
-
 class LoanSticky extends Component {
   constructor(props) {
     super(props);
@@ -18,18 +14,6 @@ class LoanSticky extends Component {
   }
 
   handlerCreateLoan() {
-    /*setTimeout(() => {
-      toast(
-        {
-          type: 'success',
-          icon: 'check',
-          title: 'Registro agregado',
-          description: 'El prestamo fue realizado satisfactoriamente',
-          animation: 'fade left',
-          time: 2500,
-        }
-      );
-    }, 300);*/
     let listComponents = [];
     this.props.listComponents.forEach(val => listComponents.push(val.id));
     const dateTime = formatDateTime(new Date());
@@ -50,7 +34,6 @@ class LoanSticky extends Component {
         raised>
         <Card.Content
           className='contentSticky'>
-          {/*<SemanticToastContainer/>*/}
           <Divider horizontal>
             <Header as='h4'>
               <Icon name='user'/>
