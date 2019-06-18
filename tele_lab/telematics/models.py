@@ -2,20 +2,32 @@ from django.db import models
 from users.models import User
 
 
-class Headquarters(models.Model):
-    name = models.CharField(verbose_name="Sede", max_length=255, blank=False, null=False)
+class Places(models.Model):
+    CITY = 'CI'
+    HEADQUARTERS = 'SE'
+    WAREHOUSE = 'BO'
+    TYPE_PLACE = (
+        (CITY, 'Ciudad'),
+        (HEADQUARTERS, 'Sede'),
+        (WAREHOUSE, 'Bodega'),
+    )
+    name = models.CharField(verbose_name='Nombre', max_length=25, blank=False, null=False)
+    type_place = models.CharField(verbose_name='Tipo lugar', choices=TYPE_PLACE, max_length=2, blank=False,
+                                  null=False)
+    description = models.TextField(verbose_name='Descripción', blank=True, null=True)
+    place = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='places')
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name_plural = 'Sedes'
+        verbose_name_plural = 'Lugares'
 
 
 class AcademicProgram(models.Model):
     name = models.CharField(verbose_name="Nombre", max_length=255, blank=False, null=False)
     code = models.IntegerField(verbose_name="Código", blank=False, null=False)
-    headquarters = models.ForeignKey(Headquarters, models.CASCADE, blank=False, null=False)
+    place = models.ForeignKey(Places, models.CASCADE, blank=False, null=False)
 
     def __str__(self):
         return str(self.code) + " -> " + self.name
@@ -31,7 +43,8 @@ class Academic(models.Model):
         (STUDENT, 'Estudiante'),
         (TEACHER, 'Docente'),
     )
-    code = models.CharField(verbose_name='Código', max_length=25, unique=True, blank=False, null=False, primary_key=True)
+    code = models.CharField(verbose_name='Código', max_length=25, unique=True, blank=False, null=False,
+                            primary_key=True)
     type = models.CharField(verbose_name='Tipo de usuario', choices=TYPE_USER_CHOICES, max_length=2,
                             blank=False, null=False)
     first_name = models.CharField(verbose_name='Nombres', max_length=25, blank=False, null=False)
@@ -81,7 +94,7 @@ class ComputerEquipment(models.Model):
 
 class TypeComponent(models.Model):
     name = models.CharField(verbose_name='Nombre', max_length=25, blank=False, null=False)
-    description = models.CharField(verbose_name='Nombre', max_length=255, blank=True, null=True)
+    description = models.TextField(verbose_name='Nombre', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -90,17 +103,29 @@ class TypeComponent(models.Model):
         verbose_name_plural = 'Tipos de componentes'
 
 
-class Warehouse(models.Model):
-    name = models.CharField(verbose_name='Nombre', max_length=25, blank=False, null=False)
-    description = models.CharField(verbose_name='Descripción', max_length=255, blank=True, null=True)
-    headquarters = models.ForeignKey(Headquarters, on_delete=models.CASCADE, blank=False, null=False,
-                                     verbose_name='Sede')
+class ComponentStock(models.Model):
+    # level choices
+    LEVEL_1 = 'L1'
+    LEVEL_2 = 'L2'
+    LEVEL_3 = 'L3'
+    LEVEL_4 = 'L4'
+    LEVEL_CHOICES = (
+        (LEVEL_1, 'Nivel 1'),
+        (LEVEL_2, 'Nivel 2'),
+        (LEVEL_3, 'Nivel 3'),
+        (LEVEL_4, 'Nivel 4'),
+    )
+    name = models.CharField(verbose_name='Nombre', max_length=50, blank=False, null=False)
+    level = models.CharField(verbose_name='Nivel', max_length=2, choices=LEVEL_CHOICES, blank=False, null=False)
+    description = models.TextField(verbose_name='Descripción', blank=True, null=True)
+    type_component = models.ForeignKey(TypeComponent, on_delete=models.CASCADE, blank=False, null=False,
+                                       verbose_name='Tipo de Componente')
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name_plural = 'Bodegas'
+        verbose_name_plural = 'Stock de componentes'
 
 
 class Component(models.Model):
@@ -125,36 +150,21 @@ class Component(models.Model):
         (IN_MAINTENANCE, 'En Mantenimiento'),
         (NOT_AVAILABLE, 'No Disponible'),
     )
-
-    # level choices
-    LEVEL_1 = 'L1'
-    LEVEL_2 = 'L2'
-    LEVEL_3 = 'L3'
-    LEVEL_4 = 'L4'
-    LEVEL_CHOICES = (
-        (LEVEL_1, 'Nivel 1'),
-        (LEVEL_2, 'Nivel 2'),
-        (LEVEL_3, 'Nivel 3'),
-        (LEVEL_4, 'Nivel 4'),
-    )
-    name = models.CharField(verbose_name='Nombre', max_length=50, blank=False, null=False)
+    stock_component = models.ForeignKey(ComponentStock, on_delete=models.CASCADE, blank=False, null=False,
+                                        verbose_name='Componente')
     serial = models.CharField(verbose_name='Serial', max_length=50, blank=True, null=True)
     uptc_serial = models.CharField(verbose_name='UPTC-Serial', max_length=25, blank=True, null=True)
     state = models.CharField(verbose_name='Estado', max_length=2, choices=STATE_CHOICES, blank=False, null=False)
     status = models.CharField(verbose_name='Disponibilidad', max_length=2, choices=STATUS_CHOICES, blank=False,
                               null=False)
-    description = models.CharField(verbose_name='Descripción', max_length=50, blank=True, null=True)
-    observations = models.CharField(verbose_name='Observaciones', max_length=50, blank=True, null=True)
-    level = models.CharField(verbose_name='Nivel', max_length=2, choices=LEVEL_CHOICES, blank=False, null=False)
-    type_component = models.ForeignKey(TypeComponent, on_delete=models.CASCADE, blank=False, null=False,
-                                       verbose_name='Tipo de Componente')
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, blank=False, null=False,
-                                  verbose_name='Almacén')
+    observation = models.TextField(verbose_name='Observaciones', blank=True, null=True)
+    place = models.ForeignKey(Places, on_delete=models.CASCADE, blank=False, null=False,
+                              verbose_name='Lugar')
     computer_equipment = models.OneToOneField(ComputerEquipment, on_delete=models.CASCADE, unique=True, blank=True,
                                               null=True, verbose_name='Equipo de cómputo')
 
     def __str__(self):
-        return self.name
+        return self.serial
 
     class Meta:
         verbose_name_plural = 'Componentes'
@@ -216,7 +226,7 @@ class Sanction(models.Model):
     type = models.SmallIntegerField(choices=TYPE_CHOICES, blank=False, null=False)
     state = models.SmallIntegerField(choices=STATUS_CHOICES, blank=False, null=False,
                                      verbose_name='Tipo de sanción')
-    description = models.TextField(verbose_name='Descripción', max_length=255, blank=False, null=False)
+    description = models.TextField(verbose_name='Descripción', blank=False, null=False)
     loan_component = models.ForeignKey(LoanComponent, models.CASCADE, blank=False, null=False,
                                        verbose_name='Prestamo')
 
@@ -242,8 +252,8 @@ class Maintenance(models.Model):
     maintenance_type = models.SmallIntegerField(verbose_name='Tipo de mantenimiento', choices=MAINTENANCE_TYPE,
                                                 blank=False, null=False)
     state = models.SmallIntegerField(verbose_name='Estado', choices=STATUS_CHOICES, blank=False, null=False)
-    maintenance = models.CharField(verbose_name='Mantenimiento', max_length=50, blank=False, null=False)
-    recommendations = models.CharField(verbose_name='Recomendaciones', max_length=50, blank=True, null=True)
+    maintenance = models.TextField(verbose_name='Mantenimiento', blank=False, null=False)
+    recommendations = models.TextField(verbose_name='Recomendaciones', blank=True, null=True)
     administrator = models.ForeignKey(Administrator, models.CASCADE, blank=False,
                                       null=False, verbose_name='Administrador')
 
