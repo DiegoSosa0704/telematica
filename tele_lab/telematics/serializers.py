@@ -199,6 +199,20 @@ class ComponentStockSerializer(serializers.ModelSerializer):
         model = ComponentStock
         fields = '__all__'
 
+    def to_representation(self, instance):
+        available_stock = Component.objects.filter(stock_component_id=instance.id, status="AV")
+        available_stock = available_stock.count()
+        response_dict = dict(
+            id=instance.id,
+            name=instance.name,
+            level=instance.level,
+            description=instance.description,
+            type_component=instance.type_component.name,
+            available=available_stock,
+            stock=Component.objects.filter(stock_component_id=instance.id).count(),
+        )
+        return response_dict
+
 
 """
 class LoanComponentSerializer(serializers.ModelSerializer):
