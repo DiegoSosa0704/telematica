@@ -15,19 +15,14 @@ export function ComponentTableHeader(props) {
           Nombre
         </Table.HeaderCell>
 
-        <Table.HeaderCell width={1} sorted={props.column === 'serial' ? props.direction : null}
-                          onClick={() => props.handleSort('serial')}>
-          Serial
-        </Table.HeaderCell>
-
-        <Table.HeaderCell width={1} sorted={props.column === 'uptc_serial' ? props.direction : null}
-                          onClick={() => props.handleSort('uptc_serial')}>
-          Serial UPTC
-        </Table.HeaderCell>
-
         <Table.HeaderCell width={1} sorted={props.column === 'status' ? props.direction : null}
                           onClick={() => props.handleSort('status')}>
           Estado
+        </Table.HeaderCell>
+
+        <Table.HeaderCell width={1} sorted={props.column === 'stock' ? props.direction : null}
+                          onClick={() => props.handleSort('stock')}>
+          Stock
         </Table.HeaderCell>
 
         <Table.HeaderCell width={1}>

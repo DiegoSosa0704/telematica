@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from users import serializers as user_serializers
-from .models import Loan, Sanction, AcademicProgram, Academic, Component, LoanComponent, Administrator
+from .models import Loan, Sanction, AcademicProgram, Academic, Component, LoanComponent, Administrator, ComponentStock
 
 
 class SanctionSerializer(serializers.ModelSerializer):
@@ -113,6 +113,7 @@ class LoanBaseSerializer(serializers.ModelSerializer):
 
 class LoanSerializer(serializers.ModelSerializer):
     components = serializers.ListField(required=True)
+
     # state_loan_component = serializers.IntegerField(required=True)
 
     class Meta:
@@ -191,6 +192,12 @@ class LoanComponentSerializer(serializers.ModelSerializer):
             'loan_object',
             'component_object',
         )
+
+
+class ComponentStockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ComponentStock
+        fields = '__all__'
 
 
 """

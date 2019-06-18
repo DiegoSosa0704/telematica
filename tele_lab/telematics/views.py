@@ -7,9 +7,10 @@ from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 
 from utils.utils_token import get_user_token
-from .models import Loan, Sanction, AcademicProgram, Component, LoanComponent
+from .models import Loan, Sanction, AcademicProgram, Component, LoanComponent, ComponentStock
 from .serializers import LoanSerializer, SanctionSerializer, AcademicProgramSerializer, ComponentSerializer, \
-    ComponentLoanSerializer, LoanComponentSerializer, LoanBaseSerializer, LoanHistorySerializer
+    ComponentLoanSerializer, LoanComponentSerializer, LoanBaseSerializer, LoanHistorySerializer, \
+    ComponentStockSerializer
 
 
 class LoanView(mixins.UpdateModelMixin,
@@ -37,11 +38,9 @@ class LoanView(mixins.UpdateModelMixin,
             sort = request.GET.get('_sort')
             limit = request.GET.get('_limit')
             order_sort = "-" + sort if order == 'desc' else sort
-            components = Component.objects.filter(
+            components = ComponentStock.objects.filter(
                 Q(id__icontains=q) |
-                Q(name__icontains=q) |
-                Q(serial__icontains=q) |
-                Q(uptc_serial__icontains=q)
+                Q(name__icontains=q)
             )
             if components_exclude:
                 components = components.exclude(id__in=components_exclude).order_by(order_sort)
@@ -50,7 +49,7 @@ class LoanView(mixins.UpdateModelMixin,
             paginator = Paginator(components, int(limit))
             components_paginate = paginator.get_page(page)
             count_components = components.count()
-            serializer = ComponentSerializer(components_paginate, many=True)
+            serializer = ComponentStockSerializer(components_paginate, many=True)
             return Response({"components": serializer.data, "totalCount": count_components}, status=status.HTTP_200_OK)
 
     @action(methods=['post'], detail=False)
