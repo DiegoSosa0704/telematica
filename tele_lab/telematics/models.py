@@ -67,7 +67,7 @@ class Administrator(models.Model):
     first_name = models.CharField(verbose_name='Nombres', max_length=25, blank=False, null=False)
     last_name = models.CharField(verbose_name='Apellidos', max_length=25, blank=False, null=False)
     phone = models.CharField(verbose_name='Teléfono', max_length=25, blank=True, null=True)
-    address = models.CharField(verbose_name='Dirección', max_length=25, blank=True, null=True)
+    address = models.CharField(verbose_name='Dirección', max_length=50, blank=True, null=True)
 
     def __str__(self):
         return self.last_name + " " + self.first_name
@@ -196,6 +196,7 @@ class LoanComponent(models.Model):
         (STATUS_FINALIZED, 'Entregado'),
     )
     state = models.SmallIntegerField(choices=STATUS_CHOICES, blank=False, null=False)
+    date_end = models.DateField(verbose_name='Fecha de entrega', blank=False, null=False)
     loan = models.ForeignKey(Loan, on_delete=models.CASCADE, verbose_name='Prestamo', blank=False, null=False, )
     component = models.ForeignKey(Component, on_delete=models.CASCADE, verbose_name='Componente', blank=False,
                                   null=False, related_name='test')
