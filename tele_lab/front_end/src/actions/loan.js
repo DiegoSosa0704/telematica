@@ -22,6 +22,8 @@ export const CREATE_LOAN_FAILURE = '@@loan/CREATE_LOAN_FAILURE';
 
 export const SELECTED_COMPONENT_LOAN = '@@loan/SELECTED_COMPONENT_LOAN';
 
+export const STATUS_MODAL_SELECTED_COMPONENT = '@@loan/STATUS_MODAL_SELECTED_COMPONENT';
+
 export const getListUsers = () => ({
   [RSAA]: {
     endpoint: '/api/v1/user/',
@@ -109,4 +111,9 @@ export const createLoan = (components, academicId, dateStart) => ({
 export const selectedComponentOnLoan = (component) => ({
   type: SELECTED_COMPONENT_LOAN,
   payload: component
+});
+
+export const statusModalSelectedComponent = (status) => ({
+  type: STATUS_MODAL_SELECTED_COMPONENT,
+  payload: status,
 });

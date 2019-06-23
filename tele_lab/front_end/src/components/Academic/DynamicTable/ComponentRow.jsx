@@ -24,6 +24,7 @@ class ComponentRow extends React.Component {
 
   selectRow(component) {
     this.props.selectedComponentOnLoan(component);
+    this.props.statusModalSelectedComponent(true);
   }
 
   componentDidMount() {
@@ -75,6 +76,9 @@ const mapDispatchToProps = dispatch => {
     },
     selectedComponentOnLoan: (component) => {
       return dispatch(loan.selectedComponentOnLoan(component));
+    },
+    statusModalSelectedComponent: (state) => {
+      return dispatch(loan.statusModalSelectedComponent(state));
     },
   };
 };

@@ -12,6 +12,7 @@ const initialState = {
   success: false,
   addComponentState: false,
   selectedComponent: undefined,
+  statusModalSelectedComponent: false,
 };
 
 export default (state = initialState, action) => {
@@ -77,6 +78,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedComponent: action.payload
+      };
+    case loan.STATUS_MODAL_SELECTED_COMPONENT:
+      return {
+        ...state,
+        statusModalSelectedComponent: action.payload
       };
     default:
       return state

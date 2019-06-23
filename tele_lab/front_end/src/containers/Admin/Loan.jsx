@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Grid, Header, Rail, Segment, Sticky} from "semantic-ui-react";
 import ComponentList from "../../components/Academic/DynamicTable/ComponentList";
 import LoanSticky from "../../components/Admin/Loan/LoanSticky";
+import ModalStockComponent from "../../components/Admin/Loan/ModalStockComponent";
 
 class Loan extends Component {
   state = {searchQuery: '', context: null};
@@ -19,6 +20,9 @@ class Loan extends Component {
               <Grid padded>
                 <Grid.Row>
                   <Grid.Column>
+                    <ModalStockComponent
+                      component={this.props.selectedComponent}
+                    />
                     <ComponentList/>
                   </Grid.Column>
                 </Grid.Row>
