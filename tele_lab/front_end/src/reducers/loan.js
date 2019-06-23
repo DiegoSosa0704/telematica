@@ -10,7 +10,8 @@ const initialState = {
   countComponents: 0,
   lastQuery: undefined,
   success: false,
-  addComponentState: false
+  addComponentState: false,
+  selectedComponent: undefined,
 };
 
 export default (state = initialState, action) => {
@@ -73,7 +74,10 @@ export default (state = initialState, action) => {
       };
     case loan.CREATE_LOAN_FAILURE:
     case loan.SELECTED_COMPONENT_LOAN:
-      return state;
+      return {
+        ...state,
+        selectedComponent: action.payload
+      };
     default:
       return state
   }

@@ -22,7 +22,7 @@ class ComponentTable extends React.Component {
           onChangeLimit={this.props.onChangeLimit}
         />
         Total: {this.props.totalCount}.
-        <Table celled selectable sortable>
+        <Table celled selectable sortable unstackable>
           <ComponentTableHeader
             column={this.props.column}
             direction={this.props.direction}
