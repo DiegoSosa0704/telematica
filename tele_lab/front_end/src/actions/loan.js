@@ -20,6 +20,7 @@ export const CREATE_LOAN_REQUEST = '@@loan/CREATE_LOAN_REQUEST';
 export const CREATE_LOAN_SUCCESS = '@@loan/CREATE_LOAN_SUCCESS';
 export const CREATE_LOAN_FAILURE = '@@loan/CREATE_LOAN_FAILURE';
 
+export const SELECTED_COMPONENT_LOAN = '@@loan/SELECTED_COMPONENT_LOAN';
 
 export const getListUsers = () => ({
   [RSAA]: {
@@ -103,4 +104,9 @@ export const createLoan = (components, academicId, dateStart) => ({
       CREATE_LOAN_REQUEST, CREATE_LOAN_SUCCESS, CREATE_LOAN_FAILURE
     ]
   }
+});
+
+export const selectedComponentOnLoan = (component) => ({
+  type: SELECTED_COMPONENT_LOAN,
+  payload: component
 });

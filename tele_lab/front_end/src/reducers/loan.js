@@ -72,6 +72,8 @@ export default (state = initialState, action) => {
         components: [],
       };
     case loan.CREATE_LOAN_FAILURE:
+    case loan.SELECTED_COMPONENT_LOAN:
+      return state;
     default:
       return state
   }
