@@ -15,6 +15,8 @@ urlpatterns = [
          name='get_pending_loan'),
     path('loan/component/update/<int:pk>/', views.LoanView.as_view({'patch': 'patch'}),
          name='update'),
+    path('loan/stock-components/<int:main_component>/', views.LoanView.as_view({'get': 'get_stock_components'}),
+         name='get_stock_components'),
     path('loan/update/<int:pk>/', views.LoanView.as_view({'put': 'change_loan'}),
          name='change_loan'),
     path('loan/pending/search', views.LoanView.as_view({'get': 'search_pending_loan'}), name='search_pending_loan'),

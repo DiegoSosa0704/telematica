@@ -143,6 +143,15 @@ class LoanView(mixins.UpdateModelMixin,
             serializer = LoanHistorySerializer(loan_paginate, many=True)
             return Response({"loans": serializer.data, "totalCount": count_loans}, status=status.HTTP_200_OK)
 
+    @action(methods=['get'], detail=False)
+    def get_stock_components(self, request, main_component):
+        stock_components = Component.objects.filter(stock_component=main_component).order_by('status')
+        stock_components_serializer = ComponentSerializer(stock_components, many=True)
+        if stock_components_serializer.data:
+            return Response(stock_components_serializer.data, status.HTTP_200_OK)
+        else:
+            return Response({"details": "Not found"}, status.HTTP_404_NOT_FOUND)
+
     @action(methods=['patch'], detail=True)
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
