@@ -205,6 +205,7 @@ class ComponentStockSerializer(serializers.ModelSerializer):
         response_dict = dict(
             id=instance.id,
             name=instance.name,
+            image=instance.image.url,
             level=instance.level,
             description=instance.description,
             type_component=instance.type_component.name,

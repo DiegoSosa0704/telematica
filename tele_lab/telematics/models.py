@@ -117,6 +117,7 @@ class ComponentStock(models.Model):
     )
     name = models.CharField(verbose_name='Nombre', max_length=50, blank=False, null=False)
     level = models.CharField(verbose_name='Nivel', max_length=2, choices=LEVEL_CHOICES, blank=False, null=False)
+    image = models.ImageField(upload_to='static/images')
     description = models.TextField(verbose_name='Descripción', blank=True, null=True)
     type_component = models.ForeignKey(TypeComponent, on_delete=models.CASCADE, blank=False, null=False,
                                        verbose_name='Tipo de Componente')

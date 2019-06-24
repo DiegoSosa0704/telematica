@@ -40,7 +40,9 @@ class LoanView(mixins.UpdateModelMixin,
             order_sort = "-" + sort if order == 'desc' else sort
             components = ComponentStock.objects.filter(
                 Q(id__icontains=q) |
-                Q(name__icontains=q)
+                Q(name__icontains=q) |
+                Q(level__icontains=q) |
+                Q(type_component__name__icontains=q)
             )
             if components_exclude:
                 components = components.exclude(id__in=components_exclude).order_by(order_sort)
