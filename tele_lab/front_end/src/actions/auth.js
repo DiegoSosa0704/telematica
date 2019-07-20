@@ -25,8 +25,8 @@ export const GET_USER_REQUEST = '@@auth/GET_USER_REQUEST';
 export const GET_USER_SUCCESS = '@@auth/GET_USER_SUCCESS';
 export const GET_USER_FAILURE = '@@auth/GET_USER_FAILURE';
 
-const client_id = "JV3yHjpcCvGLj0rPKUmQ8d944f3czVgzg4UEoASk";
-const client_secret = "kkDj7gm1WeWXgH8XmsrJtwNp3jRUxYvf25B72niNIjUeSZSt7KygX5Hi6TL4r1bjUYNtRhzWElGj5cNghqUJU71rhPIzjr45s2otkA2eTmuCYpq4QJCk2u1sRg5AbWI7";
+const client_id = "0AQOF28iUFvNheSK5XDzaDnKpkaMEixPJn0yzzKN";
+const client_secret = "CY0Q0idjy9Dsve60HXvSMyWqR8GXYw1F1foErINsCDluaW3I1qECS1IIalYfH3xzR7MRwqcfBEeGWQLoqwFJh95TURSVgZpHVOv45k5pgLVcbFM92SVy6TgsTgWsDtkI";
 
 
 export const login = (username, password, token) => ({

@@ -25,13 +25,11 @@ export function ComponentTableHeader(props) {
           Nivel
         </Table.HeaderCell>
 
-        <Table.HeaderCell width={1} sorted={props.column === 'status' ? props.direction : null}
-                          onClick={() => props.handleSort('status')}>
+        <Table.HeaderCell width={1}>
           Disponible
         </Table.HeaderCell>
 
-        <Table.HeaderCell width={1} sorted={props.column === 'stock' ? props.direction : null}
-                          onClick={() => props.handleSort('stock')}>
+        <Table.HeaderCell width={1}>
           Stock total
         </Table.HeaderCell>
 

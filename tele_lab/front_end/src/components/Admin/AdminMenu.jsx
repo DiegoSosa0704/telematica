@@ -33,7 +33,7 @@ class AdminMenu extends Component {
           borderRadius: '0'
         }}>
           <Menu.Item>
-            <Image src={'https://react.semantic-ui.com/logo.png'} size='tiny' centered/>
+            <Image src={'../static/images/logo.png'} size='tiny' centered/>
           </Menu.Item>
           <Menu.Item>
             Préstamos

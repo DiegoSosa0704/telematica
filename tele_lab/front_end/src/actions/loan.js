@@ -20,6 +20,10 @@ export const CREATE_LOAN_REQUEST = '@@loan/CREATE_LOAN_REQUEST';
 export const CREATE_LOAN_SUCCESS = '@@loan/CREATE_LOAN_SUCCESS';
 export const CREATE_LOAN_FAILURE = '@@loan/CREATE_LOAN_FAILURE';
 
+export const GET_STOCK_COMPONENTS_REQUEST = "@@loan/GET_STOCK_COMPONENTS";
+export const GET_STOCK_COMPONENTS_SUCCESS = "@@loan/GET_STOCK_COMPONENTS";
+export const GET_STOCK_COMPONENTS_FAILURE = "@@loan/GET_STOCK_COMPONENTS";
+
 export const SELECTED_COMPONENT_LOAN = '@@loan/SELECTED_COMPONENT_LOAN';
 
 export const STATUS_MODAL_SELECTED_COMPONENT = '@@loan/STATUS_MODAL_SELECTED_COMPONENT';
@@ -116,4 +120,15 @@ export const selectedComponentOnLoan = (component) => ({
 export const statusModalSelectedComponent = (status) => ({
   type: STATUS_MODAL_SELECTED_COMPONENT,
   payload: status,
+});
+
+export const getStockComponents = (componentId) => ({
+  [RSAA]: {
+    endpoint: `/api/v1/loan/stock-components/${componentId}/`,
+    method: 'GET',
+    headers: withAuth({'Content-Type': 'application/json'}),
+    types: [
+      GET_STOCK_COMPONENTS_REQUEST, GET_STOCK_COMPONENTS_SUCCESS, GET_STOCK_COMPONENTS_FAILURE
+    ]
+  }
 });

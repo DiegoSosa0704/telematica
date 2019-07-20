@@ -35,7 +35,10 @@ const mapDispatchToProps = dispatch => {
   return {
     changeStatusModal: (state) => {
       return dispatch(loan.statusModalSelectedComponent(state))
-    }
+    },
+    getStockComponent: (componentId) => {
+      return dispatch(loan.getStockComponents(componentId));
+    },
   };
 };
 

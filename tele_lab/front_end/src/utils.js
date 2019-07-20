@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export const changeStateComponent = (state) => {
   if (state === "IN") {
     return "En servicio"
@@ -68,3 +70,17 @@ export const formatDateTime = (today) => {
   let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   return date + ' ' + time;
 };
+
+function getPaginatedItems(items, page, pageSize) {
+  let pg = page || 1,
+    pgSize = pageSize || 100,
+    offset = (pg - 1) * pgSize,
+    pagedItems = _.drop(items, offset).slice(0, pgSize);
+  return {
+    page: pg,
+    pageSize: pgSize,
+    total: items.length,
+    total_pages: Math.ceil(items.length / pgSize),
+    data: pagedItems
+  };
+}

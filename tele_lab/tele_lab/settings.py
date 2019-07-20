@@ -150,15 +150,15 @@ OAUTH2_PROVIDER = {
 AUTH_USER_MODEL = 'users.User'
 
 # Client ID - Oauth2 Toolkit configuration
-OAUTH2_CLIENT_ID = 'JV3yHjpcCvGLj0rPKUmQ8d944f3czVgzg4UEoASk'
+OAUTH2_CLIENT_ID = '0AQOF28iUFvNheSK5XDzaDnKpkaMEixPJn0yzzKN'
 
 # Email settings
 EMAIL_USE_TLS = True
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = ''  # -> Email address
-EMAIL_HOST_PASSWORD = ''  # -> Email password
+EMAIL_HOST_USER = 'diego.sosa0704@gmail.com'  # -> Email address
+EMAIL_HOST_PASSWORD = 'alduin123'  # -> Email password
 EMAIL_PORT = 587
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
