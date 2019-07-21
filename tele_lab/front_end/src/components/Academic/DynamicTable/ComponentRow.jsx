@@ -1,7 +1,6 @@
 import React from "react";
-import {Button, Icon, Table} from "semantic-ui-react";
+import {Icon, Table} from "semantic-ui-react";
 import PropTypes from "prop-types";
-import {changeStatusComponent} from '../../../utils'
 import {loan} from "../../../actions";
 import {connect} from "react-redux";
 import {store} from "../../../index";

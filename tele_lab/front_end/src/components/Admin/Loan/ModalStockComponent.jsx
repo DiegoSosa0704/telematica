@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, Header, Icon, Image, Modal} from 'semantic-ui-react'
+import {Modal} from 'semantic-ui-react'
 import {loan} from "../../../actions";
 import {connect} from "react-redux";
 import ModalStockComponentContent from "./ModalStockComponentContent";
@@ -35,9 +35,6 @@ const mapDispatchToProps = dispatch => {
   return {
     changeStatusModal: (state) => {
       return dispatch(loan.statusModalSelectedComponent(state))
-    },
-    getStockComponent: (componentId) => {
-      return dispatch(loan.getStockComponents(componentId));
     },
   };
 };
