@@ -12,8 +12,11 @@ class ModalStockComponent extends Component {
   render() {
     return (
       <Modal
+        closeIcon
+        size={'large'}
         open={this.props.statusModal}
         onClose={this.handleClose}
+        centered={false}
       >
         {this.props.selectedComponent !== undefined ?
           <ModalStockComponentContent component={this.props.selectedComponent}/> :

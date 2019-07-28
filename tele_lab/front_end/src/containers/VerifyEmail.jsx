@@ -22,7 +22,6 @@ class VerifyEmail extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     onVerifyEmail: (token) => {
-      console.log(token)
       return dispatch(auth.verifyEmail(token));
     }
   };

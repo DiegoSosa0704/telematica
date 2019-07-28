@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Divider, Header, Image, Modal} from 'semantic-ui-react'
+import {Divider, Grid, GridColumn, Header, Image, Label, Modal, Segment} from 'semantic-ui-react'
 import TableComponentsOfModal from "./TableModalComponents/TableComponentsOfModal";
 
 class ModalStockComponentContent extends Component {
@@ -32,26 +32,40 @@ class ModalStockComponentContent extends Component {
     if (this.state.stockComponent !== undefined) {
       return (
         <React.Fragment>
-          <Modal.Header>Componente</Modal.Header>
-          <Modal.Content image scrolling>
-            <Image size='medium' src={`../${this.props.component.image}`} wrapped/>
-            <Modal.Description>
-              <Header>{this.props.component.name}</Header>
-              <p>
-                <b>Tipo: </b> <span>{this.props.component.type_component}</span>
-              </p>
-              <p>
-                <b>Nivel de préstamo: </b> <span>{this.props.component.level}</span>
-              </p>
-              <p>
-                <b>Stock total: </b> <span>{this.props.component.stock}</span>
-              </p>
-              <p>
-                <b>Descripción: </b> <span>{this.props.component.description}</span>
-              </p>
-              <Divider section/>
-              <TableComponentsOfModal stockComponent={this.state.stockComponent} />
-            </Modal.Description>
+          <Modal.Header>
+            {this.props.component.name}
+          </Modal.Header>
+          <Modal.Content image>
+            <Segment padded='very' raised>
+              <Grid columns={2} divided>
+                <Grid.Row>
+                  <GridColumn textAlign={"center"} width={4}>
+                    <Image size='small' src={`../${this.props.component.image}`} wrapped/>
+                  </GridColumn>
+                  <Grid.Column width={12}>
+                    <Modal.Description>
+                      <Header dividing>{this.props.component.name}</Header>
+                      <p>
+                        <b>Tipo: </b> <span>{this.props.component.type_component}</span>
+                      </p>
+                      <p>
+                        <b>Nivel de préstamo: </b> <span>{this.props.component.level}</span>
+                      </p>
+                      <p>
+                        <b>Stock total: </b> <span>{this.props.component.stock}</span>
+                      </p>
+                      <p>
+                        <b>Descripción: </b> <span>{this.props.component.description}</span>
+                      </p>
+                    </Modal.Description>
+                  </Grid.Column>
+                </Grid.Row>
+                <Divider section/>
+                <Grid.Row>
+                  <TableComponentsOfModal stockComponent={this.state.stockComponent}/>
+                </Grid.Row>
+              </Grid>
+            </Segment>
           </Modal.Content>
         </React.Fragment>
       );
