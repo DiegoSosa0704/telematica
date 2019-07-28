@@ -1,7 +1,28 @@
 from rest_framework import serializers
 
 from users import serializers as user_serializers
-from .models import Loan, Sanction, AcademicProgram, Academic, Component, LoanComponent, Administrator, ComponentStock
+from .models import Loan, Sanction, AcademicProgram, Academic, Component, LoanComponent, Administrator, ComponentStock, \
+    Places
+
+
+class HeadquartersPlacesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Places
+        fields = '__all__'
+
+
+class CellarPlacesSerializer(serializers.ModelSerializer):
+    place_object = HeadquartersPlacesSerializer(read_only=True, source='place')
+
+    class Meta:
+        model = Places
+        fields = (
+            'id',
+            'name',
+            'type_place',
+            'description',
+            'place_object',
+        )
 
 
 class SanctionSerializer(serializers.ModelSerializer):
@@ -55,9 +76,20 @@ class SearchAcademicSerializer(serializers.ModelSerializer):
 
 
 class ComponentSerializer(serializers.ModelSerializer):
+    place_object = CellarPlacesSerializer(read_only=True, source='place')
+
     class Meta:
         model = Component
-        fields = '__all__'
+        fields = (
+            'id',
+            'serial',
+            'uptc_serial',
+            'state',
+            'status',
+            'observation',
+            'place_object',
+            'computer_equipment'
+        )
 
 
 class AcademicLoanSerializer(serializers.ModelSerializer):
