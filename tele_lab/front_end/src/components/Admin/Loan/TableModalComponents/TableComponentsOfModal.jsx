@@ -13,7 +13,7 @@ class TableComponentsOfModal extends Component {
       (component, index) => <RowComponentsOfModal key={index} component={component}/>
     );
     return (
-      <Table celled fixed singleLine>
+      <Table celled fixed singleLine unstackable>
         <HeaderComponentsOfModal/>
         <Table.Body>
           {componentRow}

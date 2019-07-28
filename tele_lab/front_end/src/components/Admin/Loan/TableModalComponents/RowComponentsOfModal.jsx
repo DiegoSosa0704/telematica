@@ -32,8 +32,12 @@ class RowComponentsOfModal extends Component {
         return "NA"
       }
     };
-    console.log(this.props.component);
-
+    const componentPlace = (places) => {
+      return places.place_object.name + ", " + places.name
+    };
+    const componentObservation = (observation) => {
+      return observation === '' ? 'N/A' : observation
+    };
     return (
       <Table.Row>
         <Table.Cell>{this.props.component.serial}</Table.Cell>
@@ -42,7 +46,11 @@ class RowComponentsOfModal extends Component {
           {selectStatus(this.props.component.status)}
         </Table.Cell>
         <Table.Cell>
-          {this.props.component.observation === '' ? 'N/A' : this.props.component.observation}
+          {componentPlace(this.props.component.place_object)}
+        </Table.Cell>
+        <Table.Cell
+          title={componentObservation(this.props.component.observation)}>
+          {componentObservation(this.props.component.observation)}
         </Table.Cell>
         <Table.Cell>
           <Button size='mini' circular icon onClick={() => console.log('test')}>

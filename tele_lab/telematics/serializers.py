@@ -11,7 +11,7 @@ class HeadquartersPlacesSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CellarPlacesSerializer(serializers.ModelSerializer):
+class WarehousePlacesSerializer(serializers.ModelSerializer):
     place_object = HeadquartersPlacesSerializer(read_only=True, source='place')
 
     class Meta:
@@ -76,7 +76,7 @@ class SearchAcademicSerializer(serializers.ModelSerializer):
 
 
 class ComponentSerializer(serializers.ModelSerializer):
-    place_object = CellarPlacesSerializer(read_only=True, source='place')
+    place_object = WarehousePlacesSerializer(read_only=True, source='place')
 
     class Meta:
         model = Component

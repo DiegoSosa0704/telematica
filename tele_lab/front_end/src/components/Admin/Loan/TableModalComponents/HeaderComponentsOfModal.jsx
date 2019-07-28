@@ -16,6 +16,9 @@ class HeaderComponentsOfModal extends Component {
             Estado
           </Table.HeaderCell>
           <Table.HeaderCell width={2}>
+            Almacén
+          </Table.HeaderCell>
+          <Table.HeaderCell width={2}>
             Observaciones
           </Table.HeaderCell>
           <Table.HeaderCell width={1}>
