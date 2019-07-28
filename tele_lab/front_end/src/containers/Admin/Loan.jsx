@@ -3,7 +3,6 @@ import {Grid, Header, Rail, Segment, Sticky} from "semantic-ui-react";
 import ComponentList from "../../components/Academic/DynamicTable/ComponentList";
 import LoanSticky from "../../components/Admin/Loan/LoanSticky";
 import ModalStockComponent from "../../components/Admin/Loan/ModalStockComponent";
-import {store} from "../../index";
 
 class Loan extends Component {
   state = {searchQuery: '', context: null};

@@ -37,7 +37,6 @@ class ComponentRow extends React.Component {
   render() {
     return (
       <Table.Row onClick={() => this.selectRow(this.props.vehicle)} style={{cursor: "pointer"}}>
-        {/*<Table.Cell>{this.props.vehicle.id}</Table.Cell>*/}
         <Table.Cell>{this.props.vehicle.name}</Table.Cell>
         <Table.Cell>{this.props.vehicle.type_component}</Table.Cell>
         <Table.Cell>{this.props.vehicle.level}</Table.Cell>
@@ -48,11 +47,6 @@ class ComponentRow extends React.Component {
           {this.props.vehicle.available}
         </Table.Cell>
         <Table.Cell>{this.props.vehicle.stock}</Table.Cell>
-        {/*        <Table.Cell>
-          <Button size='mini' circular icon onClick={() => this.addToLoan(this.props.vehicle)}>
-            <Icon name="plus"/>
-          </Button>
-        </Table.Cell>*/}
       </Table.Row>
     );
   }
