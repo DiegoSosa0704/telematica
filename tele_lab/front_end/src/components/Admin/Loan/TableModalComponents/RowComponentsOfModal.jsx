@@ -3,6 +3,7 @@ import {Button, Icon, Label, Table} from "semantic-ui-react";
 import {loan} from "../../../../actions";
 import {connect} from "react-redux";
 import _ from "lodash"
+import toast from "toasted-notes";
 
 class RowComponentsOfModal extends Component {
 
@@ -25,7 +26,7 @@ class RowComponentsOfModal extends Component {
   addComponent(component) {
     if (this.state.selectedComponent === false) {
       this.props.addComponentToLoan(component);
-      this.setState({selectedComponent: true})
+      this.setState({selectedComponent: true});
     }
   }
 

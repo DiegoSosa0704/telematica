@@ -30,6 +30,10 @@ export default (state = initialState, action) => {
         userLoan: action.payload,
       };
     case loan.ADD_COMPONENT_TO_LOAN:
+      toast.notify("Componente agregado al préstamo.", {
+        position: "top",
+        duration: 1800
+      });
       return {
         ...state,
         components: [...state.components, action.payload],
