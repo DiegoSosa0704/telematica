@@ -17,7 +17,7 @@ class ComponentRow extends React.Component {
   addToLoan(component) {
     if (!store.getState().loan.addComponentState) {
       this.props.addComponentToLoan(component);
-      this.props.getListComponents(store.getState().loan.lastQuery, store.getState().loan.components)
+      // this.props.getListComponents(store.getState().loan.lastQuery, store.getState().loan.components)
     }
   }
 
@@ -64,9 +64,9 @@ const mapDispatchToProps = dispatch => {
     addComponentToLoan: (component) => {
       return dispatch(loan.addToLoan(component));
     },
-    getListComponents: (query, post) => {
+    /*getListComponents: (query, post) => {
       return dispatch(loan.listComponents(query, post));
-    },
+    },*/
     selectedComponentOnLoan: (component) => {
       return dispatch(loan.selectedComponentOnLoan(component));
     },

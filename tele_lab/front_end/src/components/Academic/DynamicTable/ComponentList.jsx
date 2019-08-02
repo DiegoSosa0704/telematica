@@ -139,7 +139,7 @@ class ComponentList extends React.Component {
       .map(k => esc(k) + '=' + esc(params[k]))
       .join('&');
 
-    this.props.saveLastQuery(query);
+    // this.props.saveLastQuery(query);
     this.props.getListComponents(query, this.props.components);
     this.setState({loading: false});
   }
