@@ -140,7 +140,7 @@ class ComponentList extends React.Component {
       .join('&');
 
     // this.props.saveLastQuery(query);
-    this.props.getListComponents(query, this.props.components);
+    this.props.getListComponents(query);
     this.setState({loading: false});
   }
 
@@ -180,8 +180,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getListComponents: (query, post) => {
-      return dispatch(loan.listComponents(query, post));
+    getListComponents: (query) => {
+      return dispatch(loan.listComponents(query));
     },
     saveLastQuery: (query) => {
       return dispatch(loan.lastQuery(query))

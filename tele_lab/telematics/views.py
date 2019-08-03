@@ -19,14 +19,8 @@ class LoanView(mixins.UpdateModelMixin,
     queryset = LoanComponent.objects.all()
     serializer_class = LoanComponentSerializer
 
-    @action(methods=['post'], detail=False)
+    @action(methods=['get'], detail=False)
     def search_components(self, request):
-        try:
-            components = request.data['components']
-        except KeyError as e:
-            return Response({"details": e.args}, status.HTTP_400_BAD_REQUEST)
-        components_exclude = [component['id'] for component in components] if components else None
-
         if 'q' in request.GET \
                 and '_page' in request.GET \
                 and '_sort' in request.GET \
@@ -43,11 +37,7 @@ class LoanView(mixins.UpdateModelMixin,
                 Q(name__icontains=q) |
                 Q(level__icontains=q) |
                 Q(type_component__name__icontains=q)
-            )
-            if components_exclude:
-                components = components.exclude(id__in=components_exclude).order_by(order_sort)
-            else:
-                components = components.order_by(order_sort)
+            ).order_by(order_sort)
             paginator = Paginator(components, int(limit))
             components_paginate = paginator.get_page(page)
             count_components = components.count()
