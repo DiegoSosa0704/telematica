@@ -39,6 +39,10 @@ export default (state = initialState, action) => {
         components: [...state.components, action.payload],
       };
     case loan.REMOVE_COMPONENT_TO_LOAN:
+      toast.notify("Componente removido del préstamo.", {
+        position: "top",
+        duration: 1800
+      });
       return {
         ...state,
         components: state.components.filter((item) => item.id !== action.payload.id)
