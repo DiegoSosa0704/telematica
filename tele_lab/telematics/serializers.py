@@ -1,5 +1,4 @@
-import datetime
-
+from django.utils import timezone
 from rest_framework import serializers
 
 from users import serializers as user_serializers
@@ -169,14 +168,14 @@ class LoanSerializer(serializers.ModelSerializer):
         administrator = validated_data.get('administrator')
         if components_data:
             loan = Loan.objects.create(
-                date_start=datetime.datetime.now(),
+                date_start=timezone.now(),
                 state_loan=LoanComponent.STATUS_PENDING,
                 academic=academic,
                 administrator=administrator,
             )
             for component in components_data:
                 LoanComponent.objects.create(
-                    date_end=get_time_by_level(Component.objects.get(id=component)),
+                    date_end=get_time_by_level(ComponentStock.objects.get(component=component).level),
                     state=0,
                     component_id=component,
                     loan=loan
