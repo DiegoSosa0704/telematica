@@ -74,8 +74,9 @@ export default (state = initialState, action) => {
     case auth.LOGOUT_SUCCESSFUL:
       return initialState;
     case loan.CREATE_LOAN_SUCCESS:
-      toast.notify("Préstamo realizado.", {
-        position: "bottom-left"
+      toast.notify("Préstamo guardado.", {
+        position: "top",
+        duration: 1800
       });
       return {
         ...state,

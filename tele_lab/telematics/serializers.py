@@ -1,8 +1,12 @@
+import datetime
+
 from rest_framework import serializers
 
 from users import serializers as user_serializers
 from .models import Loan, Sanction, AcademicProgram, Academic, Component, LoanComponent, Administrator, ComponentStock, \
     Places
+
+from utils.general_utils import get_time_by_level
 
 
 class HeadquartersPlacesSerializer(serializers.ModelSerializer):
@@ -151,8 +155,8 @@ class LoanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Loan
         fields = (
-            'date_start',
-            'state_loan',
+            # 'date_start',
+            # 'state_loan',
             'administrator',
             'components',
             'academic',
@@ -162,14 +166,14 @@ class LoanSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         components_data = validated_data.pop('components')
         loan = Loan.objects.create(
-            date_start=validated_data.get('date_start'),
-            state_loan=validated_data.get('state_loan'),
+            date_start=datetime.datetime.now(),
+            state_loan=LoanComponent.STATUS_PENDING,
             academic=validated_data.get('academic'),
             administrator=validated_data.get('administrator'),
         )
         for component in components_data:
             LoanComponent.objects.create(
-                # date_end=validated_data.get('date_end'),
+                date_end=get_time_by_level(Component.objects.get(id=component)),
                 state=0,
                 component_id=component,
                 loan=loan
