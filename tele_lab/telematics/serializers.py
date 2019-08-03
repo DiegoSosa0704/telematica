@@ -165,19 +165,25 @@ class LoanSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         components_data = validated_data.pop('components')
-        loan = Loan.objects.create(
-            date_start=datetime.datetime.now(),
-            state_loan=LoanComponent.STATUS_PENDING,
-            academic=validated_data.get('academic'),
-            administrator=validated_data.get('administrator'),
-        )
-        for component in components_data:
-            LoanComponent.objects.create(
-                date_end=get_time_by_level(Component.objects.get(id=component)),
-                state=0,
-                component_id=component,
-                loan=loan
+        academic = validated_data.get('academic')
+        administrator = validated_data.get('administrator')
+        if components_data:
+            loan = Loan.objects.create(
+                date_start=datetime.datetime.now(),
+                state_loan=LoanComponent.STATUS_PENDING,
+                academic=academic,
+                administrator=administrator,
             )
+            for component in components_data:
+                LoanComponent.objects.create(
+                    date_end=get_time_by_level(Component.objects.get(id=component)),
+                    state=0,
+                    component_id=component,
+                    loan=loan
+                )
+                Component.objects.filter(id=component).update(status=Component.ON_LOAN)
+        else:
+            loan = None
         return loan
 
     def update(self, instance, validated_data):

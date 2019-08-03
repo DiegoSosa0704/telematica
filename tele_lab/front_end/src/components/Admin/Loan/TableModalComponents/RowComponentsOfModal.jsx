@@ -3,7 +3,6 @@ import {Button, Icon, Label, Table} from "semantic-ui-react";
 import {loan} from "../../../../actions";
 import {connect} from "react-redux";
 import _ from "lodash"
-import toast from "toasted-notes";
 
 class RowComponentsOfModal extends Component {
 
@@ -15,7 +14,9 @@ class RowComponentsOfModal extends Component {
   }
 
   componentDidMount() {
-    if (this.props.loanComponents !== undefined) {
+    if (this.props.component.status !== 'AV') {
+      this.setState({selectedComponent: true})
+    } else if (this.props.loanComponents !== undefined) {
       let findComponent = _.find(this.props.loanComponents, ['id', this.props.component.id]);
       if (findComponent !== undefined) {
         this.setState({selectedComponent: true})
@@ -81,7 +82,13 @@ class RowComponentsOfModal extends Component {
           {componentObservation(this.props.component.observation)}
         </Table.Cell>
         <Table.Cell>
-          <Button color={"green"} size='mini' circular icon onClick={() => this.addComponent(this.props.component)}>
+          <Button
+            disabled={this.state.selectedComponent}
+            color={"green"}
+            size='mini'
+            circular
+            icon
+            onClick={() => this.addComponent(this.props.component)}>
             <Icon name="plus"/>
           </Button>
         </Table.Cell>
