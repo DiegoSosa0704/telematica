@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Divider, Grid, GridColumn, Header, Image, Label, Modal, Segment} from 'semantic-ui-react'
+import {Divider, Grid, GridColumn, Header, Image, Modal, Segment} from 'semantic-ui-react'
 import TableComponentsOfModal from "./TableModalComponents/TableComponentsOfModal";
 
 class ModalStockComponentContent extends Component {

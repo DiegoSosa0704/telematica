@@ -25,7 +25,7 @@ class HomeMenu extends Component {
       <Menu stackable inverted>
         <Container>
           <Menu.Item>
-            <img src='https://react.semantic-ui.com/logo.png'/>
+            <img src='https://react.semantic-ui.com/logo.png' alt={"Logo"}/>
           </Menu.Item>
 
           <Menu.Item

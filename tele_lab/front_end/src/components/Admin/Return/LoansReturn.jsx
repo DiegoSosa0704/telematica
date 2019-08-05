@@ -3,10 +3,6 @@ import {Header, Placeholder} from 'semantic-ui-react'
 import ListPendingLoans from "./ListPendingLoans";
 
 class LoansReturn extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <React.Fragment>

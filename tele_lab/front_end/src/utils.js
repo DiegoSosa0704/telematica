@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 export const changeStateComponent = (state) => {
   if (state === "IN") {
     return "En servicio"
@@ -56,7 +54,7 @@ export const dateToString = (date) => {
 };
 
 export const dateTimeToString = (dateTime) => {
-  let options = {hour: "numeric", hour12:"false"};
+  // let options = {hour: "numeric", hour12:"false"};
   return new Date(dateTime).toLocaleTimeString('es-CO', {timeZone: 'UTC'});
 };
 
@@ -70,7 +68,7 @@ export const formatDateTime = (today) => {
   return date + ' ' + time;
 };
 
-function getPaginatedItems(items, page, pageSize) {
+/*function getPaginatedItems(items, page, pageSize) {
   let pg = page || 1,
     pgSize = pageSize || 100,
     offset = (pg - 1) * pgSize,
@@ -82,4 +80,4 @@ function getPaginatedItems(items, page, pageSize) {
     total_pages: Math.ceil(items.length / pgSize),
     data: pagedItems
   };
-}
+}*/
