@@ -140,7 +140,7 @@ class ComponentLoanSerializer(serializers.ModelSerializer):
             state=instance.state,
             date_end=instance.date_end,
             component_id=instance.component.id,
-            name=instance.component.name,
+            name=instance.component.stock_component.name,
             serial=instance.component.serial,
             uptc_serial=instance.component.uptc_serial,
         )

@@ -75,7 +75,7 @@ class LoanView(mixins.UpdateModelMixin,
 
     @action(methods=['get'], detail=False)
     def get_components_loan(self, request, loan_id):
-        components_loan = LoanComponent.objects.filter(loan=loan_id).order_by('component__name')
+        components_loan = LoanComponent.objects.filter(loan=loan_id).order_by('component__stock_component__name')
         components_serializer = ComponentLoanSerializer(components_loan, many=True)
         if components_serializer.data:
             return Response(components_serializer.data, status.HTTP_200_OK)
