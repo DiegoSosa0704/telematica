@@ -5,7 +5,6 @@ import {connect} from 'react-redux'
 import ListSticky from '../../Admin/Loan/ListSticky'
 import AcademicSearchEngine from "../../../components/Admin/StudentSearch";
 import {loan} from "../../../actions";
-import {formatDateTime} from "../../../utils";
 
 class LoanSticky extends Component {
   constructor(props) {
@@ -16,8 +15,7 @@ class LoanSticky extends Component {
   handlerCreateLoan() {
     let listComponents = [];
     this.props.listComponents.forEach(val => listComponents.push(val.id));
-    const dateTime = formatDateTime(new Date());
-    this.props.createLoan(listComponents, this.props.user.code, dateTime)
+    this.props.createLoan(listComponents, this.props.user.code)
   }
 
   render() {
@@ -87,8 +85,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createLoan: (components, academicId, dateStart) => {
-      return dispatch(loan.createLoan(components, academicId, dateStart))
+    createLoan: (components, academicId) => {
+      return dispatch(loan.createLoan(components, academicId))
     }
   }
 };

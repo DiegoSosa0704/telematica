@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {Button, List} from "semantic-ui-react";
 import {loan} from "../../../actions";
 import {connect} from "react-redux";
-// import {store} from "../../../index";
 
 const daysLevel = {
   "L1": 2,
@@ -20,7 +19,6 @@ class ListSticky extends Component {
 
   handleRemoveItem() {
     this.props.removeItem(this.props.component);
-    // this.props.getListComponents(store.getState().loan.lastQuery, store.getState().loan.components)
   }
 
   render() {
@@ -59,9 +57,6 @@ const mapDispatchToProps = dispatch => {
     removeItem: (component) => {
       return dispatch(loan.removeToLoan(component));
     },
-    /*getListComponents: (query, post) => {
-      return dispatch(loan.listComponents(query, post));
-    },*/
   }
 };
 

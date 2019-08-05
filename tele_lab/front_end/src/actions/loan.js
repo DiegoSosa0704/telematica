@@ -63,10 +63,7 @@ export const removeToLoan = (component) => {
 export const listComponents = (query, post) => ({
   [RSAA]: {
     endpoint: `/api/v1/loan/components/search?${query}`,
-    method: 'POST',
-    body: JSON.stringify({
-      components: post
-    }),
+    method: 'GET',
     headers: withAuth({'Content-Type': 'application/json'}),
     types: [
       LIST_COMPONENTS_REQUEST, LIST_COMPONENTS_SUCCESS, LIST_COMPONENTS_FAILURE
@@ -95,15 +92,13 @@ export const lastQuery = (query) => {
   }
 };
 
-export const createLoan = (components, academicId, dateStart) => ({
+export const createLoan = (components, academicId) => ({
   [RSAA]: {
     endpoint: '/api/v1/loan/create/',
     method: 'POST',
     body: JSON.stringify({
       components: components,
       academic: academicId,
-      state_loan: 0,
-      date_start: dateStart
     }),
     headers: withAuth({'Content-Type': 'application/json'}),
     types: [

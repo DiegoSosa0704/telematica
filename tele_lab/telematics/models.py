@@ -11,6 +11,8 @@ class Places(models.Model):
         (HEADQUARTERS, 'Sede'),
         (WAREHOUSE, 'Bodega'),
     )
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     name = models.CharField(verbose_name='Nombre', max_length=25, blank=False, null=False)
     type_place = models.CharField(verbose_name='Tipo lugar', choices=TYPE_PLACE, max_length=2, blank=False,
                                   null=False)
@@ -25,6 +27,8 @@ class Places(models.Model):
 
 
 class AcademicProgram(models.Model):
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     name = models.CharField(verbose_name="Nombre", max_length=255, blank=False, null=False)
     code = models.IntegerField(verbose_name="Código", blank=False, null=False)
     place = models.ForeignKey(Places, models.CASCADE, blank=False, null=False)
@@ -43,6 +47,8 @@ class Academic(models.Model):
         (STUDENT, 'Estudiante'),
         (TEACHER, 'Docente'),
     )
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     code = models.CharField(verbose_name='Código', max_length=25, unique=True, blank=False, null=False,
                             primary_key=True)
     type = models.CharField(verbose_name='Tipo de usuario', choices=TYPE_USER_CHOICES, max_length=2,
@@ -63,6 +69,8 @@ class Administrator(models.Model):
         on_delete=models.CASCADE, blank=False, null=False,
         verbose_name='Usuario'
     )
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     cc = models.CharField(verbose_name='Cédula de ciudadania', unique=True, max_length=25, blank=False, null=False)
     first_name = models.CharField(verbose_name='Nombres', max_length=25, blank=False, null=False)
     last_name = models.CharField(verbose_name='Apellidos', max_length=25, blank=False, null=False)
@@ -74,6 +82,8 @@ class Administrator(models.Model):
 
 
 class ComputerEquipment(models.Model):
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     brand = models.CharField(verbose_name='Marca', max_length=25, blank=False, null=False)
     model_computer = models.CharField(verbose_name='Modelo', max_length=25, blank=False, null=False)
     room_id = models.IntegerField(verbose_name='ID', blank=False, null=False)
@@ -93,6 +103,8 @@ class ComputerEquipment(models.Model):
 
 
 class TypeComponent(models.Model):
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     name = models.CharField(verbose_name='Nombre', max_length=25, blank=False, null=False)
     description = models.TextField(verbose_name='Nombre', blank=True, null=True)
 
@@ -115,6 +127,8 @@ class ComponentStock(models.Model):
         (LEVEL_3, 'Nivel 3'),
         (LEVEL_4, 'Nivel 4'),
     )
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     name = models.CharField(verbose_name='Nombre', max_length=50, blank=False, null=False)
     level = models.CharField(verbose_name='Nivel', max_length=2, choices=LEVEL_CHOICES, blank=False, null=False)
     image = models.ImageField(upload_to='static/images')
@@ -151,6 +165,8 @@ class Component(models.Model):
         (IN_MAINTENANCE, 'En Mantenimiento'),
         (NOT_AVAILABLE, 'No Disponible'),
     )
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     stock_component = models.ForeignKey(ComponentStock, on_delete=models.CASCADE, blank=False, null=False,
                                         verbose_name='Componente')
     serial = models.CharField(verbose_name='Serial', max_length=50, blank=True, null=True)
@@ -178,6 +194,8 @@ class Loan(models.Model):
         (STATUS_PENDING, 'Pendiente'),
         (STATUS_FINALIZED, 'Finalizado'),
     )
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     date_start = models.DateTimeField(verbose_name='Fecha de inicio', blank=False, null=False)
     date_end = models.DateTimeField(verbose_name='Fecha final', blank=True, null=True)
     state_loan = models.SmallIntegerField(choices=STATUS_CHOICES, blank=False, null=False)
@@ -196,6 +214,8 @@ class LoanComponent(models.Model):
         (STATUS_PENDING, 'Pendiente'),
         (STATUS_FINALIZED, 'Entregado'),
     )
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     state = models.SmallIntegerField(choices=STATUS_CHOICES, blank=False, null=False)
     date_end = models.DateField(verbose_name='Fecha de entrega', blank=False, null=False)
     loan = models.ForeignKey(Loan, on_delete=models.CASCADE, verbose_name='Prestamo', blank=False, null=False, )
@@ -225,6 +245,8 @@ class Sanction(models.Model):
         (STATUS_SANCTIONED, 'sanctioned'),
         (STATUS_FINALIZED, 'finalized'),
     )
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     type = models.SmallIntegerField(choices=TYPE_CHOICES, blank=False, null=False)
     state = models.SmallIntegerField(choices=STATUS_CHOICES, blank=False, null=False,
                                      verbose_name='Tipo de sanción')
@@ -249,6 +271,8 @@ class Maintenance(models.Model):
         (MAINTENANCE_PREVENTIVE, 'preventive'),
         (MAINTENANCE_CORRECTIVE, 'corrective')
     )
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     date_start = models.DateField(verbose_name='Fecha de inicio', blank=False, null=False)
     date_end = models.DateField(verbose_name='Fecha de finalización', blank=True, null=False)
     maintenance_type = models.SmallIntegerField(verbose_name='Tipo de mantenimiento', choices=MAINTENANCE_TYPE,
@@ -264,6 +288,8 @@ class Maintenance(models.Model):
 
 
 class MaintenanceComponent(models.Model):
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     maintenance = models.ForeignKey(Maintenance, on_delete=models.CASCADE, blank=False, null=False,
                                     verbose_name='Mantenimiento')
     component = models.ForeignKey(Component, on_delete=models.CASCADE, blank=False, null=False,

@@ -65,7 +65,6 @@ export const formatDate = (today) => {
 };
 
 export const formatDateTime = (today) => {
-  console.log(today)
   let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   return date + ' ' + time;
