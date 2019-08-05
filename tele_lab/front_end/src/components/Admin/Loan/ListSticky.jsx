@@ -14,6 +14,7 @@ const daysLevel = {
 class ListSticky extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props.component);
     this.handleRemoveItem = this.handleRemoveItem.bind(this);
   }
 
@@ -44,7 +45,7 @@ class ListSticky extends Component {
           <List.Description>{dateEnd()}</List.Description>
         </List.Content>
         <List.Content>
-          <List.Header as='a'>{this.props.component.name}</List.Header>
+          <List.Header as='a'>{this.props.component.component_stock_object.name}</List.Header>
           <List.Description>{this.props.component.status}</List.Description>
         </List.Content>
       </React.Fragment>
