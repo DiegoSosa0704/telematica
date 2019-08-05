@@ -27,6 +27,7 @@ class ComponentStockSerializer(serializers.ModelSerializer):
         )
         return response_dict
 
+
 class HeadquartersPlacesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Places

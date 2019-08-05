@@ -4,11 +4,10 @@ import {loan} from "../../../actions";
 import {connect} from "react-redux";
 
 const daysLevel = {
-  "L1": 2,
-  "L2": 4,
-  "L3": 6,
-  "L4": 8,
-  "L5": 10,
+  "L1": 5,
+  "L2": 10,
+  "L3": 15,
+  "L4": 20,
 };
 
 class ListSticky extends Component {
@@ -27,7 +26,7 @@ class ListSticky extends Component {
       let sumDays = 0;
       let date = new Date(Date.now());
       for (const prop in daysLevel) {
-        if (prop === this.props.component.level) {
+        if (prop === this.props.component.component_stock_object.level) {
           sumDays = daysLevel[prop]
         }
       }
@@ -46,7 +45,8 @@ class ListSticky extends Component {
         </List.Content>
         <List.Content>
           <List.Header as='a'>{this.props.component.component_stock_object.name}</List.Header>
-          <List.Description>{this.props.component.status}</List.Description>
+          <List.Description><b>Serial:</b> {this.props.component.serial}</List.Description>
+          <List.Description><b>Serial UPTC:</b> {this.props.component.uptc_serial}</List.Description>
         </List.Content>
       </React.Fragment>
     );
