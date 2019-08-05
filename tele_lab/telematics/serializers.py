@@ -2,11 +2,30 @@ from django.utils import timezone
 from rest_framework import serializers
 
 from users import serializers as user_serializers
+from utils.general_utils import get_time_by_level
 from .models import Loan, Sanction, AcademicProgram, Academic, Component, LoanComponent, Administrator, ComponentStock, \
     Places
 
-from utils.general_utils import get_time_by_level
 
+class ComponentStockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ComponentStock
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        available_stock = Component.objects.filter(stock_component_id=instance.id, status="AV")
+        available_stock = available_stock.count()
+        response_dict = dict(
+            id=instance.id,
+            name=instance.name,
+            image=instance.image.url,
+            level=instance.level,
+            description=instance.description,
+            type_component=instance.type_component.name,
+            available=available_stock,
+            stock=Component.objects.filter(stock_component_id=instance.id).count(),
+        )
+        return response_dict
 
 class HeadquartersPlacesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -80,6 +99,7 @@ class SearchAcademicSerializer(serializers.ModelSerializer):
 
 class ComponentSerializer(serializers.ModelSerializer):
     place_object = WarehousePlacesSerializer(read_only=True, source='place')
+    component_stock_object = ComponentStockSerializer(read_only=True, source='stock_component')
 
     class Meta:
         model = Component
@@ -91,7 +111,8 @@ class ComponentSerializer(serializers.ModelSerializer):
             'status',
             'observation',
             'place_object',
-            'computer_equipment'
+            'computer_equipment',
+            'component_stock_object'
         )
 
 
@@ -233,27 +254,6 @@ class LoanComponentSerializer(serializers.ModelSerializer):
             'loan_object',
             'component_object',
         )
-
-
-class ComponentStockSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ComponentStock
-        fields = '__all__'
-
-    def to_representation(self, instance):
-        available_stock = Component.objects.filter(stock_component_id=instance.id, status="AV")
-        available_stock = available_stock.count()
-        response_dict = dict(
-            id=instance.id,
-            name=instance.name,
-            image=instance.image.url,
-            level=instance.level,
-            description=instance.description,
-            type_component=instance.type_component.name,
-            available=available_stock,
-            stock=Component.objects.filter(stock_component_id=instance.id).count(),
-        )
-        return response_dict
 
 
 """
