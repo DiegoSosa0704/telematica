@@ -1,5 +1,5 @@
 import React from "react";
-import {Icon, Table} from "semantic-ui-react";
+import {Table} from "semantic-ui-react";
 import PropTypes from "prop-types";
 import {loan} from "../../../actions";
 import {connect} from "react-redux";
@@ -40,11 +40,8 @@ class ComponentRow extends React.Component {
         <Table.Cell>{this.props.vehicle.name}</Table.Cell>
         <Table.Cell>{this.props.vehicle.type_component}</Table.Cell>
         <Table.Cell>{this.props.vehicle.level}</Table.Cell>
-        <Table.Cell positive={this.state.available} negative={!this.state.available}>
-          {this.state.available ?
-            <Icon name='checkmark'/> :
-            <Icon name='close'/>}
-          {this.props.vehicle.available}
+        <Table.Cell>
+            {this.props.vehicle.available}
         </Table.Cell>
         <Table.Cell>{this.props.vehicle.stock}</Table.Cell>
       </Table.Row>

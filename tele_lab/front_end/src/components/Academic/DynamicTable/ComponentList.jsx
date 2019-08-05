@@ -37,6 +37,12 @@ class ComponentList extends React.Component {
     })
   }
 
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.loadSaveLoan === false) {
+      this.props.getListComponents(this.props.lastQuery);
+    }
+  }
+
   directionConverter(order) {
     if (order === 'asc') {
       return 'ascending';
@@ -138,8 +144,7 @@ class ComponentList extends React.Component {
     const query = Object.keys(params)
       .map(k => esc(k) + '=' + esc(params[k]))
       .join('&');
-
-    // this.props.saveLastQuery(query);
+    this.props.saveLastQuery(query);
     this.props.getListComponents(query);
     this.setState({loading: false});
   }
@@ -175,6 +180,8 @@ class ComponentList extends React.Component {
 const mapStateToProps = state => {
   return {
     components: state.loan.components,
+    loadSaveLoan: state.loan.loadSaveLoan,
+    lastQuery: state.loan.lastQuery
   }
 };
 

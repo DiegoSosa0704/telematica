@@ -15,7 +15,7 @@ class LoanSticky extends Component {
   handlerCreateLoan() {
     let listComponents = [];
     this.props.listComponents.forEach(val => listComponents.push(val.id));
-    this.props.createLoan(listComponents, this.props.user.code)
+    this.props.createLoan(listComponents, this.props.user.code);
   }
 
   render() {

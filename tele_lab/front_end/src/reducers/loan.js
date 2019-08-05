@@ -13,7 +13,8 @@ const initialState = {
   addComponentState: false,
   selectedComponent: undefined,
   statusModalSelectedComponent: false,
-  listStockComponent: undefined
+  listStockComponent: undefined,
+  loadSaveLoan: undefined
 };
 
 export default (state = initialState, action) => {
@@ -73,6 +74,11 @@ export default (state = initialState, action) => {
       };
     case auth.LOGOUT_SUCCESSFUL:
       return initialState;
+    case loan.CREATE_LOAN_REQUEST:
+      return {
+        ...state,
+        loadSaveLoan: true
+      };
     case loan.CREATE_LOAN_SUCCESS:
       toast.notify("Préstamo guardado.", {
         position: "top",
@@ -82,6 +88,7 @@ export default (state = initialState, action) => {
         ...state,
         userLoan: {},
         components: [],
+        loadSaveLoan: false
       };
     case loan.CREATE_LOAN_FAILURE:
     case loan.SELECTED_COMPONENT_LOAN:
