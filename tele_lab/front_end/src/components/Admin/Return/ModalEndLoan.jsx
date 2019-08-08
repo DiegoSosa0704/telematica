@@ -54,7 +54,7 @@ class ModalEndLoan extends Component {
         response.json().then(data => {
           this.props.getPendingLoans();
           toast.notify("Préstamo finalizado.", {
-            position: "bottom-left"
+            position: "top"
           });
         })
       } else {

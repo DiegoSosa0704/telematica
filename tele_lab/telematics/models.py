@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-
+from django.db.models.signals import post_save
 
 class Places(models.Model):
     CITY = 'CI'
@@ -225,6 +225,16 @@ class LoanComponent(models.Model):
     class Meta:
         unique_together = (("loan", "component"),)
         verbose_name_plural = 'Prestamos Componentes'
+
+
+def create_loan_component(sender, **kwargs):
+    if not kwargs['created']:
+        loan_component = kwargs['instance']
+        print(loan_component)
+        Component.objects.filter(id=loan_component.component.id).update(status=Component.AVAILABLE)
+
+
+post_save.connect(create_loan_component, sender=LoanComponent)
 
 
 class Sanction(models.Model):
