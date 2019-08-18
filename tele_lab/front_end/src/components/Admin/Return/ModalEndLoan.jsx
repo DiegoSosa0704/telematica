@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {Button, Header, Icon, Modal} from "semantic-ui-react";
 import {returnComponent} from "../../../actions";
 import toast from 'toasted-notes'
+import * as PropTypes from 'prop-types'
 
 class ModalEndLoan extends Component {
   state = {modalOpen: false};
@@ -109,6 +110,16 @@ const mapDispatchToProps = dispatch => {
       return dispatch(returnComponent.getPendingLoans());
     },
   };
+};
+
+ModalEndLoan.propTypes = {
+  indexLastComponent: PropTypes.number,
+  componentsLoan: PropTypes.array,
+  stateItem: PropTypes.number,
+  pendingLoans: PropTypes.array,
+  endLoan: PropTypes.func,
+  changeEndLoan: PropTypes.func,
+  getPendingLoans: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalEndLoan);

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Container} from 'semantic-ui-react';
-
+import PropTypes from 'prop-types';
 import ComponentTable from './ComponentTable.jsx';
 import {ComponentFilter} from './ComponentFilter.jsx';
 import {connect} from "react-redux";
@@ -179,7 +179,6 @@ class ComponentList extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    components: state.loan.components,
     loadSaveLoan: state.loan.loadSaveLoan,
     lastQuery: state.loan.lastQuery
   }
@@ -194,6 +193,13 @@ const mapDispatchToProps = dispatch => {
       return dispatch(loan.lastQuery(query))
     },
   };
+};
+
+ComponentList.propTypes = {
+  loadSaveLoan: PropTypes.bool,
+  lastQuery: PropTypes.string,
+  getListComponents: PropTypes.func,
+  saveLastQuery: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComponentList)

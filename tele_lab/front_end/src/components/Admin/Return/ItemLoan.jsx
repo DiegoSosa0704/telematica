@@ -3,6 +3,7 @@ import {List} from "semantic-ui-react";
 import {changeTypeAcademic, dateTimeToString, dateToString} from "../../../utils";
 import {returnComponent} from "../../../actions";
 import {connect} from "react-redux";
+import * as PropTypes from 'prop-types'
 
 class ItemLoan extends Component {
   state = {active: false};
@@ -64,6 +65,14 @@ const mapDispatchToProps = dispatch => {
       return dispatch(returnComponent.changeStateItemList(indexItem));
     }
   };
+};
+
+ItemLoan.propTypes = {
+  component: PropTypes.object,
+  indexItem: PropTypes.number,
+  stateItem: PropTypes.number,
+  getComponentsByPendingLoan: PropTypes.func,
+  changeStateItemList: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemLoan);

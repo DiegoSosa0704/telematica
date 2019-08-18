@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {Header} from "semantic-ui-react";
 import {connect} from "react-redux";
-import {ListComponentsReturn} from './ListComponentsReturn'
+import ListComponentsReturn from './ListComponentsReturn'
+import * as PropTypes from "prop-types";
 
 class LoansReturn extends Component {
   render() {
@@ -24,6 +25,10 @@ const mapStateToProps = state => {
   return {
     componentsLoan: state.returnComponent.componentsLoan
   }
+};
+
+LoansReturn.propTypes = {
+  componentsLoan: PropTypes.array
 };
 
 export default connect(mapStateToProps, null)(LoansReturn)

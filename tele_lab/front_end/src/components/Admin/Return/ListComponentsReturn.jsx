@@ -1,8 +1,9 @@
 import React from 'react'
 import {List} from "semantic-ui-react";
 import ButtonToggleReturnLoan from "./ButtonToggleReturnLoan";
+import * as PropTypes from 'prop-types'
 
-export const ListComponentsReturn = (props) => {
+const ListComponentsReturn = (props) => {
   const listLoans = props.componentsLoan.map((component, index) => {
     return (
       <React.Fragment key={index}>
@@ -27,3 +28,9 @@ export const ListComponentsReturn = (props) => {
     </List>
   );
 };
+
+ListComponentsReturn.propTypes = {
+  componentsLoan: PropTypes.array
+};
+
+export default ListComponentsReturn;

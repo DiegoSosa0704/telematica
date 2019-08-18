@@ -4,6 +4,7 @@ import ItemLoan from "./ItemLoan";
 import {connect} from "react-redux";
 import {returnComponent} from "../../../actions";
 import _ from 'lodash'
+import * as PropTypes from 'prop-types'
 
 class ListPendingLoans extends Component {
 
@@ -51,6 +52,12 @@ const mapDispatchToProps = dispatch => {
       return dispatch(returnComponent.changeStateItemList(indexItem));
     }
   };
+};
+
+ListPendingLoans.propTypes = {
+  pendingLoans: PropTypes.array,
+  stateItem: PropTypes.number,
+  changeStateItemList: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListPendingLoans);

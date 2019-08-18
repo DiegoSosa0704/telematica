@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Table} from "semantic-ui-react";
 import HeaderComponentsOfModal from "./HeaderComponentsOfModal";
 import RowComponentsOfModal from "./RowComponentsOfModal";
+import PropTypes from 'prop-types'
 
 class TableComponentsOfModal extends Component {
   render() {
@@ -18,4 +19,9 @@ class TableComponentsOfModal extends Component {
     );
   }
 }
+
+TableComponentsOfModal.propTypes = {
+  stockComponent: PropTypes.array
+};
+
 export default TableComponentsOfModal

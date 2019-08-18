@@ -39,7 +39,6 @@ def get_user_data(request, token):
         dict_obj.pop('groups')
         dict_obj.pop('user_permissions')
         dict_obj.pop('password')
-        print(dict_obj)
     except Exception as e:
         return Response({'detail': e.args}, status=status.HTTP_404_NOT_FOUND)
     return Response(dict_obj, status=status.HTTP_200_OK)

@@ -48,8 +48,14 @@ class ComponentTable extends React.Component {
       </React.Fragment>
     );
   }
-
 }
+
+const mapStateToProps = state => {
+  return {
+    listComponents: state.loan.listComponents,
+  }
+};
+
 
 ComponentTable.propTypes = {
   totalCount: PropTypes.number.isRequired,
@@ -59,13 +65,7 @@ ComponentTable.propTypes = {
   addFavorite: PropTypes.func.isRequired,
   onChangeLimit: PropTypes.func.isRequired,
   limit: PropTypes.string.isRequired,
+  listComponents:  PropTypes.array.isRequired
 };
-
-const mapStateToProps = state => {
-  return {
-    listComponents: state.loan.listComponents,
-  }
-};
-
 
 export default connect(mapStateToProps, null)(ComponentTable)

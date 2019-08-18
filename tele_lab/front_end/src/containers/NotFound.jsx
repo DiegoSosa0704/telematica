@@ -3,6 +3,7 @@ import {Image} from "semantic-ui-react";
 import * as reducers from '../reducers'
 import {auth} from '../actions'
 import {connect} from 'react-redux'
+import * as PropTypes from "prop-types";
 
 class NotFound extends Component {
 
@@ -45,5 +46,11 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 };
+
+NotFound.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  logout: PropTypes.func
+};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotFound)

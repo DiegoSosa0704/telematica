@@ -230,7 +230,6 @@ class LoanComponent(models.Model):
 def create_loan_component(sender, **kwargs):
     if not kwargs['created']:
         loan_component = kwargs['instance']
-        print(loan_component)
         Component.objects.filter(id=loan_component.component.id).update(status=Component.AVAILABLE)
 
 

@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import ListSticky from '../../Admin/Loan/ListSticky'
 import AcademicSearchEngine from "../../../components/Admin/StudentSearch";
 import {loan} from "../../../actions";
+import * as PropTypes from "prop-types";
 
 class LoanSticky extends Component {
   constructor(props) {
@@ -89,6 +90,12 @@ const mapDispatchToProps = dispatch => {
       return dispatch(loan.createLoan(components, academicId))
     }
   }
+};
+
+LoanSticky.propsTypes = {
+  listComponents: PropTypes.array,
+  user: PropTypes.object,
+  createLoan: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoanSticky);

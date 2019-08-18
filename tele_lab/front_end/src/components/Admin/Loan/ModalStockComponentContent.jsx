@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Divider, Grid, GridColumn, Header, Image, Modal, Segment} from 'semantic-ui-react'
 import TableComponentsOfModal from "./TableModalComponents/TableComponentsOfModal";
+import * as PropTypes from 'prop-types'
 
 class ModalStockComponentContent extends Component {
   state = {stockComponent: undefined};
@@ -84,5 +85,9 @@ class ModalStockComponentContent extends Component {
     );
   }
 }
+
+ModalStockComponentContent.propTypes = {
+  component: PropTypes.object,
+};
 
 export default ModalStockComponentContent;

@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Button, List} from "semantic-ui-react";
 import {loan} from "../../../actions";
 import {connect} from "react-redux";
+import * as PropTypes from "prop-types";
 
 const daysLevel = {
   "L1": 5,
@@ -13,7 +14,6 @@ const daysLevel = {
 class ListSticky extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.component);
     this.handleRemoveItem = this.handleRemoveItem.bind(this);
   }
 
@@ -59,6 +59,11 @@ const mapDispatchToProps = dispatch => {
       return dispatch(loan.removeToLoan(component));
     },
   }
+};
+
+ListSticky.propTypes = {
+  removeItem: PropTypes.func,
+  component: PropTypes.object
 };
 
 export default connect(null, mapDispatchToProps)(ListSticky)

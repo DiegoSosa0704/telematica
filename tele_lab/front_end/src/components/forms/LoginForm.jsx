@@ -6,6 +6,7 @@ import {auth} from '../../actions'
 import {Redirect} from "react-router";
 import {isAuthenticated} from "../../reducers";
 import DjangoCSRFToken from 'django-react-csrftoken'
+import * as PropTypes from 'prop-types'
 
 class LoginBox extends React.Component {
   constructor(props) {
@@ -111,6 +112,11 @@ const mapDispatchToProps = dispatch => {
       return dispatch(auth.login(username, password, token));
     }
   };
+};
+
+LoginBox.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  onSubmit: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginBox)

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Header, Placeholder} from 'semantic-ui-react'
 import ListPendingLoans from "./ListPendingLoans";
+import * as PropTypes from 'prop-types';
 
 class LoansReturn extends Component {
   render() {
@@ -22,5 +23,9 @@ class LoansReturn extends Component {
     );
   }
 }
+
+LoansReturn.propTypes = {
+  loansReturn: PropTypes.array
+};
 
 export default LoansReturn;

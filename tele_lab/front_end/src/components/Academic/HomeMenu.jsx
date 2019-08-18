@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import * as reducers from "../../reducers";
 import {auth} from "../../actions";
 import {connect} from "react-redux";
+import PropTypes from 'prop-types'
 
 class HomeMenu extends Component {
   state = {};
@@ -86,6 +87,11 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch({type: auth.LOGOUT_SUCCESSFUL});
     }
   }
+};
+
+HomeMenu.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  logout: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeMenu)

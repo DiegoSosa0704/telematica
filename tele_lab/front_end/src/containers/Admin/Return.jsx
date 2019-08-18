@@ -6,6 +6,7 @@ import _ from "lodash";
 import {connect} from "react-redux";
 import {returnComponent} from "../../actions";
 import ModalEndLoan from "../../components/Admin/Return/ModalEndLoan";
+import * as PropTypes from 'prop-types'
 
 class ReturnComponents extends Component {
   state = {isLoading: false};
@@ -37,7 +38,7 @@ class ReturnComponents extends Component {
             Devoluciones
           </Header>
           <Segment raised className='segment-return'>
-            <ModalEndLoan propEndLoan={this.props.endLoan} />
+            <ModalEndLoan propEndLoan={this.props.endLoan}/>
             <Grid padded relaxed='very' stackable className='grid-return'>
               <Grid.Row>
                 <Grid.Column>
@@ -80,6 +81,12 @@ const mapDispatchToProps = dispatch => {
       return dispatch(returnComponent.getPendingLoans());
     },
   };
+};
+
+ReturnComponents.propTypes = {
+  pendingLoans: PropTypes.array,
+  endLoan: PropTypes.bool,
+  getPendingLoans: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReturnComponents)

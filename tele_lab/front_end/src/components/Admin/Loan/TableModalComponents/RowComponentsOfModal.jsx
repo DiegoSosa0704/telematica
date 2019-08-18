@@ -3,6 +3,7 @@ import {Button, Icon, Label, Table} from "semantic-ui-react";
 import {loan} from "../../../../actions";
 import {connect} from "react-redux";
 import _ from "lodash"
+import PropTypes from 'prop-types'
 
 class RowComponentsOfModal extends Component {
 
@@ -109,6 +110,12 @@ const mapStateToProps = (state) => {
   return {
     loanComponents: state.loan.components,
   }
+};
+
+RowComponentsOfModal.propTypes = {
+  component: PropTypes.object,
+  loanComponents: PropTypes.array,
+  addComponentToLoan: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RowComponentsOfModal)

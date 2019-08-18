@@ -4,6 +4,7 @@ import LoginForm from '../components/forms/LoginForm'
 import {isAuthenticated} from '../reducers'
 import {Redirect} from "react-router";
 import routes from '../routes'
+import * as PropTypes from 'prop-types'
 
 const Login = (props) => {
   if (props.isAuthenticated) {
@@ -22,5 +23,9 @@ const Login = (props) => {
 const mapStateToProps = (state) => ({
   isAuthenticated: isAuthenticated(state)
 });
+
+Login.propTypes = {
+  isAuthenticated: PropTypes.bool
+};
 
 export default connect(mapStateToProps, null)(Login);

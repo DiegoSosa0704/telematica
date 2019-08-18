@@ -5,6 +5,7 @@ import * as reducers from "../../reducers";
 import {auth} from "../../actions";
 import {connect} from "react-redux";
 import routes from '../../routes'
+import * as PropTypes from 'prop-types'
 
 class AdminMenu extends Component {
   constructor(props) {
@@ -111,6 +112,11 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch({type: auth.LOGOUT_SUCCESSFUL});
     }
   }
+};
+
+AdminMenu.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  logout: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminMenu)

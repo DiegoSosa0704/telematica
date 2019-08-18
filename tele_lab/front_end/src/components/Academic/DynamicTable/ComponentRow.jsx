@@ -17,7 +17,6 @@ class ComponentRow extends React.Component {
   addToLoan(component) {
     if (!store.getState().loan.addComponentState) {
       this.props.addComponentToLoan(component);
-      // this.props.getListComponents(store.getState().loan.lastQuery, store.getState().loan.components)
     }
   }
 
@@ -49,21 +48,11 @@ class ComponentRow extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    query: state.loan.lastQuery,
-    components: state.loan.components,
-  }
-};
-
 const mapDispatchToProps = dispatch => {
   return {
     addComponentToLoan: (component) => {
       return dispatch(loan.addToLoan(component));
     },
-    /*getListComponents: (query, post) => {
-      return dispatch(loan.listComponents(query, post));
-    },*/
     selectedComponentOnLoan: (component) => {
       return dispatch(loan.selectedComponentOnLoan(component));
     },
@@ -76,7 +65,10 @@ const mapDispatchToProps = dispatch => {
 ComponentRow.propTypes = {
   vehicle: PropTypes.object.isRequired,
   addFavorite: PropTypes.func.isRequired,
+  addComponentToLoan: PropTypes.func,
+  selectedComponentOnLoan: PropTypes.func,
+  statusModalSelectedComponent: PropTypes.func
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComponentRow)
+export default connect(null, mapDispatchToProps)(ComponentRow)
 

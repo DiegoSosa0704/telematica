@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link, Redirect} from 'react-router-dom'
 import {Button, Form, Grid, Header, Message, Segment, Select} from 'semantic-ui-react'
 import {auth} from '../../actions'
+import * as PropsTypes from 'prop-types'
 
 const typeUser = [
   {key: 'ES', text: 'Estudiante', value: 'ES'},
@@ -209,6 +210,11 @@ const mapDispatchToProps = dispatch => {
       return dispatch(auth.signUp(states));
     }
   };
+};
+
+LoginBox.propTypes = {
+  signup: PropsTypes.bool,
+  onSubmit: PropsTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginBox)

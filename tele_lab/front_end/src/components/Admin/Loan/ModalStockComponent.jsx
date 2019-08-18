@@ -3,6 +3,7 @@ import {Modal} from 'semantic-ui-react'
 import {loan} from "../../../actions";
 import {connect} from "react-redux";
 import ModalStockComponentContent from "./ModalStockComponentContent";
+import * as PropTypes from 'prop-types'
 
 class ModalStockComponent extends Component {
   handleClose = () => {
@@ -40,6 +41,12 @@ const mapDispatchToProps = dispatch => {
       return dispatch(loan.statusModalSelectedComponent(state))
     },
   };
+};
+
+ModalStockComponent.propTypes = {
+  selectedComponent: PropTypes.object,
+  statusModal: PropTypes.bool,
+  changeStatusModal: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalStockComponent)

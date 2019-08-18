@@ -14,7 +14,7 @@ import HomeFooter from "../components/Academic/Footer";
 import NotFound from "./NotFound";
 import routes from '../routes'
 import Return from './Admin/Return'
-
+import * as PropTypes from 'prop-types'
 
 class HomePage extends Component {
   render() {
@@ -80,6 +80,14 @@ const mapDispatchToProps = dispatch => {
       return dispatch(auth.is_admin(token));
     },
   };
+};
+
+HomePage.propTypes = {
+  is_admin: PropTypes.bool,
+  access_token: PropTypes.string,
+  refresh_token: PropTypes.string,
+  isAuthenticated: PropTypes.bool,
+  onSubmit: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage)

@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import {Search} from 'semantic-ui-react'
 import {loan} from "../../actions";
 import {connect} from "react-redux";
+import * as PropTypes from 'prop-types'
 
 class StudentSearchEngine extends Component {
   constructor(props) {
@@ -73,6 +74,13 @@ const mapDispatchToProps = dispatch => {
       return dispatch(loan.getDataUserLoan(data))
     }
   };
+};
+
+StudentSearchEngine.propTypes = {
+  listUsers: PropTypes.array,
+  userLoan: PropTypes.object,
+  getUsers: PropTypes.func,
+  getDataUser: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentSearchEngine)

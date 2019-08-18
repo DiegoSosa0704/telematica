@@ -3,6 +3,7 @@ import {Radio} from 'semantic-ui-react'
 import {connect} from "react-redux";
 import {returnComponent} from "../../../actions";
 import {store} from "../../../index";
+import * as PropTypes from 'prop-types'
 
 class ButtonToggleReturnLoan extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class ButtonToggleReturnLoan extends Component {
   }
 
   patchLoanComponent() {
-    this.props.endLoan(this.state.active ? 0 : 1, this.props.index);
+    this.props.endLoanFunc(this.state.active ? 0 : 1, this.props.index);
     if (!store.getState().returnComponent.endLoan) {
       fetch(`/api/v1/loan/component/update/${this.props.component.loan_id}/`, {
         method: 'PATCH',
@@ -80,10 +81,16 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    endLoan: (state, index) => {
+    endLoanFunc: (state, index) => {
       return dispatch(returnComponent.endLoan(state, index));
     },
   };
+};
+
+ButtonToggleReturnLoan.propTypes = {
+  component: PropTypes.object,
+  endLoan: PropTypes.bool,
+  endLoanFunc: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ButtonToggleReturnLoan);

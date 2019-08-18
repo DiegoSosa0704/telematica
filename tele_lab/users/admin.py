@@ -153,7 +153,6 @@ class UserAcademicCreationForm(forms.ModelForm):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
-            print("entro aqui")
             user.save()
         user.save()
         administrator = models_telematics.Administrator.objects.create(
