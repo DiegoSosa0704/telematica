@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Button, Card, Divider, Grid, Header, Icon, Input, List, Transition} from "semantic-ui-react";
-import {DataUserLoan} from "../LoanTableUser";
+import DataUserLoan from "../LoanTableUser";
 import {connect} from 'react-redux'
 import ListSticky from '../../Admin/Loan/ListSticky'
 import AcademicSearchEngine from "../../../components/Admin/StudentSearch";

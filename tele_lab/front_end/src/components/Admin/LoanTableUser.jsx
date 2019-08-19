@@ -1,7 +1,8 @@
 import React from 'react'
 import {Header, Item} from "semantic-ui-react";
+import * as PropTypes from 'prop-types'
 
-export const DataUserLoan = (props) => {
+const DataUserLoan = (props) => {
   return (
     <React.Fragment>
       {
@@ -26,3 +27,9 @@ export const DataUserLoan = (props) => {
     </React.Fragment>
   );
 };
+
+DataUserLoan.propTypes = {
+  userLoan: PropTypes.object.isRequired
+};
+
+export default DataUserLoan;
