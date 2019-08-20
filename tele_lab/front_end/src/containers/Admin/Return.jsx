@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Grid, Header, Input, Segment} from "semantic-ui-react";
+import {Grid, Header, Input, Rail, Segment, Sticky} from "semantic-ui-react";
 import LoansReturn from "../../components/Admin/Return/LoansReturn";
 import _ from "lodash";
 import {connect} from "react-redux";
@@ -7,9 +7,11 @@ import {returnComponent} from "../../actions";
 import ModalEndLoan from "../../components/Admin/Return/ModalEndLoan";
 import * as PropTypes from 'prop-types'
 import LoanInformation from "../../components/Admin/Return/LoanInformation";
+import LoanSticky from "../../components/Admin/Loan/LoanSticky";
 
 class ReturnComponents extends Component {
-  state = {isLoading: false};
+  state = {isLoading: false, searchQuery: '', context: null};
+  handleContextRef = ref => this.setState({context: ref});
 
   constructor(props) {
     super(props);
@@ -32,34 +34,40 @@ class ReturnComponents extends Component {
 
   render() {
     return (
-      <Grid centered columns='equal'>
-        <Grid.Column>
-          <Header as='h2' attached='top'>
-            Devoluciones
-          </Header>
-          <Segment raised className='segment-return'>
-            <ModalEndLoan propEndLoan={this.props.endLoan}/>
-            <Grid padded relaxed stackable className='grid-return'>
-              <Grid.Row columns={'equal'} className='row-return-components'>
-                <Grid.Column className='column-return-loans'>
-                  <Input loading={this.state.isLoading}
-                         icon='users'
-                         iconPosition='left'
-                         placeholder='Buscar...'
-                         onChange={_.debounce((event, data) => this.getLoanSearch(data), 500, {leading: true})}/>
-                  <LoansReturn loansReturn={this.state.result !== undefined ?
-                    this.state.result :
-                    this.props.pendingLoans}
-                  />
-                </Grid.Column>
-                <Grid.Column className='column-return-components'>
-                  <LoanInformation />
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Segment>
-        </Grid.Column>
-      </Grid>
+      <div ref={this.handleContextRef}>
+        <Grid centered columns='equal'>
+          <Grid.Column>
+            <Header as='h2' attached='top'>
+              Devoluciones
+            </Header>
+            <Segment raised className='segment-return'>
+              <ModalEndLoan propEndLoan={this.props.endLoan}/>
+              <Grid padded relaxed stackable className='grid-return'>
+                <Grid.Row columns={'equal'} className='row-return-components'>
+                  <Grid.Column className='column-return-loans'>
+                    <Input loading={this.state.isLoading}
+                           icon='users'
+                           iconPosition='left'
+                           placeholder='Buscar...'
+                           onChange={_.debounce((event, data) => this.getLoanSearch(data), 500, {leading: true})}/>
+                    <LoansReturn loansReturn={this.state.result !== undefined ?
+                      this.state.result :
+                      this.props.pendingLoans}
+                    />
+                  </Grid.Column>
+                  <Grid.Column className='column-return-components'>
+                    <Rail className='my_rail' position='right'>
+                      <Sticky context={this.state.context} pushing offset={30}>
+                        <LoanInformation/>
+                      </Sticky>
+                    </Rail>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </Segment>
+          </Grid.Column>
+        </Grid>
+      </div>
     );
   }
 }
