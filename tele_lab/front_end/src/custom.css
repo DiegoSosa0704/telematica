@@ -37,27 +37,27 @@ body {
     max-height: 220px;
 }
 
-.ui.segment.segment-return {
+/*.ui.segment.segment-return {
     height: 85vh;
-}
+}*/
 
-.ui.grid.grid-return {
+/*.ui.grid.grid-return {
     height: 100%;
-}
+}*/
 
-.row-return-components {
-    height: 80%;
-}
+/*.row-return-components {
+    height: 100%;
+}*/
 
-.column.column-return-components {
+/*.column.column-return-components {
     max-height: 100%;
-    overflow: auto;
+    !*overflow: auto;*!
 }
 
 .column.column-return-loans {
     max-height: 100%;
     overflow: auto;
-}
+}*/
 
 @media screen and (min-width: 1400px) {
     .ui.card.cardSticky .content.contentList {

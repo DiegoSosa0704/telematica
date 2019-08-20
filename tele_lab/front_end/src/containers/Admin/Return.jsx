@@ -1,13 +1,12 @@
 import React, {Component} from 'react'
-import {Grid, Header, Input, Segment, SegmentGroup} from "semantic-ui-react";
+import {Grid, Header, Input, Segment} from "semantic-ui-react";
 import LoansReturn from "../../components/Admin/Return/LoansReturn";
-import ComponentsReturn from "../../components/Admin/Return/ComponentsReturn";
 import _ from "lodash";
 import {connect} from "react-redux";
 import {returnComponent} from "../../actions";
 import ModalEndLoan from "../../components/Admin/Return/ModalEndLoan";
 import * as PropTypes from 'prop-types'
-import DataUserLoan from "../../components/Admin/LoanTableUser";
+import LoanInformation from "../../components/Admin/Return/LoanInformation";
 
 class ReturnComponents extends Component {
   state = {isLoading: false};
@@ -54,15 +53,7 @@ class ReturnComponents extends Component {
                   />
                 </Grid.Column>
                 <Grid.Column className='column-return-components'>
-                  <SegmentGroup stacked>
-                    <Segment padded>
-                      <Header as='h3' dividing>Usuario</Header>
-                      {/*<DataUserLoan userLoan={}/>*/}
-                    </Segment>
-                    <Segment padded>
-                      <ComponentsReturn/>
-                    </Segment>
-                  </SegmentGroup>
+                  <LoanInformation />
                 </Grid.Column>
               </Grid.Row>
             </Grid>

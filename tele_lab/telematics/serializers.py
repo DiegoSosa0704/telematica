@@ -238,7 +238,7 @@ class LoanSerializer(serializers.ModelSerializer):
                 first_name=instance.academic.first_name,
                 last_name=instance.academic.last_name,
                 user=instance.academic.user_id,
-                academic_program=instance.academic.academic_program_id
+                academic_program=instance.academic.academic_program.name
             )
         )
         return response_dict
