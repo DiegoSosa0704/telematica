@@ -41,12 +41,13 @@ class LoanInformation extends Component {
 
     return (
       <React.Fragment>
-        <SegmentGroup raised>
-          <Segment padded>
+        <SegmentGroup raised className={"returnSticky"}>
+          <Segment padded className={"segmentDataUser"}>
             <Header as='h3' dividing>Usuario</Header>
             <ShowDataUser/>
           </Segment>
-          <Segment padded>
+          <Segment padded className={"segmentComponents"}>
+            <Header as='h3' dividing>Componentes</Header>
             <ComponentsReturn/>
           </Segment>
         </SegmentGroup>

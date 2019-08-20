@@ -59,6 +59,23 @@ body {
     overflow: auto;
 }*/
 
+.returnSticky {
+    height: 80vh;
+}
+
+.segmentDataUser {
+    height: 30%;
+}
+
+.segmentComponents {
+    height: 70%;
+}
+
+.listComponents {
+    height: 90%;
+    overflow: auto;
+}
+
 @media screen and (min-width: 1400px) {
     .ui.card.cardSticky .content.contentList {
         height: 400px;

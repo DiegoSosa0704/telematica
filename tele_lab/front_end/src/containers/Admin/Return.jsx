@@ -57,7 +57,7 @@ class ReturnComponents extends Component {
                   </Grid.Column>
                   <Grid.Column className='column-return-components'>
                     <Rail className='my_rail' position='right'>
-                      <Sticky context={this.state.context} pushing offset={30}>
+                      <Sticky context={this.state.context} pushing offset={20}>
                         <LoanInformation/>
                       </Sticky>
                     </Rail>

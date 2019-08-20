@@ -23,7 +23,7 @@ const ListComponentsReturn = (props) => {
     );
   });
   return (
-    <List selection divided relaxed>
+    <List selection divided relaxed className={"listComponents"}>
       {listLoans}
     </List>
   );
