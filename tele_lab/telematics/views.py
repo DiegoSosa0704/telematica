@@ -44,6 +44,26 @@ class LoanView(mixins.UpdateModelMixin,
             serializer = ComponentStockSerializer(components_paginate, many=True)
             return Response({"components": serializer.data, "totalCount": count_components}, status=status.HTTP_200_OK)
 
+    @action(methods=['get'], detail=False)
+    def search_loans(self, request):
+        if 'q' in request.GET \
+                and '_page' in request.GET \
+                and '_limit' in request.GET:
+            q = request.GET.get('q')
+            page = request.GET.get('_page')
+            limit = request.GET.get('_limit')
+            loans = Loan.objects.filter(
+                Q(academic__code__icontains=q) |
+                Q(academic__last_name__icontains=q) |
+                Q(academic__first_name__icontains=q)
+            ).order_by('created')
+            paginator = Paginator(loans, int(limit))
+            loans_paginate = paginator.get_page(page)
+            serializer = LoanSerializer(loans_paginate, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": 'Faltan parametros en la petición'}, status=status.HTTP_400_BAD_REQUEST)
+
     @action(methods=['post'], detail=False)
     def create_loan(self, request):
         try:
