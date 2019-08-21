@@ -7,6 +7,7 @@ const initialState = {
   stateItem: 0,
   endLoan: false,
   loans: [],
+  loansTotalCount: 0,
 };
 
 export default (state = initialState, action) => {
@@ -51,9 +52,11 @@ export default (state = initialState, action) => {
         endLoan: action.payload
       };
     case returnComponent.GET_LOANS_SUCCESS:
+
       return {
         ...state,
-        loans: _.union(state.loans, action.payload)
+        loansTotalCount: action.payload.totalCount,
+        loans: _.union(state.loans, action.payload.loans)
       };
     default:
       return state

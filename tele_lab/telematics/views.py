@@ -60,7 +60,8 @@ class LoanView(mixins.UpdateModelMixin,
             paginator = Paginator(loans, int(limit))
             loans_paginate = paginator.get_page(page)
             serializer = LoanSerializer(loans_paginate, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            count_loans = loans.count()
+            return Response({"loans": serializer.data, "totalCount": count_loans}, status=status.HTTP_200_OK)
         else:
             return Response({"detail": 'Faltan parametros en la petición'}, status=status.HTTP_400_BAD_REQUEST)
 

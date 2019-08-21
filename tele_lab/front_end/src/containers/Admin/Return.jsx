@@ -16,13 +16,15 @@ class ReturnComponents extends Component {
     searchQuery: '',
     context: null,
     q: '',
-    _page: 0,
-    _limit: 20,
+    _page: 1,
+    _limit: 10,
   };
 
   onBottomVisible = (event) => {
     this.setState({_page: this.state._page + 1});
-    this.loadData({_page: this.state._page})
+    if (this.state._page <= Math.ceil(this.props.loansTotalCount / this.state._limit)) {
+      this.loadData({_page: this.state._page})
+    }
   };
 
   handleOfChangeInput = (event, {name, value}) => {
@@ -54,28 +56,11 @@ class ReturnComponents extends Component {
 
   handleContextRef = ref => this.setState({context: ref});
 
-  constructor(props) {
-    super(props);
-    // this.getLoanSearch = this.getLoanSearch.bind(this)
-  }
-
   componentDidMount() {
     this.loadData({});
-    // this.props.getPendingLoans();
   }
 
-  /*getLoanSearch(data) {
-    this.setState({isLoading: true});
-    setTimeout(() => {
-      const re = new RegExp(_.escapeRegExp(data.value), 'i');
-      const isMatch = result => re.test(result.academic.code);
-      let results = _.filter(this.props.pendingLoans, isMatch);
-      this.setState({result: results, isLoading: false});
-    }, 300)
-  }*/
-
   render() {
-    const { _page } = this.state;
     return (
       <div ref={this.handleContextRef}>
         <Grid centered columns='equal'>
@@ -92,6 +77,7 @@ class ReturnComponents extends Component {
                       once={false}
                       continuous={false}
                       onBottomVisible={this.onBottomVisible}
+                      onBottomPassed={() =>  console.lo('holaa')}
                     >
                       <Input loading={this.state.isLoading}
                              icon='users'
@@ -107,7 +93,6 @@ class ReturnComponents extends Component {
                   <Grid.Column className='column-return-components'>
                     <Rail className='my_rail' position='right'>
                       <Sticky context={this.state.context} pushing offset={20}>
-                        {_page.toString()}
                         <LoanInformation/>
                       </Sticky>
                     </Rail>
@@ -127,6 +112,7 @@ const mapStateToProps = state => {
     loans: state.returnComponent.loans,
     pendingLoans: state.returnComponent.pendingLoans,
     endLoan: state.returnComponent.endLoan,
+    loansTotalCount: state.returnComponent.loansTotalCount,
   };
 };
 
