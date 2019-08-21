@@ -6,6 +6,7 @@ const initialState = {
   componentsLoan: undefined,
   stateItem: 0,
   endLoan: false,
+  loans: [],
 };
 
 export default (state = initialState, action) => {
@@ -48,6 +49,11 @@ export default (state = initialState, action) => {
       return  {
         ...state,
         endLoan: action.payload
+      };
+    case returnComponent.GET_LOANS_SUCCESS:
+      return {
+        ...state,
+        loans: _.union(state.loans, action.payload)
       };
     default:
       return state

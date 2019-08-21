@@ -18,6 +18,10 @@ export const STATE_ITEM_LIST = '@@returnComponent/STATE_ITEM_LIST';
 export const END_LOAN = '@@returnComponent/END_LOAN';
 export const CHANGE_END_LOAN = '@@returnComponent/CHANGE_END_LOAN';
 
+export const GET_LOANS_REQUEST = '@@returnComponent/GET_LOANS_REQUEST';
+export const GET_LOANS_SUCCESS = '@@returnComponent/GET_LOANS_SUCCESS';
+export const GET_LOANS_FAILURE = '@@returnComponent/GET_LOANS_FAILURE';
+
 export const getPendingLoans = () => ({
   [RSAA]: {
     endpoint: '/api/v1/loan/pending/',
@@ -77,3 +81,14 @@ export const changeEndLoan = (state) => {
     payload: state
   }
 };
+
+export const getLoans = (query) => ({
+  [RSAA]: {
+    endpoint: `/api/v1/loan/search?${query}`,
+    method: 'GET',
+    headers: withAuth({'Content-Type': 'application/json'}),
+    types: [
+      GET_LOANS_REQUEST, GET_LOANS_SUCCESS, GET_LOANS_FAILURE
+    ]
+  }
+});
