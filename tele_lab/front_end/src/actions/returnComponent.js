@@ -22,6 +22,11 @@ export const GET_LOANS_REQUEST = '@@returnComponent/GET_LOANS_REQUEST';
 export const GET_LOANS_SUCCESS = '@@returnComponent/GET_LOANS_SUCCESS';
 export const GET_LOANS_FAILURE = '@@returnComponent/GET_LOANS_FAILURE';
 
+export const GET_RESET_LOANS_REQUEST = '@@returnComponent/GET_RESET_LOANS_REQUEST';
+export const GET_RESET_LOANS_SUCCESS = '@@returnComponent/GET_RESET_LOANS_SUCCESS';
+export const GET_RESET_LOANS_FAILURE = '@@returnComponent/GET_RESET_LOANS_FAILURE';
+
+
 export const getPendingLoans = () => ({
   [RSAA]: {
     endpoint: '/api/v1/loan/pending/',
@@ -44,7 +49,7 @@ export const getComponentsByPendingLoan = (loanId) => ({
   }
 });
 
-export const changeStateLoanComponent = (loanComponentId ,state) => ({
+export const changeStateLoanComponent = (loanComponentId, state) => ({
   [RSAA]: {
     endpoint: `/api/v1/loan/component/update/${loanComponentId}/`,
     method: 'PATCH',
@@ -82,13 +87,28 @@ export const changeEndLoan = (state) => {
   }
 };
 
-export const getLoans = (query) => ({
-  [RSAA]: {
-    endpoint: `/api/v1/loan/search?${query}`,
-    method: 'GET',
-    headers: withAuth({'Content-Type': 'application/json'}),
-    types: [
-      GET_LOANS_REQUEST, GET_LOANS_SUCCESS, GET_LOANS_FAILURE
-    ]
+export const getLoans = (query, resetList) => {
+  if (resetList) {
+    return {
+      [RSAA]: {
+        endpoint: `/api/v1/loan/search?${query}`,
+        method: 'GET',
+        headers: withAuth({'Content-Type': 'application/json'}),
+        types: [
+          GET_RESET_LOANS_REQUEST, GET_RESET_LOANS_SUCCESS, GET_RESET_LOANS_FAILURE
+        ]
+      }
+    }
+  } else {
+    return {
+      [RSAA]: {
+        endpoint: `/api/v1/loan/search?${query}`,
+        method: 'GET',
+        headers: withAuth({'Content-Type': 'application/json'}),
+        types: [
+          GET_LOANS_REQUEST, GET_LOANS_SUCCESS, GET_LOANS_FAILURE
+        ]
+      }
+    }
   }
-});
+};

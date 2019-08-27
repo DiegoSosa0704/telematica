@@ -28,7 +28,9 @@ class ReturnComponents extends Component {
   };
 
   handleOfChangeInput = (event, {name, value}) => {
-    if (regex.test(value)) {
+    if (value !== '' && !regex.test(value)) {
+      this.setState({q: value});
+    } else {
       this.onSubmitFilter(value);
     }
   };
@@ -36,11 +38,11 @@ class ReturnComponents extends Component {
   onSubmitFilter = (filter) => {
     if (filter !== this.state.q) {
       this.setState({q: filter, _page: 1});
-      this.loadData({q: filter, _page: 1});
+      this.loadData({q: filter, _page: 1}, true);
     }
   };
 
-  loadData(params) {
+  loadData(params, resetList = false) {
     const current = this.state;
     queryParams.forEach(function (element) {
       if (!(element in params)) {
@@ -51,7 +53,7 @@ class ReturnComponents extends Component {
     const query = Object.keys(params)
       .map(k => esc(k) + '=' + esc(params[k]))
       .join('&');
-    this.props.getLoans(query);
+    this.props.getLoans(query, resetList);
   }
 
   handleContextRef = ref => this.setState({context: ref});
@@ -77,13 +79,11 @@ class ReturnComponents extends Component {
                       once={false}
                       continuous={false}
                       onBottomVisible={this.onBottomVisible}
-                      onBottomPassed={() =>  console.lo('holaa')}
                     >
                       <Input loading={this.state.isLoading}
                              icon='users'
                              iconPosition='left'
                              placeholder='Buscar...'
-                        /*onChange={_.debounce((event, data) => this.getLoanSearch(data), 500, {leading: true})}*/
                              onChange={this.handleOfChangeInput}
                       />
                       <LoansReturn loansReturn={this.props.loans}
@@ -121,9 +121,9 @@ const mapDispatchToProps = dispatch => {
     getPendingLoans: () => {
       return dispatch(returnComponent.getPendingLoans());
     },
-    getLoans: (query) => {
-      return dispatch(returnComponent.getLoans(query));
-    },
+    getLoans: (query, resetList) => {
+      return dispatch(returnComponent.getLoans(query, resetList));
+    }
   };
 };
 

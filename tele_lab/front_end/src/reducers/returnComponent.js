@@ -52,11 +52,16 @@ export default (state = initialState, action) => {
         endLoan: action.payload
       };
     case returnComponent.GET_LOANS_SUCCESS:
-
       return {
         ...state,
         loansTotalCount: action.payload.totalCount,
         loans: _.union(state.loans, action.payload.loans)
+      };
+    case returnComponent.GET_RESET_LOANS_SUCCESS:
+      return {
+        ...state,
+        loansTotalCount: action.payload.totalCount,
+        loans: action.payload.loans
       };
     default:
       return state
