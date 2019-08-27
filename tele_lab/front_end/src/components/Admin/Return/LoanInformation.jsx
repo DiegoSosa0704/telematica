@@ -63,7 +63,7 @@ LoanInformation.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    listLoans: state.returnComponent.pendingLoans,
+    listLoans: state.returnComponent.loans,
     index: state.returnComponent.stateItem,
   };
 };
