@@ -94,7 +94,7 @@ const mapStateToProps = state => {
     indexLastComponent: state.returnComponent.indexLastComponent,
     componentsLoan: state.returnComponent.componentsLoan,
     stateItem: state.returnComponent.stateItem,
-    pendingLoans: state.returnComponent.pendingLoans,
+    pendingLoans: state.returnComponent.loans,
   };
 };
 

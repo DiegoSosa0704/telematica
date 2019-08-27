@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {List} from "semantic-ui-react";
+import {List, ListItem} from "semantic-ui-react";
 import {changeTypeAcademic, dateTimeToString, dateToString} from "../../../utils";
 import {returnComponent} from "../../../actions";
 import {connect} from "react-redux";
@@ -32,8 +32,10 @@ class ItemLoan extends Component {
   }
 
   render() {
+    console.log(this.props.component);
     return (
-      <List.Item active={this.state.active} onClick={() => this.handlerListItem(this.props.component)}>
+      <ListItem active={this.state.active} onClick={() => this.handlerListItem(this.props.component)}
+                style={{'backgroundColor': this.props.component.state_loan === 1 ? '#e57373' : '#66bb6a'}}>
         <List.Content floated='right'>
           <List.Header>Fecha:</List.Header>
           <List.Description>{dateToString(this.props.component.date_start)}</List.Description>
@@ -45,7 +47,7 @@ class ItemLoan extends Component {
           <List.Description>{changeTypeAcademic(this.props.component.academic.type)}</List.Description>
           <List.Description><b>Código:</b> {this.props.component.academic.code}</List.Description>
         </List.Content>
-      </List.Item>
+      </ListItem>
     );
   }
 }
