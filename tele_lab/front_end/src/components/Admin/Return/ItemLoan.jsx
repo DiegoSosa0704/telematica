@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {List, ListItem} from "semantic-ui-react";
+import {Label, List, ListItem} from "semantic-ui-react";
 import {changeTypeAcademic, dateTimeToString, dateToString} from "../../../utils";
 import {returnComponent} from "../../../actions";
 import {connect} from "react-redux";
@@ -34,14 +34,24 @@ class ItemLoan extends Component {
   render() {
     console.log(this.props.component);
     return (
-      <ListItem active={this.state.active} onClick={() => this.handlerListItem(this.props.component)}
-                style={{'backgroundColor': this.props.component.state_loan === 1 ? '#e57373' : '#66bb6a'}}>
+      <ListItem active={this.state.active} onClick={() => this.handlerListItem(this.props.component)}>
         <List.Content floated='right'>
           <List.Header>Fecha:</List.Header>
           <List.Description>{dateToString(this.props.component.date_start)}</List.Description>
           <List.Description>{dateTimeToString(this.props.component.date_start)}</List.Description>
         </List.Content>
-        {this.state.active? <List.Icon name='right triangle' />: null}
+        <List.Content floated='right'>
+          <List.Header>Estado:</List.Header>
+          <List.Description>
+            {
+              this.props.component.state_loan === 1 ?
+                <Label color='green' horizontal>Péndiente</Label> :
+                <Label color='red' horizontal>Finalizado</Label>
+
+            }
+          </List.Description>
+        </List.Content>
+        {this.state.active ? <List.Icon name='right triangle'/> : null}
         <List.Content>
           <List.Header>{this.props.component.academic.last_name} {this.props.component.academic.first_name}</List.Header>
           <List.Description>{changeTypeAcademic(this.props.component.academic.type)}</List.Description>
