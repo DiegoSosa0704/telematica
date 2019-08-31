@@ -8,8 +8,6 @@ class LoansReturn extends Component {
   render() {
     return (
       <React.Fragment>
-        {/*<Header as='h3' dividing>Componentes</Header>*/}
-
         {this.props.componentsLoan !== undefined ?
           <ListComponentsReturn componentsLoan={this.props.componentsLoan}/> :
           <Header as='h3' disabled>

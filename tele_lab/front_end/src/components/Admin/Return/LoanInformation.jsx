@@ -9,33 +9,34 @@ import {changeTypeAcademic} from "../../../utils";
 class LoanInformation extends Component {
 
   render() {
-    const PlaceholderDataUser = () => (
-      <Placeholder>
-        <Placeholder.Line length='long'/>
-        <Placeholder.Line length='medium'/>
-        <Placeholder.Line length='short'/>
-        <Placeholder.Line length='medium'/>
-      </Placeholder>
-    );
-
     const ShowDataUser = () => {
       let user = undefined;
       if (this.props.listLoans !== undefined) {
-        this.props.listLoans.forEach((item, index) => {
-          if (index === this.props.index) {
-            user = {
-              title: item.academic.first_name + " " + item.academic.last_name,
-              description: changeTypeAcademic(item.academic.type),
-              code: item.academic.code,
-              academic_program: item.academic.academic_program
-            };
-          }
-        })
-      }
-      if (user !== undefined) {
+        if (this.props.listLoans.length > 0) {
+          this.props.listLoans.forEach((item, index) => {
+            if (index === this.props.index) {
+              user = {
+                title: item.academic.first_name + " " + item.academic.last_name,
+                description: changeTypeAcademic(item.academic.type),
+                code: item.academic.code,
+                academic_program: item.academic.academic_program
+              };
+            }
+          });
         return (<DataUserLoan userLoan={user}/>);
-      } else {
-        return (<PlaceholderDataUser/>);
+        } else {
+          return (<Header as={"h3"}>No se ha seleccionado un préstamo</Header>)
+        }
+      }
+    };
+
+    const ShowComponentsLoan  = () => {
+      if (this.props.listLoans !== undefined) {
+        if (this.props.listLoans.length > 0) {
+          return (<ComponentsReturn/>);
+        } else {
+          return (<Header as={"h3"}>No se ha seleccionado un préstamo</Header>)
+        }
       }
     };
 
@@ -48,7 +49,7 @@ class LoanInformation extends Component {
           </Segment>
           <Segment padded className={"segmentComponents"}>
             <Header as='h3' dividing>Componentes</Header>
-            <ComponentsReturn/>
+            <ShowComponentsLoan/>
           </Segment>
         </SegmentGroup>
       </React.Fragment>
