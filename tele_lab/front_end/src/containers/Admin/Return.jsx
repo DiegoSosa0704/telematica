@@ -60,7 +60,7 @@ class ReturnComponents extends Component {
   handleContextRef = ref => this.setState({context: ref});
 
   componentDidMount() {
-    this.loadData({});
+    this.loadData({}, true);
   }
 
   render() {
