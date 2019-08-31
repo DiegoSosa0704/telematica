@@ -8,13 +8,13 @@ import * as PropTypes from 'prop-types'
 
 class ListPendingLoans extends Component {
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  /*componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.pendingLoans !== this.props.pendingLoans) {
       if (!_.isEqual(nextProps.pendingLoans, this.props.pendingLoans)) {
         this.props.changeStateItemList(0);
       }
     }
-  }
+  }*/
 
   render() {
     if (this.props.pendingLoans.length > 0) {

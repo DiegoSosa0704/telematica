@@ -39,6 +39,7 @@ class ReturnComponents extends Component {
     if (filter !== this.state.q) {
       this.setState({q: filter, _page: 1});
       this.loadData({q: filter, _page: 1}, true);
+      this.props.changeStateItemList(0);
     }
   };
 
@@ -123,6 +124,9 @@ const mapDispatchToProps = dispatch => {
     },
     getLoans: (query, resetList) => {
       return dispatch(returnComponent.getLoans(query, resetList));
+    },
+    changeStateItemList: (indexItem) => {
+      return dispatch(returnComponent.changeStateItemList(indexItem));
     }
   };
 };
