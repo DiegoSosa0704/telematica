@@ -33,7 +33,7 @@ class ListPendingLoans extends Component {
     } else {
       return (
         <Header as='h3' disabled>
-          No hay préstamos pendientes.
+          No hay préstamos disponibles.
         </Header>
       );
     }

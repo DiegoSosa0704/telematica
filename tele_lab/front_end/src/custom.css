@@ -37,9 +37,9 @@ body {
     max-height: 220px;
 }
 
-/*.ui.segment.segment-return {
-    height: 85vh;
-}*/
+.ui.segment.segment-return {
+    min-height: 95vh;
+}
 
 /*.ui.grid.grid-return {
     height: 100%;

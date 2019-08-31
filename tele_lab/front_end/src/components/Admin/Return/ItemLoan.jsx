@@ -45,9 +45,8 @@ class ItemLoan extends Component {
           <List.Description>
             {
               this.props.component.state_loan === 1 ?
-                <Label color='green' horizontal>Péndiente</Label> :
-                <Label color='red' horizontal>Finalizado</Label>
-
+                <Label color='green' horizontal>Finalizado</Label> :
+                <Label color='red' horizontal>Péndiente</Label>
             }
           </List.Description>
         </List.Content>
